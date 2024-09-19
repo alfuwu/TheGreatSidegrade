@@ -1,0 +1,3 @@
+displayName = The Great Sidegrade
+author = alfuwu
+version = 1.0.0

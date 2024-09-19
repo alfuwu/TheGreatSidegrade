@@ -1,0 +1,65 @@
+note: (?) means that the idea may or may not be implemented
+
+new evils:
+ - the starved (hunger themed evil biome)
+ - the nothing (void themed evil biome, incredibly rare)
+ - the spiral (twisted themed evil biome)
+ - the rotten (rotten themed evil biome, similar to the crimson, desolate)
+ - the fractured (tons of small floating rocks make up the land, rare)
+ - the hive(?) (hiveminded biome)
+
+new goods:
+ - the bloom (overgrowth, bioluminescent plants, regeneration & life)
+ - the gold (golden themed forest-style biome, sparkly grass)
+
+new bosses:
+ - the veilkeeper(?) (drags the player through different dimensions, represented via shaders)
+ - the crux parasite (requires crimson & corruption items to craft the summon item for. additionally may spawn naturally if a corruption creature dies within the crimson or vice-versa)
+ - bloomheart (plantera 2: electric boogaloo, the bloom)
+ - the dreaming colossus (has a chance to spawn in if the player sleeps too much and hasn't killed it before, otherwise )
+ - the chronovore (steampunk EoW-styled boss that spawns in the spiral)
+ - titan of rot (boss in the rotten)
+ - oblivion (boss of the nothing, large white orb)
+ - chorus of catastrophe (hardmode trio of elemental sirens)
+ - primeval behemoth (mountain, earthy themed boss)
+
+new monsters:
+ - twisted horror (land-based creature that spawns in the spiral)
+ - vine serpent (the bloom, wyvern-like)
+ - voidmorphs (shapeless creatures that can mimic the player from the nothing)
+ - abyssal leech (flying creature from the nothing, saps health and mana upon hit)
+ - singularity slime (creates an implosion upon death, dragging in lots of shit, very rare)
+
+new weapons:
+ - something that brings down a lazer from the heavens dealing holy damage
+ - rotshaper staff (crafted with titan of rot drops)
+ - echo blade (leaves an echo behind upon swing, which will swing again after a second)
+
+new damage types:
+ - holy damage
+
+new accessories:
+ - hourglass of the spiral (chance to stop time when taking damage, combine with panic necklace?)
+ - bloomspore amulet (increases life regen dramatically, combine with band of regeneration)
+ - 
+
+new consumables:
+ - chalice of eternity
+ - essence of reflection
+
+new buffs:
+ - reflected (granted by the essence of reflection, duplicates all attacks and doubles damage received)
+ - eternalized (locks health and mana, preventing use of magic weapons and loss or gain of health)
+
+new events:
+ - convergence (event that starts if the world is more than 30% good and 30% evil)
+ - the harrowing (event that only exists in worlds with the nothing as their primary evil type)
+ - meteor shower (event that only starts after killing boss2 [EoW / BoC], spawns three-to-five meteors over its course)
+
+new event monsters:
+ the harrowing:
+  - nightmare wyverns
+  - eldritch brutes
+  - spectral children
+ meteor shower:
+  - meteor elemental
