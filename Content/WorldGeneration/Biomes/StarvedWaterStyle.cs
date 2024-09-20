@@ -10,7 +10,7 @@ namespace TheGreatSidegrade.Content.WorldGeneration.Biomes {
         private Asset<Texture2D> rainTexture;
 
         public override void Load() {
-            rainTexture = Mod.Assets.Request<Texture2D>("Content/Biomes/StarvedRain");
+            rainTexture = Mod.Assets.Request<Texture2D>("Content/WorldGeneration/Biomes/StarvedRain");
         }
 
         public override int ChooseWaterfallStyle() {

@@ -1,4 +1,5 @@
 using Terraria.ModLoader;
+using TheGreatSidegrade.Assets;
 using TheGreatSidegrade.Common.Hooks;
 
 namespace TheGreatSidegrade {

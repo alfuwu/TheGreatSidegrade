@@ -47,7 +47,7 @@ namespace TheGreatSidegrade.Content.WorldGeneration.Biomes
                 case 2:
                     return BackgroundTextureLoader.GetBackgroundSlot(Mod, "Assets/Textures/Backgrounds/StarvedSurfaceMid2");
                 case 3:
-                    return BackgroundTextureLoader.GetBackgroundSlot("ExampleMod/Assets/Textures/Backgrounds/StarvedSurfaceMid3"); // You can use the full path version of GetBackgroundSlot too
+                    return BackgroundTextureLoader.GetBackgroundSlot(Mod, "Assets/Textures/Backgrounds/StarvedSurfaceMid3");
                 default:
                     return -1;
             }
