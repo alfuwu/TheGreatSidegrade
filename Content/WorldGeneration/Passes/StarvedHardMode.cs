@@ -6,8 +6,8 @@ using Terraria.ModLoader;
 using Terraria.Utilities;
 using Terraria.WorldBuilding;
 using TheGreatSidegrade.Common;
-using TheGreatSidegrade.Content.Evils.Starved.Tiles;
-using TheGreatSidegrade.Content.Evils.Starved.Walls;
+using TheGreatSidegrade.Content.Tiles.Starved;
+using TheGreatSidegrade.Content.Walls.Starved;
 
 namespace TheGreatSidegrade.Content.WorldGeneration.Passes {
     public class StarvedHardMode {

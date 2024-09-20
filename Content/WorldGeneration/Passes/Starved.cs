@@ -6,13 +6,14 @@ using Terraria.ModLoader;
 using Terraria.WorldBuilding;
 using Terraria;
 using Microsoft.Xna.Framework;
-using TheGreatSidegrade.Content.Evils.Starved.Tiles;
-using TheGreatSidegrade.Content.Evils.Starved.Walls;
+using Terraria.Localization;
+using TheGreatSidegrade.Content.Tiles.Starved;
+using TheGreatSidegrade.Content.Walls.Starved;
 
 namespace TheGreatSidegrade.Content.WorldGeneration.Passes {
     public class Starved {
         public static void Method(GenerationProgress progress, GameConfiguration configuration) {
-            progress.Message = "The world hungers";
+            progress.Message = Language.GetTextValue("Mods.TheGreatSidegrade.World.Generation.Starved.Message");
             int num208 = 0;
             while (num208 < Main.maxTilesX * 0.00045) {
                 float num209 = (float)(num208 / (Main.maxTilesX * 0.00045));
@@ -96,7 +97,7 @@ namespace TheGreatSidegrade.Content.WorldGeneration.Passes {
                             if (Main.tile[num57, num224].TileType == TileID.Sand && num57 >= num211 + WorldGen.genRand.Next(5) && num57 <= num212 - WorldGen.genRand.Next(5))
                                 Main.tile[num57, num224].TileType = (ushort)ModContent.TileType<StarvedSand>();
                             if (Main.tile[num57, num224].TileType == TileID.Dirt && num224 < Main.worldSurface - 1.0 && !flag13) {
-                                //ExxoAvalonOriginsWorld.grassSpread = 0;
+                                //AvalonWorld.grassSpread = 0;
                                 WorldGen.SpreadGrass(num57, num224, 0, ModContent.TileType<StarvedGrass>(), true, default);
                             }
                             flag13 = true;

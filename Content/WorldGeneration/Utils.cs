@@ -2,7 +2,7 @@
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.WorldBuilding;
-using TheGreatSidegrade.Content.Evils.Starved.Tiles;
+using TheGreatSidegrade.Content.Tiles.Starved;
 
 namespace TheGreatSidegrade.Content.WorldGeneration {
     public class Utils {
@@ -24,9 +24,7 @@ namespace TheGreatSidegrade.Content.WorldGeneration {
         }
 
         public static void Swap<T>(ref T first, ref T second) where T : unmanaged {
-            T first2 = first;
-            first = second;
-            second = first2;
+            (second, first) = (first, second);
         }
 
         public static int TileCheck(int positionX) {

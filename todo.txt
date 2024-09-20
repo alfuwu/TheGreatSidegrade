@@ -8,7 +8,7 @@ new evils:
  - the fractured (tons of small floating rocks make up the land, rare)
  - the hive(?) (hiveminded biome)
 
-new goods:
+new goods(?):
  - the bloom (overgrowth, bioluminescent plants, regeneration & life)
  - the gold (golden themed forest-style biome, sparkly grass)
 
@@ -16,10 +16,12 @@ new bosses:
  - the veilkeeper(?) (drags the player through different dimensions, represented via shaders)
  - the crux parasite (requires crimson & corruption items to craft the summon item for. additionally may spawn naturally if a corruption creature dies within the crimson or vice-versa)
  - bloomheart (plantera 2: electric boogaloo, the bloom)
- - the dreaming colossus (has a chance to spawn in if the player sleeps too much and hasn't killed it before, otherwise )
+ - the dreaming colossus (has a chance to spawn in if the player sleeps too much and hasn't killed it before, otherwise spawnable with a Flux Bed during the night)
  - the chronovore (steampunk EoW-styled boss that spawns in the spiral)
  - titan of rot (boss in the rotten)
  - oblivion (boss of the nothing, large white orb)
+ - storm of eternity (fragmented boss, spawns in the fractured)
+ - the starved ()
  - chorus of catastrophe (hardmode trio of elemental sirens)
  - primeval behemoth (mountain, earthy themed boss)
 

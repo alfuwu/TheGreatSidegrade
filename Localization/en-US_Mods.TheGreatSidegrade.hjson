@@ -1,12 +1,12 @@
 Biomes: {
 	StarvedSurfaceBiome: {
-		DisplayName: Starved Surface Biome
-		TownNPCDialogueName: the Starved Surface Biome
+		DisplayName: The Starved
+		TownNPCDialogueName: the Starved
 	}
 
 	StarvedUndergroundBiome: {
-		DisplayName: Starved Underground Biome
-		TownNPCDialogueName: the Starved Underground Biome
+		DisplayName: The Starved
+		TownNPCDialogueName: the Starved
 	}
 }
 
@@ -25,6 +25,11 @@ Items: {
 		DisplayName: Starving Torch
 		Tooltip: ""
 	}
+
+	StarvingEgg: {
+		DisplayName: Starving Egg
+		Tooltip: ""
+	}
 }
 
 Prefixes.GargantuanPrefix.DisplayName: Gargantuan Prefix
@@ -35,36 +40,95 @@ Configs: {
 
 	SidegradeServer: {
 		DisplayName: Sidegrade Server
-		Headers.NewWorldEvils: New World Evils Header
+		Headers.NewWorldEvils: New World Evils
 
 		EnableRandomFracturedWorld: {
 			Label: Enable Random Fractured World
-			Tooltip: ""
+			Tooltip: Allows the mod to randomly choose The Fractured as the world's evil, if left on random
 		}
 
 		EnableRandomNothingWorld: {
 			Label: Enable Random Nothing World
-			Tooltip: ""
+			Tooltip: Allows the mod to randomly choose The Nothing as the world's evil, if left on random
 		}
 
 		EnableRandomRottenWorld: {
 			Label: Enable Random Rotten World
-			Tooltip: ""
+			Tooltip: Allows the mod to randomly choose The Rotten as the world's evil, if left on random
 		}
 
 		EnableRandomSpiralWorld: {
 			Label: Enable Random Spiral World
-			Tooltip: ""
+			Tooltip: Allows the mod to randomly choose The Spiral as the world's evil, if left on random
 		}
 
 		EnableRandomStarvedWorld: {
 			Label: Enable Random Starved World
-			Tooltip: ""
+			Tooltip: Allows the mod to randomly choose The Starved as the world's evil, if left on random
 		}
 
 		EnableMorePrefixes: {
 			Label: Enable More Prefixes
-			Tooltip: ""
+			Tooltip: You can never have enough prefixes, as scientifically proven by our loyal scientists here at Sidegrade Inc.
 		}
 	}
+}
+
+SpawnInfo: {
+	Veilkeeper: That which is hidden behind the Veil should not be seen by mortal eyes.
+	CruxParasite:
+		'''
+		Use a [i:TheGreatSidegrade/CorruptedAmalgamation] during the night in the Crimson or a [i:TheGreatSidegrade/CrimsonAmalgamation] during the night in the Corruption.
+
+		Has a chance to spawn naturally if killing a Crimson monster in the Corruption and vice-versa.
+		'''
+	Bloomheart: N/A
+	DreamingColossus:
+		'''
+		Use a [i:TheGreatSidegrade/FluxBed] during the night.
+
+		Or sleep in a bed for too long in hardmode, if you have not already killed the Dreaming Colossus.
+		'''
+	Chronovore:
+		'''
+		Use a [i:TheGreatSidegrade/TimeCapsule] in the Spiral.
+
+		Or smash 3 Twisted Cores in the Spiral.
+		'''
+	TitanOfRot:
+		'''
+		Use a [i:TheGreatSidegrade/DecayingDoll] in the Rotten.
+
+		Or sacrifice 25 [i:TheGreatSidegrade/RottenSkin] at the Dead One's Altar.
+		'''
+	Oblivion: Entry not found.
+	StormOfEternity:
+		'''
+		Use a [i:TheGreatSidegrade/SuperGlue] in the Fractured.
+
+		Or smash 3 Fragmented Hearts in the Fractured.
+		'''
+	TheStarved:
+		'''
+		Use a [i:TheGreatSidegrade/VeryJuicyHamburger] in the Starved.
+
+		Or break and eat 3 Starving Eggs.
+		'''
+	ChorusOfCatastrophe: Use a [i:CatcallerWhistle] at night in hardmode.
+	PrimevalBehemoth: Use a [i:SuspiciousLookingRock] in the Forest or Snow biome.
+}
+
+World: {
+	Generation: {
+		Fractured.Message: Breaking the world apart
+		Nothing.Message: Fixing world file...
+		Rotten.Message: Refrigerating the world
+		Spiral.Message: Twisting the world around a donut
+		Starved.Message: The world hungers
+	}
+}
+
+Tiles: {
+	AltarOfTheStarvingOne.MapEntry: Altar of the Starving One
+	TwistedShrine.MapEntry: Twisted Shrine
 }

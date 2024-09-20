@@ -4,7 +4,7 @@ using Terraria;
 using Terraria.ModLoader;
 using TheGreatSidegrade.Common;
 using Microsoft.Xna.Framework;
-using TheGreatSidegrade.Content.Evils.Starved.Items.Placeable;
+using TheGreatSidegrade.Content.Items.Starved.Placeable;
 
 namespace TheGreatSidegrade.Content.WorldGeneration.Biomes
 {
@@ -31,7 +31,7 @@ namespace TheGreatSidegrade.Content.WorldGeneration.Biomes
         public override bool IsBiomeActive(Player player)
         {
             // First, we will use the exampleBlockCount from our added ModSystem for our first custom condition
-            bool b1 = ModContent.GetInstance<BiomesTileCount>().starvedBlockCount >= 40;
+            bool b1 = ModContent.GetInstance<BiomeTileCounter>().starvedBlockCount >= 40;
 
             // Second, we will limit this biome to the inner horizontal third of the map as our second custom condition
             bool b2 = true;// Math.Abs(player.position.ToTileCoordinates().X - Main.maxTilesX / 2) < Main.maxTilesX / 6;

@@ -1,0 +1,11 @@
+BiomeTitles: {
+	Title: {
+		TheGreatSidegrade: {
+			Fractured: Fractured
+			Nothing: Nothing
+			Rotten: Rotten
+			Spiral: Spiral
+			Starved: Starved
+		}
+	}
+}

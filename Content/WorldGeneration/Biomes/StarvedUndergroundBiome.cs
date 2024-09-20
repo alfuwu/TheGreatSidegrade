@@ -24,7 +24,7 @@ namespace TheGreatSidegrade.Content.WorldGeneration.Biomes {
             // Limit the biome height to be underground in either rock layer or dirt layer
             return (player.ZoneRockLayerHeight || player.ZoneDirtLayerHeight) &&
                 // Check how many tiles of our biome are present, such that biome should be active
-                ModContent.GetInstance<BiomesTileCount>().starvedBlockCount >= 40;
+                ModContent.GetInstance<BiomeTileCounter>().starvedBlockCount >= 40;
         }
 
         // In the event that both our biome AND one or more modded SceneEffect layers are active with the same SceneEffect Priority, this can decide which one.

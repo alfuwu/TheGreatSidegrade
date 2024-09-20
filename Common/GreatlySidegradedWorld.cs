@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using Terraria;
@@ -10,6 +11,12 @@ using TheGreatSidegrade.Content.WorldGeneration.Passes;
 
 namespace TheGreatSidegrade.Common {
     public class GreatlySidegradedWorld : ModSystem {
+        public static Color FracturedBiomeColor = new(111, 110, 110);
+        public static Color NothingBiomeColor = new(10, 10, 10);
+        public static Color RottenBiomeColor = new(142, 76, 59);
+        public static Color SpiralBiomeColor = new(56, 76, 59);
+        public static Color StarvedBiomeColor = new(199, 173, 90);
+
         public static WorldEvil worldEvil;
 
         public enum WorldEvil {
@@ -23,19 +30,15 @@ namespace TheGreatSidegrade.Common {
         }
 
         public override void PreWorldGen() {
-            WorldGen.crimson = WorldGen.genRand.NextBool(2);
-            if (WorldGen.WorldGenParam_Evil == 0) {
-                WorldGen.crimson = false;
+            if (WorldGen.WorldGenParam_Evil == 0 || TheGreatSidegrade.IsContagion) {
                 worldEvil = WorldEvil.Corruption;
             } else if (WorldGen.WorldGenParam_Evil == 1) {
-                WorldGen.crimson = true;
                 worldEvil = WorldEvil.Crimson;
             } else if (WorldGen.WorldGenParam_Evil == -1) {
                 Mod.Logger.Info("RANDOM WORLD EVIL");
                 if (WorldGen.genRand.NextBool(Enum.GetValues<WorldEvil>().Length - 2, Enum.GetValues<WorldEvil>().Length)) {
-                    WorldGen.crimson = false;
                     worldEvil = PickRandomEvil();
-                } else if (WorldGen.crimson) {
+                } else if (WorldGen.genRand.NextBool(2)) {
                     worldEvil = WorldEvil.Crimson;
                 } else {
                     worldEvil = WorldEvil.Corruption;
@@ -44,9 +47,10 @@ namespace TheGreatSidegrade.Common {
                 Mod.Logger.Info("WORLDE EVL: " + Enum.GetName(worldEvil));
             }
             if (WorldGen.WorldGenParam_Evil > 2) { // 2 is taken by Exxo Avalon Origins for the Contagion
-                WorldGen.crimson = false;
                 worldEvil = (WorldEvil) WorldGen.WorldGenParam_Evil + 1;
             }
+            Mod.Logger.Info(TheGreatSidegrade.IsContagion);
+            WorldGen.crimson = worldEvil == WorldEvil.Crimson;
         }
 
         public static WorldEvil PickRandomEvil() {
@@ -55,20 +59,18 @@ namespace TheGreatSidegrade.Common {
 
         public override void ModifyWorldGenTasks(List<GenPass> list, ref double totalWeight) {
             int index = list.FindIndex(genpass => genpass.Name.Equals("Corruption"));
-            if (!IsVanillaEvil()) {
+            if (!IsVanillaEvil() && index > -1) {
                 list.RemoveAt(index);
                 list.Insert(index, new PassLegacy(/*$"{nameof(TheGreatSidegrade)}: {Enum.GetName(worldEvil)}"*/ "Corruption", GetWorldGenPass()));
             }
         }
 
         public override void ModifyHardmodeTasks(List<GenPass> list) {
-            int index = list.FindIndex(genpass => genpass.Name.Equals("Hardmode Good"));
-            int index2 = list.FindIndex(genpass => genpass.Name.Equals("Hardmode Evil"));
-            if (!IsVanillaEvil()) {
-                list.RemoveAt(index2);
-                list.Insert(index2, new PassLegacy(/*$"{nameof(TheGreatSidegrade)}: Hardmode {Enum.GetName(worldEvil)}"*/ "Hardmode Evil", GetHardModeWorldGenPass()));
-                //list.RemoveAt(index);
-                //list.RemoveAt(index2);
+            //int index2 = list.FindIndex(genpass => genpass.Name.Equals("Hardmode Good"));
+            int index = list.FindIndex(genpass => genpass.Name.Equals("Hardmode Evil"));
+            if (!IsVanillaEvil() && index > -1) {
+                list.RemoveAt(index);
+                list.Insert(index, new PassLegacy(/*$"{nameof(TheGreatSidegrade)}: Hardmode {Enum.GetName(worldEvil)}"*/ "Hardmode Evil", GetHardModeWorldGenPass()));
             }
         }
 
@@ -95,36 +97,11 @@ namespace TheGreatSidegrade.Common {
         }
 
         public override void NetSend(BinaryWriter bw) {
-            BitsByte evilType = new();
-            evilType[0] = true;
-            switch (worldEvil) {
-                case WorldEvil.Fractured:
-                    evilType[0] = true;
-                    break;
-                case WorldEvil.Nothing:
-                    evilType[1] = true;
-                    break;
-                case WorldEvil.Rotten:
-                    evilType[2] = true;
-                    break;
-                case WorldEvil.Spiral:
-                    evilType[3] = true;
-                    break;
-                case WorldEvil.Starved:
-                    evilType[4] = true;
-                    break;
-            }
-            bw.Write(evilType);
+            bw.Write((byte) worldEvil);
         }
 
         public override void NetReceive(BinaryReader br) {
-            BitsByte evilType = br.ReadByte();
-            Mod.Logger.Info("GOT DATA");
-            switch (evilType) {
-                case 1:
-                    Mod.Logger.Info("CAN READ EVILTYPE");
-                    break;
-            }
+            worldEvil = (WorldEvil) br.ReadByte();
         }
 
         public override void SaveWorldData(TagCompound tag) {
@@ -136,9 +113,8 @@ namespace TheGreatSidegrade.Common {
                 worldEvil = (WorldEvil) tag.GetByte("WorldEvil");
         }
 
-        // check for contagion?
-        public static bool IsVanillaEvil() => IsVanillaEvil(worldEvil, TheGreatSidegrade.ExxoAvalonOrigins == null);
+        public static bool IsVanillaEvil() => IsVanillaEvil(worldEvil);
 
-        public static bool IsVanillaEvil(WorldEvil evil, bool contagion) => !contagion && (evil == WorldEvil.Corruption || worldEvil == WorldEvil.Crimson);
+        public static bool IsVanillaEvil(WorldEvil evil) => evil == WorldEvil.Corruption || worldEvil == WorldEvil.Crimson;
     }
 }

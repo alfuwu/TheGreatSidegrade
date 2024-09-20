@@ -107,7 +107,7 @@ namespace TheGreatSidegrade.Common.Hooks {
                 }
             }
 
-            if (worldEvil != null && !GreatlySidegradedWorld.IsVanillaEvil(worldEvil.Value, false)) {
+            if (worldEvil != null && !GreatlySidegradedWorld.IsVanillaEvil(worldEvil.Value)) {
                 string iconPath = "Assets/Textures/UI/Icon";
                 iconPath += data.IsHardMode ? "Hallow" : "";
                 iconPath += Enum.GetName(worldEvil.Value);

@@ -3,9 +3,10 @@ using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Terraria;
 using Terraria.ModLoader;
-using TheGreatSidegrade.Content.Evils.Starved.Dusts;
+using TheGreatSidegrade.Content.Dusts.Starved;
 
-namespace TheGreatSidegrade.Content.WorldGeneration.Biomes {
+namespace TheGreatSidegrade.Content.WorldGeneration.Biomes
+{
     public class StarvedWaterStyle : ModWaterStyle {
         private Asset<Texture2D> rainTexture;
 
