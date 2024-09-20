@@ -132,3 +132,10 @@ Tiles: {
 	AltarOfTheStarvingOne.MapEntry: Altar of the Starving One
 	TwistedShrine.MapEntry: Twisted Shrine
 }
+
+Buffs: {
+	SpiralingDebuff: {
+		DisplayName: Spiraling Debuff
+		Description: Mods.TheGreatSidegrade.Buffs.SpiralingDebuff.Description
+	}
+}

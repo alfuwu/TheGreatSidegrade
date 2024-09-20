@@ -1,6 +1,6 @@
 ﻿using Terraria.ModLoader;
 
-namespace TheGreatSidegrade.Content.Prefixes {
-    public class GargantuanPrefix : ModPrefix {
-    }
+namespace TheGreatSidegrade.Content.Prefixes;
+
+public class GargantuanPrefix : ModPrefix {
 }
