@@ -22,6 +22,8 @@ new bosses:
  - oblivion (boss of the nothing, large white orb)
  - storm of eternity (fragmented boss, spawns in the fractured)
  - the starved ()
+ - lich
+ - tuba archmage
  - chorus of catastrophe (hardmode trio of elemental sirens)
  - primeval behemoth (mountain, earthy themed boss)
 
@@ -65,3 +67,5 @@ new event monsters:
   - spectral children
  meteor shower:
   - meteor elemental
+
+biome worlds compat

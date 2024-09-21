@@ -68,15 +68,15 @@ public class WorldUI {
             c.Emit(OpCodes.Brtrue_S, vanilla);
             c.Emit(OpCodes.Ldsfld, typeof(GreatlySidegradedWorld).GetField(nameof(GreatlySidegradedWorld.worldEvil)));
             c.Emit(OpCodes.Box, typeof(GreatlySidegradedWorld.WorldEvil));
-            c.Emit(OpCodes.Call, typeof(Object).GetMethod(nameof(GetType)));
+            c.Emit(OpCodes.Call, typeof(object).GetMethod(nameof(GetType)));
             c.Emit(OpCodes.Ldsfld, typeof(GreatlySidegradedWorld).GetField(nameof(GreatlySidegradedWorld.worldEvil)));
             c.Emit(OpCodes.Box, typeof(GreatlySidegradedWorld.WorldEvil));
             c.Emit(OpCodes.Call, typeof(Enum).GetMethod(nameof(Enum.GetName), [typeof(Type), typeof(object)]));
             c.Emit(OpCodes.Br_S, end);
             c.MarkLabel(vanilla);
-            MonoModHooks.DumpIL(TheGreatSidegrade.Mod, il);
+            //MonoModHooks.DumpIL(TheGreatSidegrade.Mod, il);
         } catch (Exception e) {
-            MonoModHooks.DumpIL(TheGreatSidegrade.Mod, il);
+            //MonoModHooks.DumpIL(TheGreatSidegrade.Mod, il);
 
             throw new ILPatchFailureException(TheGreatSidegrade.Mod, il, e);
         }

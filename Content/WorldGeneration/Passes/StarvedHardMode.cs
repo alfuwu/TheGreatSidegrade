@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 using Terraria;
+using Terraria.ID;
 using Terraria.IO;
 using Terraria.ModLoader;
 using Terraria.Utilities;
@@ -14,7 +15,7 @@ namespace TheGreatSidegrade.Content.WorldGeneration.Passes;
 public class StarvedHardMode {
     public static void Method(GenerationProgress progress, GameConfiguration configuration) {
         WorldGen.IsGeneratingHardMode = true;
-        Main.rand ??= new UnifiedRandom((int)DateTime.Now.Ticks);
+        Main.rand ??= new UnifiedRandom((int) DateTime.Now.Ticks);
         float num1 = Main.rand.Next(300, 400) * (1f / 1000f);
         float num2 = Main.rand.Next(200, 300) * (1f / 1000f);
         int i1 = (int)(Main.maxTilesX * num1);
@@ -77,55 +78,58 @@ public class StarvedHardMode {
                     if (!((double)(Math.Abs(k - vector.X) + Math.Abs(l - vector.Y)) < num * 0.5 * (1.0 + Main.rand.Next(-10, 11) * 0.015)))
                         continue;
                     if (good) {
-                        if (Main.tile[k, l].WallType == (ushort)ModContent.WallType<StarvingStoneWall>())
+                        if (Main.tile[k, l].WallType == (ushort) ModContent.WallType<StarvingStoneWall>())
                             Main.tile[k, l].WallType = 28;
                         if (Main.tile[k, l].WallType == 63 || Main.tile[k, l].WallType == 65 || Main.tile[k, l].WallType == 66 || Main.tile[k, l].WallType == 68 || Main.tile[k, l].WallType == 69 || Main.tile[k, l].WallType == 81)
                             Main.tile[k, l].WallType = 70;
-                        else if (Main.tile[k, l].WallType == 216 || Main.tile[k, l].WallType == (ushort)ModContent.WallType<StarvedNaturalWall1>())
+                        else if (Main.tile[k, l].WallType == 216 || Main.tile[k, l].WallType == (ushort) ModContent.WallType<StarvedNaturalWall1>())
                             Main.tile[k, l].WallType = 219;
-                        else if (Main.tile[k, l].WallType == 187 || Main.tile[k, l].WallType == (ushort)ModContent.WallType<StarvedNaturalWall2>())
+                        else if (Main.tile[k, l].WallType == 187 || Main.tile[k, l].WallType == (ushort) ModContent.WallType<StarvedNaturalWall2>())
                             Main.tile[k, l].WallType = 222;
                         if (Main.tile[k, l].WallType == 3 || Main.tile[k, l].WallType == 83)
                             Main.tile[k, l].WallType = 28;
-                        if (Main.tile[k, l].TileType == 2 || Main.tile[k, l].TileType == (ushort)ModContent.TileType<StarvedGrass>()) {
+                        if (Main.tile[k, l].TileType == 2 || Main.tile[k, l].TileType == (ushort) ModContent.TileType<StarvedGrass>()) {
                             Main.tile[k, l].TileType = 109;
                             Utils.SquareTileFrame(k, l);
-                        } else if (Main.tile[k, l].TileType == 1 || Main.tile[k, l].TileType == (ushort)ModContent.TileType<StarvingStone>()) {
+                        } else if (Main.tile[k, l].TileType == 1 || Main.tile[k, l].TileType == (ushort) ModContent.TileType<StarvingStone>()) {
                             Main.tile[k, l].TileType = 117;
                             Utils.SquareTileFrame(k, l);
-                        } else if (Main.tile[k, l].TileType == 53 || Main.tile[k, l].TileType == 123 || Main.tile[k, l].TileType == (ushort)ModContent.TileType<StarvedSand>()) {
+                        } else if (Main.tile[k, l].TileType == 53 || Main.tile[k, l].TileType == 123 || Main.tile[k, l].TileType == (ushort) ModContent.TileType<StarvedSand>()) {
                             Main.tile[k, l].TileType = 116;
                             Utils.SquareTileFrame(k, l);
-                        } else if (Main.tile[k, l].TileType == 23 || Main.tile[k, l].TileType == 199 || Main.tile[k, l].TileType == (ushort)ModContent.TileType<StarvedGrass>()) {
+                        } else if (Main.tile[k, l].TileType == 23 || Main.tile[k, l].TileType == 199 || Main.tile[k, l].TileType == (ushort) ModContent.TileType<StarvedGrass>()) {
                             Main.tile[k, l].TileType = 109;
                             Utils.SquareTileFrame(k, l);
-                        } else if (Main.tile[k, l].TileType == 25 || Main.tile[k, l].TileType == 203 || Main.tile[k, l].TileType == (ushort)ModContent.TileType<StarvingStone>()) {
+                        } else if (Main.tile[k, l].TileType == 25 || Main.tile[k, l].TileType == 203 || Main.tile[k, l].TileType == (ushort) ModContent.TileType<StarvingStone>()) {
                             Main.tile[k, l].TileType = 117;
                             Utils.SquareTileFrame(k, l);
-                        } else if (Main.tile[k, l].TileType == 112 || Main.tile[k, l].TileType == 234 || Main.tile[k, l].TileType == (ushort)ModContent.TileType<StarvedSand>()) {
+                        } else if (Main.tile[k, l].TileType == 112 || Main.tile[k, l].TileType == 234 || Main.tile[k, l].TileType == (ushort) ModContent.TileType<StarvedSand>()) {
                             Main.tile[k, l].TileType = 116;
                             Utils.SquareTileFrame(k, l);
                         } else if (Main.tile[k, l].TileType == 161 || Main.tile[k, l].TileType == 163 || Main.tile[k, l].TileType == 200 || Main.tile[k, l].TileType == (ushort)ModContent.TileType<StarvedIce>()) {
                             Main.tile[k, l].TileType = 164;
                             Utils.SquareTileFrame(k, l);
-                        } else if (Main.tile[k, l].TileType == 396 || Main.tile[k, l].TileType == (ushort)ModContent.TileType<StarvedSandstone>()) {
+                        } else if (Main.tile[k, l].TileType == 396 || Main.tile[k, l].TileType == (ushort) ModContent.TileType<StarvedSandstone>()) {
                             Main.tile[k, l].TileType = 403;
                             Utils.SquareTileFrame(k, l);
-                        } else if (Main.tile[k, l].TileType == 397 || Main.tile[k, l].TileType == (ushort)ModContent.TileType<HardenedStarvedSand>()) {
+                        } else if (Main.tile[k, l].TileType == 397 || Main.tile[k, l].TileType == (ushort) ModContent.TileType<HardenedStarvedSand>()) {
                             Main.tile[k, l].TileType = 402;
+                            Utils.SquareTileFrame(k, l);
+                        } else if (Main.tile[k, l].TileType == 661 || Main.tile[k, l].TileType == 662) {
+                            Main.tile[k, l].TileType = 60;
                             Utils.SquareTileFrame(k, l);
                         }
                     } else if (GreatlySidegradedWorld.worldEvil != GreatlySidegradedWorld.WorldEvil.Corruption && GreatlySidegradedWorld.worldEvil != GreatlySidegradedWorld.WorldEvil.Crimson) {
                         if (Main.tile[k, l].WallType == 28)
-                            Main.tile[k, l].WallType = (ushort)ModContent.WallType<StarvingStoneWall>();
+                            Main.tile[k, l].WallType = (ushort) ModContent.WallType<StarvingStoneWall>();
                         if (Main.tile[k, l].WallType == 63 || Main.tile[k, l].WallType == 65 || Main.tile[k, l].WallType == 66 || Main.tile[k, l].WallType == 68)
-                            Main.tile[k, l].WallType = (ushort)ModContent.WallType<StarvedGrassWall>();
+                            Main.tile[k, l].WallType = (ushort) ModContent.WallType<StarvedGrassWall>();
                         else if (Main.tile[k, l].WallType == 216)
-                            Main.tile[k, l].WallType = (ushort)ModContent.WallType<StarvedNaturalWall1>();
+                            Main.tile[k, l].WallType = (ushort) ModContent.WallType<StarvedNaturalWall1>();
                         else if (Main.tile[k, l].WallType == 187)
-                            Main.tile[k, l].WallType = (ushort)ModContent.WallType<StarvedNaturalWall2>();
+                            Main.tile[k, l].WallType = (ushort) ModContent.WallType<StarvedNaturalWall2>();
                         if (Main.tile[k, l].TileType == 2) {
-                            Main.tile[k, l].TileType = (ushort)ModContent.TileType<StarvedGrass>();
+                            Main.tile[k, l].TileType = (ushort) ModContent.TileType<StarvedGrass>();
                             Utils.SquareTileFrame(k, l);
                         } else if (Main.tile[k, l].TileType == 1) {
                             Main.tile[k, l].TileType = (ushort)ModContent.TileType<StarvingStone>();

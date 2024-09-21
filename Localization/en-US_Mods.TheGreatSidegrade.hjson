@@ -114,8 +114,10 @@ SpawnInfo: {
 
 		Or break and eat 3 Starving Eggs.
 		'''
-	ChorusOfCatastrophe: Use a [i:CatcallerWhistle] at night in hardmode.
-	PrimevalBehemoth: Use a [i:SuspiciousLookingRock] in the Forest or Snow biome.
+	ChorusOfCatastrophe: Use a [i:TheGreatSidegraded/CatcallerWhistle] at night in hardmode.
+	Lich: Use a [i:TheGreatSidegrade/Phylactery] anywhere in the world.
+	PrimevalBehemoth: Use a [i:TheGreatSidegrade/SuspiciousLookingRock] in the Forest or Snow biome.
+	TubaArchmage: Use a [i:TheGreatSidegrade/MobiusTube] during the day.
 }
 
 World: {
@@ -137,5 +139,12 @@ Buffs: {
 	SpiralingDebuff: {
 		DisplayName: Spiraling Debuff
 		Description: Mods.TheGreatSidegrade.Buffs.SpiralingDebuff.Description
+	}
+}
+
+Events: {
+	MeteorShower: {
+		Start: A meteor shower is happening!
+		End: The meteor shower has ended... for now :)
 	}
 }
