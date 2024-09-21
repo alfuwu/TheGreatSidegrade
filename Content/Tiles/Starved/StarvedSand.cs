@@ -2,6 +2,8 @@
 using Terraria;
 using Microsoft.Xna.Framework;
 using TheGreatSidegrade.Common;
+using Terraria.ID;
+using Terraria.ObjectData;
 
 namespace TheGreatSidegrade.Content.Tiles.Starved;
 
@@ -15,6 +17,9 @@ public class StarvedSand : ModTile {
         Main.tileSolid[Type] = true;
         Main.tileMergeDirt[Type] = true;
         Main.tileBlockLight[Type] = true;
+        TileID.Sets.Conversion.Sand[Type] = true;
+
+        TileObjectData.newTile.CopyFrom(TileObjectData.GetTileData(TileID.Ebonsand, 0));
 
         AddMapEntry(new Color(221, 131, 59));
     }

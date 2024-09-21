@@ -1,3 +1,4 @@
+using Microsoft.Xna.Framework;
 using Terraria.ModLoader;
 using TheGreatSidegrade.Common.Hooks;
 
@@ -14,7 +15,7 @@ public class TheGreatSidegrade : Mod {
     public static bool HasAvalon { get =>  Avalon != null; }
 
     public static bool IsContagion {
-        get => HasAvalon && Avalon.TryFind("AvalonWorld", out ModSystem world) && (int)world.GetType().GetField("WorldEvil").GetValue(world) == 2;
+        get => HasAvalon && Avalon.TryFind("AvalonWorld", out ModSystem world) && (ushort) world.GetType().GetField("WorldEvil").GetValue(world) == 2;
         set {
             if (HasAvalon && Avalon.TryFind("AvalonWorld", out ModSystem world))
                 world.GetType().GetField("WorldEvil").SetValue(world, value ? 2 : 0);
@@ -23,10 +24,10 @@ public class TheGreatSidegrade : Mod {
 
     public override void Load() {
         Mod = this;
-        ModLoader.TryGetMod("Avalon", out Mod tmp);
-        Avalon = tmp;
-        ModLoader.TryGetMod("Confection", out Mod tmp2);
-        Confection = tmp2;
+        if (ModLoader.TryGetMod("Avalon", out Mod tmp))
+            Avalon = tmp;
+        if (ModLoader.TryGetMod("Confection", out Mod tmp2))
+            Confection = tmp2;
 
         Hooks.RegisterHooks();
     }

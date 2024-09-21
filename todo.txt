@@ -26,6 +26,8 @@ new bosses:
  - tuba archmage
  - chorus of catastrophe (hardmode trio of elemental sirens)
  - primeval behemoth (mountain, earthy themed boss)
+ - chess boss (meme boss, fights chess boss if summoned at the same time)
+ - checkers boss (also meme boss, fights chess boss if summoned at the same time)
 
 new monsters:
  - twisted horror (land-based creature that spawns in the spiral)

@@ -20,7 +20,7 @@ public class MeteorShowerEvent : ModEvent {
     public override void EventPostUpdate() {
         lastMeteor++;
         if (Math.Pow(Main.rand.NextFloat(), 3) < 1 - bigNumber / Math.Pow(lastMeteor, 2)) {
-            //WorldGen.spawnMeteor = false;
+            // not sure why i need to set this boolean but okay
             WorldGen.spawnMeteor = true;
             WorldGen.dropMeteor();
             WorldGen.spawnMeteor = false;

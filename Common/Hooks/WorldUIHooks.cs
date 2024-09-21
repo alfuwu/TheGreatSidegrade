@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Mono.Cecil.Cil;
 using MonoMod.Cil;
 using ReLogic.Content;
@@ -15,10 +16,24 @@ using TheGreatSidegrade.Assets;
 
 namespace TheGreatSidegrade.Common.Hooks;
 
-public class WorldUI {
+public class WorldUIHooks {
     public static void DrawSelf(ILContext il) {
         try {
             ILCursor c = new(il);
+            // color swapping
+            //c.GotoNext(i => i.MatchInitobj(out _)); // goto init color
+            c.GotoNext(i => i.MatchCall(typeof(Color).GetMethod("set_PackedValue")));
+            ILLabel colorEnd = c.DefineLabel();
+            c.MarkLabel(colorEnd);
+            c.GotoPrev(MoveType.After, i => i.MatchLdloca(out _)); // go back to init color
+            ILLabel vanillaColor = c.DefineLabel();
+            c.Emit(OpCodes.Call, typeof(GreatlySidegradedWorld).GetMethod(nameof(GreatlySidegradedWorld.IsVanillaEvil), []));
+            c.Emit(OpCodes.Brtrue_S, vanillaColor);
+            c.Emit(OpCodes.Call, typeof(WorldUIHooks).GetMethod(nameof(GetGenProgressBarColor))); // get uint
+            c.Emit(OpCodes.Br_S, colorEnd);
+            c.MarkLabel(vanillaColor);
+
+            // texture swapping
             c.GotoNext(i => i.MatchRet()); // goto return
             c.GotoPrev(i => i.MatchLdarg0()); // goto load UIGenProgress._texOuterLower
             c.GotoPrev(i => i.MatchLdloc(out _)); // goto end
@@ -30,8 +45,7 @@ public class WorldUI {
             ILLabel vanilla = c.DefineLabel(); // why
             c.Emit(OpCodes.Call, typeof(GreatlySidegradedWorld).GetMethod(nameof(GreatlySidegradedWorld.IsVanillaEvil), []));
             c.Emit(OpCodes.Brtrue_S, vanilla); // skip to vanilla textures if world is using a vanilla evil
-                                               //c.Emit(OpCodes.Ldnull); // load null argument for GetGenProgressBarTexture
-            c.Emit(OpCodes.Call, typeof(WorldUI).GetMethod(nameof(GetGenProgressBarTexture))); // get Texture2D
+            c.Emit(OpCodes.Call, typeof(WorldUIHooks).GetMethod(nameof(GetGenProgressBarTexture))); // get Texture2D
             c.Emit(OpCodes.Br_S, end); // skip to end
             c.MarkLabel(vanilla);
             //MonoModHooks.DumpIL(TheGreatSidegrade.Mod, il);
@@ -42,6 +56,16 @@ public class WorldUI {
         }
     }
 
+    public static uint GetGenProgressBarColor() {
+        return GreatlySidegradedWorld.worldEvil switch {
+            GreatlySidegradedWorld.WorldEvil.Fractured => 0x0u,
+            GreatlySidegradedWorld.WorldEvil.Nothing => 0xFFFFFFu,
+            GreatlySidegradedWorld.WorldEvil.Rotten => 0xFF7FF0u,
+            GreatlySidegradedWorld.WorldEvil.Spiral => 0x4965FFu,
+            GreatlySidegradedWorld.WorldEvil.Starved => 0xFFBD8Cu,
+            _ => 0u
+        };
+    }
 
     public static Texture2D GetGenProgressBarTexture() {
         return GreatlySidegradedWorld.worldEvil switch {
@@ -76,9 +100,9 @@ public class WorldUI {
             c.MarkLabel(vanilla);
             //MonoModHooks.DumpIL(TheGreatSidegrade.Mod, il);
         } catch (Exception e) {
-            //MonoModHooks.DumpIL(TheGreatSidegrade.Mod, il);
+            MonoModHooks.DumpIL(TheGreatSidegrade.Mod, il);
 
-            throw new ILPatchFailureException(TheGreatSidegrade.Mod, il, e);
+            //throw new ILPatchFailureException(TheGreatSidegrade.Mod, il, e);
         }
     }
 

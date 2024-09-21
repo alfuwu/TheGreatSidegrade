@@ -2,6 +2,7 @@
 using Terraria;
 using Microsoft.Xna.Framework;
 using TheGreatSidegrade.Common;
+using Terraria.ID;
 
 namespace TheGreatSidegrade.Content.Tiles.Starved;
 
@@ -15,6 +16,7 @@ public class StarvedSandstone : ModTile {
         Main.tileSolid[Type] = true;
         Main.tileMergeDirt[Type] = true;
         Main.tileBlockLight[Type] = true;
+        TileID.Sets.Conversion.Sandstone[Type] = true;
 
         AddMapEntry(new Color(221, 131, 59));
     }
