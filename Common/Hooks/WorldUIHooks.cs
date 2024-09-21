@@ -34,7 +34,7 @@ public class WorldUIHooks {
             c.MarkLabel(vanillaColor);
 
             // texture swapping
-            c.GotoNext(i => i.MatchRet()); // goto return
+            c.Index = c.Instrs.Count - 1; // goto return
             c.GotoPrev(i => i.MatchLdarg0()); // goto load UIGenProgress._texOuterLower
             c.GotoPrev(i => i.MatchLdloc(out _)); // goto end
             ILLabel end = c.DefineLabel(); // create a label to skip to when done with textures
@@ -99,7 +99,7 @@ public class WorldUIHooks {
             c.Emit(OpCodes.Br_S, end);
             c.MarkLabel(vanilla);
             //MonoModHooks.DumpIL(TheGreatSidegrade.Mod, il);
-        } catch (Exception e) {
+        } catch {
             MonoModHooks.DumpIL(TheGreatSidegrade.Mod, il);
 
             //throw new ILPatchFailureException(TheGreatSidegrade.Mod, il, e);

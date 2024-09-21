@@ -11,7 +11,7 @@ namespace TheGreatSidegrade.Common.Hooks;
 
 public class WorldGenHooks {
     public static void TileRunner(On_WorldGen.orig_TileRunner orig, int i, int j, double strength, int steps, int type, bool addTile, double speedX, double speedY, bool noYChange, bool overRide, int ignoreTileType) {
-        if ((type == TileID.Demonite || type == TileID.Crimtane /* apparently avalon doesn't add a evil ore for the contagion??? || (TheGreatSidegrade.HasAvalon && TheGreatSidegrade.Avalon.TryFind("", out ModTile tile) && type == tile.Type)*/) && !GreatlySidegradedWorld.IsVanillaEvil())
+        if ((type == TileID.Demonite || type == TileID.Crimtane /* nvm it does im just stupid */ || (TheGreatSidegrade.HasAvalon && TheGreatSidegrade.Avalon.TryFind("BacciliteOre", out ModTile tile) && type == tile.Type)) && !GreatlySidegradedWorld.IsVanillaEvil())
             type = GreatlySidegradedWorld.worldEvil switch {
                 GreatlySidegradedWorld.WorldEvil.Fractured => ModContent.TileType<Fractite>(),
                 GreatlySidegradedWorld.WorldEvil.Nothing => ModContent.TileType<Oblivium>(),

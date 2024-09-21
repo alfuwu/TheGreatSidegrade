@@ -26,7 +26,7 @@ public class TheGreatSidegrade : Mod {
         Mod = this;
         if (ModLoader.TryGetMod("Avalon", out Mod tmp))
             Avalon = tmp;
-        if (ModLoader.TryGetMod("Confection", out Mod tmp2))
+        if (ModLoader.TryGetMod("TheConfectionRebirth", out Mod tmp2))
             Confection = tmp2;
 
         Hooks.RegisterHooks();

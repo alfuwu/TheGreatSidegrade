@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.34916.146
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TheGreatSidegrade", "TheGreatSidegrade.csproj", "{A4C1B10A-C5C6-4969-AB22-F1A76B5B09DE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ATheGreatSidegrade", "ATheGreatSidegrade.csproj", "{3BF8AEBC-1DCD-4026-93D9-9CA22E4A4C6A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{A4C1B10A-C5C6-4969-AB22-F1A76B5B09DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A4C1B10A-C5C6-4969-AB22-F1A76B5B09DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A4C1B10A-C5C6-4969-AB22-F1A76B5B09DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A4C1B10A-C5C6-4969-AB22-F1A76B5B09DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3BF8AEBC-1DCD-4026-93D9-9CA22E4A4C6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3BF8AEBC-1DCD-4026-93D9-9CA22E4A4C6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3BF8AEBC-1DCD-4026-93D9-9CA22E4A4C6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3BF8AEBC-1DCD-4026-93D9-9CA22E4A4C6A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {820F775D-8210-4EB9-A069-69CC186808CF}
+		SolutionGuid = {BFF69E67-4AD2-4D8B-9D5F-C99CED2B2C5F}
 	EndGlobalSection
 EndGlobal

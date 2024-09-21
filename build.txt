@@ -1,4 +1,5 @@
 displayName = The Great Sidegrade
 author = alfuwu
 version = 1.0.0
-weakReferences=Avalon,BiomeWorlds,Confection
+weakReferences=Avalon,BiomeWorlds,TheConfectionRebirth
+sortBefore=Avalon

@@ -1,5 +1,6 @@
 ﻿using Terraria;
 using Terraria.GameContent.UI.Elements;
+using TheGreatSidegrade.Common.Hooks.Compatibility;
 
 namespace TheGreatSidegrade.Common.Hooks;
 
@@ -13,6 +14,10 @@ public class Hooks {
         On_Main.UpdateTime_StartDay += MainHooks.OnBecomeDay;
         On_WorldGen.TileRunner += WorldGenHooks.TileRunner;
         //On_AWorldListItem.GetIcon += WorldUI.OnGetIcon;
+
+        // mod hooks
+        if (TheGreatSidegrade.HasAvalon)
+            ContagionSelectionMenuHook.Apply();
     }
 
     public static void UnregisterHooks() {
@@ -22,5 +27,8 @@ public class Hooks {
         On_Main.UpdateTime_StartDay -= MainHooks.OnBecomeDay;
         On_WorldGen.TileRunner -= WorldGenHooks.TileRunner;
         //On_AWorldListItem.GetIcon -= WorldUI.OnGetIcon;
+
+        if (TheGreatSidegrade.HasAvalon)
+            ContagionSelectionMenuHook.Unapply();
     }
 }

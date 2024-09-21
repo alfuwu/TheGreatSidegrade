@@ -26,7 +26,7 @@ new bosses:
  - tuba archmage
  - chorus of catastrophe (hardmode trio of elemental sirens)
  - primeval behemoth (mountain, earthy themed boss)
- - chess boss (meme boss, fights chess boss if summoned at the same time)
+ - chess boss (meme boss, fights checkers boss if summoned at the same time)
  - checkers boss (also meme boss, fights chess boss if summoned at the same time)
 
 new monsters:
@@ -40,6 +40,8 @@ new weapons:
  - something that brings down a lazer from the heavens dealing holy damage
  - rotshaper staff (crafted with titan of rot drops)
  - echo blade (leaves an echo behind upon swing, which will swing again after a second)
+ - chess kit (drops from chess boss, allows challenging other players to a chess duel. if pvp is enabled for both parties and theyre on different teams, the loser dies)
+ - checkers kit (same as chess kit but for checkers instead)
 
 new damage types:
  - holy damage
