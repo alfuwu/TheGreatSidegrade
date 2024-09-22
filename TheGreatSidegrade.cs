@@ -13,6 +13,7 @@ public class TheGreatSidegrade : Mod {
     public const string AssetPath = $"{nameof(TheGreatSidegrade)}/Assets/";
 
     public static bool HasAvalon { get =>  Avalon != null; }
+    public static bool HasConfection { get => Confection != null; }
 
     public static bool IsContagion {
         get => HasAvalon && Avalon.TryFind("AvalonWorld", out ModSystem world) && (ushort) world.GetType().GetField("WorldEvil").GetValue(world) == 2;

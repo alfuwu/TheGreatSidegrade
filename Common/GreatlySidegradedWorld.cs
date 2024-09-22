@@ -26,6 +26,10 @@ public class GreatlySidegradedWorld : ModSystem {
 
     public static List<Type> ActiveEvents = [];
 
+    public static int totalFract = 0, totalVoid = 0, totalRot = 0, totalTwisted = 0, totalStarved = 0;
+    public static int totalFract2 = 0, totalVoid2 = 0, totalRot2 = 0, totalTwisted2 = 0, totalStarved2 = 0;
+    public static byte tFract = 0, tVoid = 0, tRot = 0, tTwisted = 0, tStarved = 0;
+
     public enum WorldEvil {
         Corruption,
         Crimson,
@@ -139,6 +143,22 @@ public class GreatlySidegradedWorld : ModSystem {
             if (ActiveEvents.Contains(e.GetType()))
                 e.Reset();
         ActiveEvents.Clear();
+
+        totalFract = 0;
+        totalVoid = 0;
+        totalRot = 0;
+        totalTwisted = 0;
+        totalStarved = 0;
+        totalFract2 = 0;
+        totalVoid2 = 0;
+        totalRot2 = 0;
+        totalTwisted2 = 0;
+        totalStarved2 = 0;
+        tFract = 0;
+        tVoid = 0;
+        tRot = 0;
+        tTwisted = 0;
+        tStarved = 0;
     }
 
     public override void PreUpdateWorld() {

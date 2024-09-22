@@ -16,8 +16,12 @@ public class Hooks {
         //On_AWorldListItem.GetIcon += WorldUI.OnGetIcon;
 
         // mod hooks
-        if (TheGreatSidegrade.HasAvalon)
+        if (TheGreatSidegrade.HasAvalon) {
             ContagionSelectionMenuHook.Apply();
+            AvalonDryadTextDetourHook.Apply();
+        }
+        if (TheGreatSidegrade.HasConfection)
+            ConfectionDryadTextDetourHook.Apply();
     }
 
     public static void UnregisterHooks() {
@@ -28,7 +32,11 @@ public class Hooks {
         On_WorldGen.TileRunner -= WorldGenHooks.TileRunner;
         //On_AWorldListItem.GetIcon -= WorldUI.OnGetIcon;
 
-        if (TheGreatSidegrade.HasAvalon)
+        if (TheGreatSidegrade.HasAvalon) {
             ContagionSelectionMenuHook.Unapply();
+            AvalonDryadTextDetourHook.Unapply();
+        }
+        if (TheGreatSidegrade.HasConfection)
+            ConfectionDryadTextDetourHook.Unapply();
     }
 }

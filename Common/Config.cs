@@ -3,7 +3,7 @@ using Terraria.ModLoader.Config;
 
 namespace TheGreatSidegrade.Common;
 
-public class SidegradeServer : ModConfig {
+public class SidegradeConfig : ModConfig {
     public override ConfigScope Mode => ConfigScope.ServerSide;
 
     [Header("NewWorldEvils")]
@@ -27,6 +27,9 @@ public class SidegradeServer : ModConfig {
     [DefaultValue(true)]
     [ReloadRequired]
     public bool EnableMorePrefixes;
+
+    [DefaultValue(false)]
+    public bool DryadKnowsNothingStatus;
 }
 
 public class SidegradeClient : ModConfig {

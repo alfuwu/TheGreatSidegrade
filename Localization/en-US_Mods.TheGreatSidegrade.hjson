@@ -72,6 +72,46 @@ Configs: {
 			Tooltip: You can never have enough prefixes, as scientifically proven by our loyal scientists here at Sidegrade Inc.
 		}
 	}
+
+	SidegradeConfig: {
+		DisplayName: Sidegrade Config
+		Headers.NewWorldEvils: New World Evils Header
+
+		EnableRandomFracturedWorld: {
+			Label: Enable Random Fractured World
+			Tooltip: ""
+		}
+
+		EnableRandomNothingWorld: {
+			Label: Enable Random Nothing World
+			Tooltip: ""
+		}
+
+		EnableRandomRottenWorld: {
+			Label: Enable Random Rotten World
+			Tooltip: ""
+		}
+
+		EnableRandomSpiralWorld: {
+			Label: Enable Random Spiral World
+			Tooltip: ""
+		}
+
+		EnableRandomStarvedWorld: {
+			Label: Enable Random Starved World
+			Tooltip: ""
+		}
+
+		EnableMorePrefixes: {
+			Label: Enable More Prefixes
+			Tooltip: ""
+		}
+
+		DryadKnowsNothingStatus: {
+			Label: Dryad Knows Nothing Status
+			Tooltip: ""
+		}
+	}
 }
 
 SpawnInfo: {

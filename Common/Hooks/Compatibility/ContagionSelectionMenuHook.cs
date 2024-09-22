@@ -17,21 +17,12 @@ public class ContagionSelectionMenuHook { // this is so cursed
         MethodInfo applyInfo = typeof(ContagionSelectionMenu).GetMethod("Apply", BindingFlags.NonPublic | BindingFlags.Instance);
         
         if (applyInfo != null ) {
-            applyHook = new ILHook(applyInfo, CancelIL);
+            applyHook = new ILHook(applyInfo, Utils.CancelIL);
             applyHook.Apply();
         }
     }
 
     public static void Unapply() {
         applyHook?.Undo();
-    }
-
-    private static void CancelIL(ILContext il) {
-        try {
-            ILCursor c = new(il);
-            c.Emit(OpCodes.Ret);
-        } catch (Exception e) {
-            throw new ILPatchFailureException(TheGreatSidegrade.Mod, il, e);
-        }
     }
 }
