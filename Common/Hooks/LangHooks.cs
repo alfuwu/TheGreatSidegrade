@@ -86,9 +86,11 @@ public class LangHooks {
             unlocalizedText = "Mods.Avalon.DryadSpecialText.WorldStatusAll";
         else if (allEvil == tEvil + tBlood && tEvil > 0 && tBlood > 0 && tGood > 0 && tCandy > 0)
             unlocalizedText = "Mods.TheConfectionRebirth.DryadSpecialText.WorldStatusAll";
+        else if (allEvil == tEvil + tBlood && tEvil > 0 && tBlood > 0 && tGood > 0 && tCandy <= 0)
+            unlocalizedText = "DryadSpecialText.WorldStatusAll";
         //TheGreatSidegrade.Mod.Logger.Info(unlocalizedText);
         //TheGreatSidegrade.Mod.Logger.Info($"{Language.GetTextValue(unlocalizedText, [.. args])} " +
-            (insult ? Language.GetTextValue("Mods.TheGreatSidegrade.DryadSpecialText.WhatTheHell") : ""));
+        //    (insult ? Language.GetTextValue("Mods.TheGreatSidegrade.DryadSpecialText.WhatTheHell") : ""));
         string arg = allGood * 1.2 >= allEvil && allGood * 0.8 <= allEvil ? Language.GetTextValue("DryadSpecialText.WorldDescriptionBalanced") :
             allGood >= allEvil ? Language.GetTextValue("DryadSpecialText.WorldDescriptionFairyTale") :
             allEvil > allGood + 20 ? Language.GetTextValue("DryadSpecialText.WorldDescriptionGrim") :
