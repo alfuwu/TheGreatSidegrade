@@ -12,22 +12,22 @@ using ReLogic.Utilities;
 namespace TheGreatSidegrade.Content.WorldGeneration.Passes;
 
 public class Starved {
-    public static void Method(GenerationProgress progress, GameConfiguration configuration) {
+    public static void Method(GenerationProgress progress, GameConfiguration _) {
         progress.Message = Language.GetTextValue("Mods.TheGreatSidegrade.World.Generation.Starved.Message");
         int num778 = Main.maxTilesX;
         int num779 = 0;
         int num780 = Main.maxTilesX;
         int num781 = 0;
         for (int num782 = 0; num782 < Main.maxTilesX; num782++) {
-            for (int num783 = 0; (double)num783 < Main.worldSurface; num783++) {
+            for (int num783 = 0; num783 < Main.worldSurface; num783++) {
                 if (Main.tile[num782, num783].HasTile) {
-                    if (Main.tile[num782, num783].TileType == 60) {
+                    if (Main.tile[num782, num783].TileType == TileID.JungleGrass) {
                         if (num782 < num778)
                             num778 = num782;
 
                         if (num782 > num779)
                             num779 = num782;
-                    } else if (Main.tile[num782, num783].TileType == 147 || Main.tile[num782, num783].TileType == 161) {
+                    } else if (Main.tile[num782, num783].TileType == TileID.SnowBlock || Main.tile[num782, num783].TileType == TileID.IceBlock) {
                         if (num782 < num780)
                             num780 = num782;
 
@@ -67,12 +67,11 @@ public class Starved {
             int num816 = 0;
             int num817 = 0;
             int num818 = 0;
-
             while (!flag53) {
                 flag53 = true;
                 int num819 = Main.maxTilesX / 2;
                 int num820 = 200;
-                num816 = ((!WorldGen.drunkWorldGen) ? WorldGen.genRand.Next(num785, Main.maxTilesX - num785) : (GenVars.crimsonLeft ? WorldGen.genRand.Next((int)(Main.maxTilesX * 0.5), Main.maxTilesX - num785) : WorldGen.genRand.Next(num785, (int)(Main.maxTilesX * 0.5))));
+                num816 = !WorldGen.drunkWorldGen ? WorldGen.genRand.Next(num785, Main.maxTilesX - num785) : GenVars.crimsonLeft ? WorldGen.genRand.Next((int) (Main.maxTilesX * 0.5), Main.maxTilesX - num785) : WorldGen.genRand.Next(num785, (int) (Main.maxTilesX * 0.5));
                 num817 = num816 - WorldGen.genRand.Next(200) - 100;
                 num818 = num816 + WorldGen.genRand.Next(200) + 100;
                 if (num817 < GenVars.evilBiomeBeachAvoidance)
@@ -131,11 +130,11 @@ public class Starved {
                     num821--;
 
                 if (num822 == num816 || num821 == 0) {
-                    for (int num823 = (int) GenVars.worldSurfaceLow; num823 < Main.worldSurface - 1.0; num823++) {
+                    for (int num823 = (int) GenVars.worldSurfaceLow; num823 < Main.worldSurface - 1; num823++) {
                         if (Main.tile[num822, num823].HasTile || Main.tile[num822, num823].WallType > 0) {
                             if (num822 == num816) {
                                 num821 = 20;
-                                StarvedRunner(num822, num823, WorldGen.genRand.Next(150) + 150, true);
+                                StarvedRunner(num822, num823, WorldGen.genRand.Next(150) + 150, makeOrb: true);
                             } else if (WorldGen.genRand.NextBool(35) && num821 == 0) {
                                 num821 = 30;
                                 bool makeOrb = true;
@@ -147,7 +146,7 @@ public class Starved {
                     }
                 }
 
-                for (int num824 = (int) GenVars.worldSurfaceLow; num824 < Main.worldSurface - 1.0; num824++) {
+                for (int num824 = (int) GenVars.worldSurfaceLow; num824 < Main.worldSurface - 1; num824++) {
                     if (Main.tile[num822, num824].HasTile) {
                         int num825 = num824 + WorldGen.genRand.Next(10, 14);
                         for (int num826 = num824; num826 < num825; num826++)
@@ -174,7 +173,7 @@ public class Starved {
                         if (Main.tile[num828, num829].TileType == TileID.Sand && num828 >= num817 + WorldGen.genRand.Next(5) && num828 <= num818 - WorldGen.genRand.Next(5))
                             Main.tile[num828, num829].TileType = (ushort) ModContent.TileType<StarvedSand>();
 
-                        if (num829 < Main.worldSurface - 1.0 && !flag54) {
+                        if (num829 < Main.worldSurface - 1 && !flag54) {
                             if (Main.tile[num828, num829].TileType == TileID.Dirt) {
                                 WorldGen.grassSpread = 0;
                                 WorldGen.SpreadGrass(num828, num829, TileID.Dirt, ModContent.TileType<StarvedGrass>());
@@ -186,9 +185,9 @@ public class Starved {
 
                         flag54 = true;
                         //if (Main.tile[num828, num829].WallType == WallID.HardenedSand)
-                        //    Main.tile[num828, num829].WallType = ModContent.WallType<HardenedStarvedSandWall>();
+                        //    Main.tile[num828, num829].WallType = (ushort) ModContent.WallType<Walls.Starved.HardendStarvingSand>();
                         //else if (Main.tile[num828, num829].WallType == WallID.Sandstone)
-                        //    Main.tile[num828, num829].WallType = ModContent.WallType<StarvingSandstoneWall>();
+                        //    Main.tile[num828, num829].WallType = (ushort) ModContent.WallType<Walls.Starved.StarvedSandstone>();
 
                         if (Main.tile[num828, num829].TileType == TileID.Stone) {
                             if (num828 >= num817 + WorldGen.genRand.Next(5) && num828 <= num818 - WorldGen.genRand.Next(5))
@@ -219,14 +218,14 @@ public class Starved {
                             if (num836 > 10 && num836 < Main.maxTilesX - 10) {
                                 for (int num837 = num834; num837 < num835; num837++) {
                                     Tile tile = Main.tile[num836, num837];
-                                    if (Math.Abs(num836 - num830) + Math.Abs(num837 - num831) < 9 + WorldGen.genRand.Next(11) && !WorldGen.genRand.NextBool(3) && tile.TileType != ModContent.TileType<StarvingEgg>()) {
+                                    if (Math.Abs(num836 - num830) + Math.Abs(num837 - num831) < 9 + WorldGen.genRand.Next(11) && WorldGen.genRand.NextBool(3) && tile.TileType != ModContent.TileType<StarvingEgg>()) {
                                         tile.HasTile = true;
-                                        tile.TileType = (ushort) ModContent.TileType<StarvingStone>();
+                                        tile.TileType = 25;
                                         if (Math.Abs(num836 - num830) <= 1 && Math.Abs(num837 - num831) <= 1)
                                             tile.HasTile = false;
                                     }
 
-                                    if (tile.TileType != 31 && Math.Abs(num836 - num830) <= 2 + WorldGen.genRand.Next(3) && Math.Abs(num837 - num831) <= 2 + WorldGen.genRand.Next(3))
+                                    if (tile.TileType != ModContent.TileType<StarvingEgg>() && Math.Abs(num836 - num830) <= 2 + WorldGen.genRand.Next(3) && Math.Abs(num837 - num831) <= 2 + WorldGen.genRand.Next(3))
                                         tile.HasTile = false;
                                 }
                             }

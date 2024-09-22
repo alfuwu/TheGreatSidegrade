@@ -13,6 +13,8 @@ public class Hooks {
         On_Main.UpdateTime_StartNight += MainHooks.OnBecomeNight;
         On_Main.UpdateTime_StartDay += MainHooks.OnBecomeDay;
         On_WorldGen.TileRunner += WorldGenHooks.TileRunner;
+        On_WorldGen.AddUpAlignmentCounts += WorldGenHooks.AddUpAlignmentCounts;
+        On_WorldGen.CountTiles += WorldGenHooks.CountTiles;
         On_Lang.GetDryadWorldStatusDialog += LangHooks.OnGetDryadWorldStatusDialog;
         On_AWorldListItem.GetIcon += WorldUIHooks.OnGetIcon;
         //On_UIWorldListItem.DrawSelf += WorldUIHooks.ModifyIcon;

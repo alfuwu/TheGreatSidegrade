@@ -73,3 +73,8 @@ new event monsters:
   - meteor elemental
 
 biome worlds compat
+
+nothing ideas:
+ - change background to plain black? nah, would prevent seeing the loading bar. find some other color tho
+ - change all world gen pass texts to "Fixing world..."
+ - add config value that removes the nothing from the evil selection menu, enabled by default, making the nothing only available thru RNG

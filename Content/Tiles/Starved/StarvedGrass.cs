@@ -24,6 +24,7 @@ public class StarvedGrass : ModTile {
         TileID.Sets.NeedsGrassFraming[Type] = true;
         TileID.Sets.NeedsGrassFramingDirt[Type] = TileID.Dirt;
         TileID.Sets.Grass[Type] = true;
+        GreatlySidegradedIDs.Sets.StarvedTileCollection.Add(Type);
 
         RegisterItemDrop(ItemID.DirtBlock);
 

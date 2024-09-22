@@ -12,6 +12,7 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.WorldBuilding;
 using TheGreatSidegrade.Common.Abstract;
+using TheGreatSidegrade.Common.Hooks.Compatibility;
 using TheGreatSidegrade.Content.WorldGeneration.Passes;
 
 namespace TheGreatSidegrade.Common;
@@ -63,9 +64,10 @@ public class GreatlySidegradedWorld : ModSystem {
         }
         if (WorldGen.WorldGenParam_Evil > 2)
             worldEvil = (WorldEvil) WorldGen.WorldGenParam_Evil;
-        WorldGen.crimson = worldEvil == WorldEvil.Crimson;
-        if (TheGreatSidegrade.IsContagion && worldEvil != WorldEvil.Contagion)
-            TheGreatSidegrade.IsContagion = false;
+        // scuffed, but works
+        WorldGen.WorldGenParam_Evil = worldEvil == WorldEvil.Crimson ? 1 : 0;
+        if (TheGreatSidegrade.HasAvalon)
+            ContagionSelectionMenuHook.SetContagion(worldEvil == WorldEvil.Contagion);
     }
 
     public static WorldEvil PickRandomEvil() {
@@ -76,8 +78,12 @@ public class GreatlySidegradedWorld : ModSystem {
     public override void ModifyWorldGenTasks(List<GenPass> list, ref double totalWeight) {
         int index = list.FindIndex(genpass => genpass.Name.Equals("Corruption") || (genpass.Name.Equals("Contagion") && worldEvil != WorldEvil.Contagion));
         int index2 = list.FindIndex(genpass => genpass.Name.Equals("Evil Altars") || (genpass.Name.Equals("Icky Altars") && worldEvil != WorldEvil.Contagion));
-        if (!IsVanillaEvil() && index > -1)
-            list[index] = new PassLegacy("Corruption", GetWorldGenPass());
+        if (!IsVanillaEvil() && index > -1) {
+            if (WorldGen.drunkWorldGen)
+                list.Insert(0, new PassLegacy(Enum.GetName(worldEvil), GetWorldGenPass()));
+            else
+                list[index] = new PassLegacy("Corruption", GetWorldGenPass());
+        }
         if (!IsVanillaEvil() && index2 > -1)
             list[index2] = new EvilAltars();
     }
@@ -85,16 +91,20 @@ public class GreatlySidegradedWorld : ModSystem {
     public override void ModifyHardmodeTasks(List<GenPass> list) {
         //int index2 = list.FindIndex(genpass => genpass.Name.Equals("Hardmode Good"));
         int index = list.FindIndex(genpass => genpass.Name.Equals("Hardmode Evil"));
-        if (!IsVanillaEvil() && index > -1)
-            list[index] = new PassLegacy("Hardmode Evil", GetHardModeWorldGenPass());
+        if (!IsVanillaEvil() && index > -1) {
+            if (WorldGen.drunkWorldGen)
+                list.Insert(index + 1, new PassLegacy($"Hardmode {Enum.GetName(worldEvil)}", GetHardModeWorldGenPass()));
+            else
+                list[index] = new PassLegacy("Hardmode Evil", GetHardModeWorldGenPass());
+        }
     }
 
     public static WorldGenLegacyMethod GetWorldGenPass() {
         return worldEvil switch {
-            WorldEvil.Fractured => new WorldGenLegacyMethod(Starved.Method),
-            WorldEvil.Nothing => new WorldGenLegacyMethod(Starved.Method),
-            WorldEvil.Rotten => new WorldGenLegacyMethod(Starved.Method),
-            WorldEvil.Spiral => new WorldGenLegacyMethod(Starved.Method),
+            WorldEvil.Fractured => new WorldGenLegacyMethod(Fractured.Method),
+            WorldEvil.Nothing => new WorldGenLegacyMethod(Nothing.Method),
+            WorldEvil.Rotten => new WorldGenLegacyMethod(Rotten.Method),
+            WorldEvil.Spiral => new WorldGenLegacyMethod(Spiral.Method),
             WorldEvil.Starved => new WorldGenLegacyMethod(Starved.Method),
             _ => null
         };
@@ -160,6 +170,20 @@ public class GreatlySidegradedWorld : ModSystem {
 
 
     public override void LoadWorldData(TagCompound tag) {
+        for (int i = 0; i < Main.tile.Width; ++i) {
+            for (int j = 0; j < Main.tile.Height; ++j) {
+                if (GreatlySidegradedIDs.Sets.FracturedTileCollection.Contains(Main.tile[i, j].TileType))
+                    totalFract2++;
+                if (GreatlySidegradedIDs.Sets.VoidTileCollection.Contains(Main.tile[i, j].TileType))
+                    totalVoid2++;
+                if (GreatlySidegradedIDs.Sets.RottenTileCollection.Contains(Main.tile[i, j].TileType))
+                    totalRot2++;
+                if (GreatlySidegradedIDs.Sets.SpiralTileCollection.Contains(Main.tile[i, j].TileType))
+                    totalTwisted2++;
+                if (GreatlySidegradedIDs.Sets.StarvedTileCollection.Contains(Main.tile[i, j].TileType))
+                    totalStarved2++;
+            }
+        }
         if (tag.TryGet("WorldEvil", out byte tmp))
             worldEvil = (WorldEvil) tmp;
         foreach (ModEvent e in ModContent.GetContent<ModEvent>())

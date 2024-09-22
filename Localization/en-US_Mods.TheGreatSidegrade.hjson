@@ -74,7 +74,7 @@ Configs: {
 
 		DryadKnowsNothingStatus: {
 			Label: Dryad Knows Nothing Status
-			Tooltip: ""
+			Tooltip: Allows the dryad to know the current status of the nothing
 		}
 	}
 }

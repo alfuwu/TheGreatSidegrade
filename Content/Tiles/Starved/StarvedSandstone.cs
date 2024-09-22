@@ -17,6 +17,7 @@ public class StarvedSandstone : ModTile {
         Main.tileMergeDirt[Type] = true;
         Main.tileBlockLight[Type] = true;
         TileID.Sets.Conversion.Sandstone[Type] = true;
+        GreatlySidegradedIDs.Sets.StarvedTileCollection.Add(Type);
 
         AddMapEntry(new Color(221, 131, 59));
     }

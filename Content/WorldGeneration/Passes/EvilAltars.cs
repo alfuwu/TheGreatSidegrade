@@ -1,8 +1,11 @@
 ﻿using ReLogic.Utilities;
 using Terraria;
+using Terraria.ID;
 using Terraria.IO;
 using Terraria.ModLoader;
 using Terraria.WorldBuilding;
+using TheGreatSidegrade.Common;
+using TheGreatSidegrade.Content.Tiles.Spiral;
 using TheGreatSidegrade.Content.Tiles.Starved;
 
 namespace TheGreatSidegrade.Content.WorldGeneration.Passes;
@@ -13,8 +16,15 @@ public class EvilAltars : GenPass {
     protected override void ApplyPass(GenerationProgress progress, GameConfiguration configuration) {
         Main.tileSolid[484] = false;
         progress.Message = Lang.gen[26].Value;
-        int num641 = (int)((Main.maxTilesX * Main.maxTilesY) * 3.3E-06);
-        int altarTile = ModContent.TileType<AltarOfTheStarvingOne>();
+        int num641 = (int) (Main.maxTilesX * Main.maxTilesY * 3.3E-06);
+        int altarTile = GreatlySidegradedWorld.worldEvil switch {
+            GreatlySidegradedWorld.WorldEvil.Fractured => ModContent.TileType<AltarOfTheStarvingOne>(),
+            GreatlySidegradedWorld.WorldEvil.Nothing => ModContent.TileType<AltarOfTheStarvingOne>(),
+            GreatlySidegradedWorld.WorldEvil.Rotten => ModContent.TileType<AltarOfTheStarvingOne>(),
+            GreatlySidegradedWorld.WorldEvil.Spiral => ModContent.TileType<TwistedShrine>(),
+            GreatlySidegradedWorld.WorldEvil.Starved => ModContent.TileType<AltarOfTheStarvingOne>(),
+            _ => TileID.DemonAltar
+        };
         if (WorldGen.remixWorldGen)
             num641 *= 3;
         for (int num642 = 0; num642 < num641; num642++) {

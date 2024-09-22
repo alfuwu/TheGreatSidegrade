@@ -20,6 +20,7 @@ public class StarvedSand : ModTile {
         TileID.Sets.Conversion.Sand[Type] = true;
 
         TileObjectData.newTile.CopyFrom(TileObjectData.GetTileData(TileID.Ebonsand, 0));
+        GreatlySidegradedIDs.Sets.StarvedTileCollection.Add(Type);
 
         AddMapEntry(new Color(221, 131, 59));
     }

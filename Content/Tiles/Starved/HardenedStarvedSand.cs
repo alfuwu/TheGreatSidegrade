@@ -16,6 +16,7 @@ public class HardenedStarvedSand : ModTile {
         Main.tileMergeDirt[Type] = true;
         Main.tileBlockLight[Type] = true;
         TileID.Sets.Conversion.HardenedSand[Type] = true;
+        GreatlySidegradedIDs.Sets.StarvedTileCollection.Add(Type);
 
         AddMapEntry(new Color(221, 131, 59));
     }

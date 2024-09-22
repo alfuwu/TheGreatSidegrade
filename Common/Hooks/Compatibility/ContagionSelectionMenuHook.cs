@@ -22,4 +22,11 @@ public class ContagionSelectionMenuHook { // this is so cursed
     public static void Unapply() {
         applyHook?.Undo();
     }
+
+    public static void SetContagion(bool c) {
+        typeof(ContagionSelectionMenu).GetProperty("SelectedWorldEvil", BindingFlags.Public | BindingFlags.Instance)
+            .SetValue(ModContent.GetInstance<ContagionSelectionMenu>(), c ?
+                ContagionSelectionMenu.WorldEvilSelection.Contagion :
+                ContagionSelectionMenu.WorldEvilSelection.Corruption);
+    }
 }

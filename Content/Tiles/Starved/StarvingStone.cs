@@ -23,6 +23,7 @@ public class StarvingStone : ModTile {
         TileID.Sets.CanBeClearedDuringOreRunner[Type] = true;
         HitSound = SoundID.Tink;
         MinPick = 60;
+        GreatlySidegradedIDs.Sets.StarvedTileCollection.Add(Type);
 
         AddMapEntry(new Color(164, 104, 91));
     }

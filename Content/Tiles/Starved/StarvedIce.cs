@@ -17,6 +17,7 @@ public class StarvedIce : ModTile {
         TileID.Sets.Conversion.Ice[Type] = true;
         //Main.tileMergeDirt[Type] = true;
         Main.tileBlockLight[Type] = true;
+        GreatlySidegradedIDs.Sets.StarvedTileCollection.Add(Type);
 
         AddMapEntry(new Color(221, 131, 59));
     }

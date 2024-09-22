@@ -1,2 +1,3 @@
 The tModLoader team, for creating the example mod, providing quality documentation, and creating tModLoader.
 The Exxo Avalon Origins mod, for providing an example on how to create a new evil
+The Confection mod, for total tile count-related code

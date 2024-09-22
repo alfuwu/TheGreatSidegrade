@@ -41,6 +41,7 @@ public class StarvedJungleGrass : ModTile {
         TileID.Sets.Grass[Type] = true;
         TileID.Sets.GrassSpecial[Type] = true;
         TileID.Sets.DoesntPlaceWithTileReplacement[Type] = true;
+        GreatlySidegradedIDs.Sets.StarvedTileCollection.Add(Type);
 
         RegisterItemDrop(ItemID.MudBlock);
     }
