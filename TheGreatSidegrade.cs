@@ -12,7 +12,7 @@ public class TheGreatSidegrade : Mod {
     public static bool DayJustStarted { get; set; }
     public const string AssetPath = $"{nameof(TheGreatSidegrade)}/Assets/";
 
-    public static bool HasAvalon { get =>  Avalon != null; }
+    public static bool HasAvalon { get => Avalon != null; }
     public static bool HasConfection { get => Confection != null; }
 
     public static bool IsContagion {

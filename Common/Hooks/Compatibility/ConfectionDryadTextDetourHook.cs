@@ -15,7 +15,7 @@ public class ConfectionDryadTextDetourHook {
         MethodInfo applyInfo = TheGreatSidegrade.Confection.GetType().GetMethod("On_Lang_GetDryadWorldStatusDialog", BindingFlags.NonPublic | BindingFlags.Instance);
 
         if (applyInfo != null) {
-            applyHook = new ILHook(applyInfo, CancelIL);
+            applyHook = new(applyInfo, CancelIL);
             applyHook.Apply();
         }
     }

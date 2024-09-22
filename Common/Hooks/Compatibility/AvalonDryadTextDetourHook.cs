@@ -1,10 +1,7 @@
-﻿using MonoMod.Cil;
-using MonoMod.RuntimeDetour;
+﻿using MonoMod.RuntimeDetour;
 using System.Reflection;
-using System;
 using Terraria.ModLoader;
-using Mono.Cecil.Cil;
-using Avalon.Common;
+using System;
 
 namespace TheGreatSidegrade.Common.Hooks.Compatibility;
 
@@ -12,12 +9,25 @@ namespace TheGreatSidegrade.Common.Hooks.Compatibility;
 public class AvalonDryadTextDetourHook {
     private static ILHook applyHook = null;
 
+    private static bool TryGetType(Module mod, string className, out Type type) {
+        type = mod.GetType(className);
+        if (type != null)
+            return true;
+        return false;
+    }
+
     public static void Apply() {
         // why is DryadTextDetour internal ahhhhhhhhhhhhhhhhhhhhhhhhhhhhh
-        MethodInfo applyInfo = TheGreatSidegrade.Avalon.TryFind("DryadTextDetour", out ModHook dryadTextDetour) ? dryadTextDetour.GetType().GetMethod("Apply", BindingFlags.NonPublic | BindingFlags.Instance) : null;
+        // oh im stupid, avalon's content aint gonna be loaded when this func runs, so it wont find DryadTextDetour using TryFind
+        // oop
+        MethodInfo applyInfo = null;
+
+        foreach (Module mod in TheGreatSidegrade.Avalon.GetType().Assembly.GetModules())
+            if (TryGetType(mod, "Avalon.Hooks.DryadTextDetour", out Type type))
+                applyInfo = type.GetMethod("Apply", BindingFlags.NonPublic | BindingFlags.Instance);
 
         if (applyInfo != null) {
-            applyHook = new ILHook(applyInfo, Utils.CancelIL);
+            applyHook = new(applyInfo, Utils.CancelIL);
             applyHook.Apply();
         }
     }

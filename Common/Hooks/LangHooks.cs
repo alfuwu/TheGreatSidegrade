@@ -3,7 +3,6 @@ using Terraria;
 using Terraria.ModLoader;
 using System.Reflection;
 using System.Collections.Generic;
-using Avalon.Common;
 
 namespace TheGreatSidegrade.Common.Hooks;
 
@@ -15,11 +14,8 @@ public class LangHooks {
         int tGood = WorldGen.tGood;
         int tEvil = WorldGen.tEvil;
         int tBlood = WorldGen.tBlood;
-        //if (TheGreatSidegrade.Avalon.TryFind("AvalonWorld", out ModSystem world3))
-        //    TheGreatSidegrade.Mod.Logger.Info("FOUND AVLON WRLD");
-        //TheGreatSidegrade.Mod.Logger.Info(world3.GetType().GetField("tSick", BindingFlags.Public | BindingFlags.Static).GetValue(null));
-        //TheGreatSidegrade.Mod.Logger.Info(AvalonWorld.tSick);
         int tSick = TheGreatSidegrade.HasAvalon ? TheGreatSidegrade.Avalon.TryFind("AvalonWorld", out ModSystem world) ? (byte) world.GetType().GetField("tSick", BindingFlags.Public | BindingFlags.Static).GetValue(null) : 0 : 0;
+        //TheGreatSidegrade.Mod.Logger.Info("Curetn TSICK: " + tSick); // is zero :c boowomp
         int tCandy = TheGreatSidegrade.HasConfection ? TheGreatSidegrade.Confection.TryFind("ConfectionWorldGeneration", out ModSystem world2) ? (byte) world2.GetType().GetField("tCandy", BindingFlags.Public | BindingFlags.Static).GetValue(null) : 0 : 0;
         int tFract = GreatlySidegradedWorld.tFract;
         int tVoid = ModContent.GetInstance<SidegradeConfig>().DryadKnowsNothingStatus ? GreatlySidegradedWorld.tVoid : 0;
@@ -83,11 +79,15 @@ public class LangHooks {
             unlocalizedText += "Starved";
             args.Add(tStarved);
         }
-        bool insult = tGood > 0 && tEvil > 0 && tBlood > 0 && tFract > 0 && tVoid > 0 && tRot > 0 && tTwisted > 0 && tStarved > 0 && (!TheGreatSidegrade.HasAvalon || tStarved > 0) && (!TheGreatSidegrade.HasConfection || tCandy > 0);
+        bool insult = tGood > 0 && tEvil > 0 && tBlood > 0 && tFract > 0 && tVoid > 0 && tRot > 0 && tTwisted > 0 && tStarved > 0 && (!TheGreatSidegrade.HasAvalon || tSick > 0) && (!TheGreatSidegrade.HasConfection || tCandy > 0);
         if (insult && tSick > 0 && tCandy > 0)
-            unlocalizedText = "Mods.TheGreatSidegrade.DryadSpecialText.All";
-        TheGreatSidegrade.Mod.Logger.Info(unlocalizedText);
-        TheGreatSidegrade.Mod.Logger.Info($"{Language.GetTextValue(unlocalizedText, [.. args])} " +
+            unlocalizedText = "Mods.TheGreatSidegrade.DryadSpecialText.WorldStatusAll";
+        else if (allEvil == tEvil + tBlood + tSick && tEvil > 0 && tBlood > 0 && tSick > 0 && tCandy <= 0)
+            unlocalizedText = "Mods.Avalon.DryadSpecialText.WorldStatusAll";
+        else if (allEvil == tEvil + tBlood && tEvil > 0 && tBlood > 0 && tGood > 0 && tCandy > 0)
+            unlocalizedText = "Mods.TheConfectionRebirth.DryadSpecialText.WorldStatusAll";
+        //TheGreatSidegrade.Mod.Logger.Info(unlocalizedText);
+        //TheGreatSidegrade.Mod.Logger.Info($"{Language.GetTextValue(unlocalizedText, [.. args])} " +
             (insult ? Language.GetTextValue("Mods.TheGreatSidegrade.DryadSpecialText.WhatTheHell") : ""));
         string arg = allGood * 1.2 >= allEvil && allGood * 0.8 <= allEvil ? Language.GetTextValue("DryadSpecialText.WorldDescriptionBalanced") :
             allGood >= allEvil ? Language.GetTextValue("DryadSpecialText.WorldDescriptionFairyTale") :

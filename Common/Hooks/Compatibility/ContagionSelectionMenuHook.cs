@@ -1,10 +1,7 @@
 ﻿using MonoMod.RuntimeDetour;
-using System;
 using System.Reflection;
 using Terraria.ModLoader;
 using Avalon.Hooks;
-using MonoMod.Cil;
-using Mono.Cecil.Cil;
 
 namespace TheGreatSidegrade.Common.Hooks.Compatibility;
 
@@ -17,7 +14,7 @@ public class ContagionSelectionMenuHook { // this is so cursed
         MethodInfo applyInfo = typeof(ContagionSelectionMenu).GetMethod("Apply", BindingFlags.NonPublic | BindingFlags.Instance);
         
         if (applyInfo != null ) {
-            applyHook = new ILHook(applyInfo, Utils.CancelIL);
+            applyHook = new(applyInfo, Utils.CancelIL);
             applyHook.Apply();
         }
     }

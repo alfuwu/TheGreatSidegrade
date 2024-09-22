@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Avalon.Common;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -63,7 +64,6 @@ public class GreatlySidegradedWorld : ModSystem {
         }
         if (WorldGen.WorldGenParam_Evil > 2)
             worldEvil = (WorldEvil) WorldGen.WorldGenParam_Evil;
-        Mod.Logger.Info(TheGreatSidegrade.IsContagion);
         WorldGen.crimson = worldEvil == WorldEvil.Crimson;
         if (TheGreatSidegrade.IsContagion && worldEvil != WorldEvil.Contagion)
             TheGreatSidegrade.IsContagion = false;
@@ -120,10 +120,12 @@ public class GreatlySidegradedWorld : ModSystem {
         bw.Write(tTwisted);
         bw.Write(tStarved);
 
+        //TheGreatSidegrade.Mod.Logger.Info("YES YES YES SENDING " + AvalonWorld.tSick);
+
         // tSick isn't syncing and i dont know why
         // but the dryad doesn't think the world is sick at all ever
-        //if (TheGreatSidegrade.HasAvalon && TheGreatSidegrade.Avalon.TryFind("AvalonWorld", out ModSystem world))
-        //    bw.Write((byte) world.GetType().GetField("tSick", BindingFlags.Public | BindingFlags.Static).GetValue(null));
+        if (TheGreatSidegrade.HasAvalon && TheGreatSidegrade.Avalon.TryFind("AvalonWorld", out ModSystem world))
+            bw.Write((byte) world.GetType().GetField("tSick", BindingFlags.Public | BindingFlags.Static).GetValue(null));
     }
 
     public override void NetReceive(BinaryReader br) {
@@ -133,11 +135,13 @@ public class GreatlySidegradedWorld : ModSystem {
         tRot = br.ReadByte();
         tTwisted = br.ReadByte();
         tStarved = br.ReadByte();
+        TheGreatSidegrade.Mod.Logger.Info("YES YES YES LOADING");
 
-        //if (TheGreatSidegrade.HasAvalon && TheGreatSidegrade.Avalon.TryFind("AvalonWorld", out ModSystem world)) {
-        //    Mod.Logger.Info("TSICK : " + br.Read());
-        //    world.GetType().GetField("tSick", BindingFlags.Public | BindingFlags.Static).SetValue(null, br.Read());
-        //}
+        if (TheGreatSidegrade.HasAvalon && TheGreatSidegrade.Avalon.TryFind("AvalonWorld", out ModSystem world)) {
+            byte b = br.ReadByte();
+            Mod.Logger.Info("TSICK : " + b);
+            world.GetType().GetField("tSick", BindingFlags.Public | BindingFlags.Static).SetValue(null, b);
+        }
     }
 
     public override void SaveWorldData(TagCompound tag) {

@@ -68,7 +68,7 @@ public class WorldUIHooks {
             GreatlySidegradedWorld.WorldEvil.Nothing => 0xFFFFFFFFu,
             GreatlySidegradedWorld.WorldEvil.Rotten => 0xFFF0CFFFu,
             GreatlySidegradedWorld.WorldEvil.Spiral => 0xFFFFA291u,
-            GreatlySidegradedWorld.WorldEvil.Starved => 0xFF8CBDFFu,
+            GreatlySidegradedWorld.WorldEvil.Starved => 0xFF4C7DFFu,
             _ => 0u
         };
     }
