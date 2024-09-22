@@ -1,18 +1,24 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Avalon;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Mono.Cecil.Cil;
 using MonoMod.Cil;
 using ReLogic.Content;
+using Stubble.Core.Classes;
 using System;
 using System.IO;
 using System.Linq;
+using System.Reflection;
+using System.Threading.Tasks;
 using Terraria;
 using Terraria.GameContent.UI.Elements;
 using Terraria.IO;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
+using Terraria.UI;
 using Terraria.Utilities;
 using TheGreatSidegrade.Assets;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace TheGreatSidegrade.Common.Hooks;
 
@@ -58,11 +64,11 @@ public class WorldUIHooks {
 
     public static uint GetGenProgressBarColor() {
         return GreatlySidegradedWorld.worldEvil switch {
-            GreatlySidegradedWorld.WorldEvil.Fractured => 0x0u,
-            GreatlySidegradedWorld.WorldEvil.Nothing => 0xFFFFFFu,
-            GreatlySidegradedWorld.WorldEvil.Rotten => 0xFF7FF0u,
-            GreatlySidegradedWorld.WorldEvil.Spiral => 0x4965FFu,
-            GreatlySidegradedWorld.WorldEvil.Starved => 0xFFBD8Cu,
+            GreatlySidegradedWorld.WorldEvil.Fractured => 0xFF000000u,
+            GreatlySidegradedWorld.WorldEvil.Nothing => 0xFFFFFFFFu,
+            GreatlySidegradedWorld.WorldEvil.Rotten => 0xFFF0CFFFu,
+            GreatlySidegradedWorld.WorldEvil.Spiral => 0xFFFFA291u,
+            GreatlySidegradedWorld.WorldEvil.Starved => 0xFF8CBDFFu,
             _ => 0u
         };
     }
@@ -107,58 +113,19 @@ public class WorldUIHooks {
     }
 
     public static Asset<Texture2D> OnGetIcon(On_AWorldListItem.orig_GetIcon orig, AWorldListItem self) {
-        WorldFileData data = self.Data;
-        var path = Path.ChangeExtension(data.Path, ".twld");
+        if (self.Data.TryGetHeaderData<GreatlySidegradedWorld>(out TagCompound header)) {
+            GreatlySidegradedWorld.WorldEvil worldEvil = 0;
 
-        if (!FileUtilities.Exists(path, data.IsCloudSave))
-            return orig(self);
+            if (header.TryGet("WorldEvil", out byte tmp))
+                worldEvil = (GreatlySidegradedWorld.WorldEvil) tmp;
 
-        //Stream stream = (data.IsCloudSave ? ((Stream)new MemoryStream(Terraria.Social.SocialAPI.Cloud.Read(path))) : ((Stream)new FileStream(path, FileMode.Open)));
-        byte[] buf = FileUtilities.ReadAllBytes(path, data.IsCloudSave);
-        if (buf[0] != 31 || buf[1] != 139)
-            return orig(self);
-
-        var stream = new MemoryStream(buf);
-        var tag = TagIO.FromStream(stream);
-
-        GreatlySidegradedWorld.WorldEvil? worldEvil = null;
-
-        if (tag.ContainsKey("modData")) {
-            foreach (TagCompound modDataTag in tag.GetList<TagCompound>("modData").Skip(2)) {
-                if (modDataTag.Get<string>("mod") == TheGreatSidegrade.Mod.Name) {
-                    worldEvil = (GreatlySidegradedWorld.WorldEvil)modDataTag.Get<TagCompound>("data").GetByte($"{nameof(TheGreatSidegrade)}:WorldEvil");
-                    break;
-                }
+            if (!GreatlySidegradedWorld.IsVanillaEvil(worldEvil)) {
+                string iconPath = $"{nameof(TheGreatSidegrade)}/Assets/Textures/UI/";
+                iconPath += Enum.GetName(worldEvil) + "/Icon";
+                iconPath += self.Data.IsHardMode ? "Hallow" : "";
+                return ModContent.Request<Texture2D>(iconPath, AssetRequestMode.ImmediateLoad);
             }
         }
-
-        if (worldEvil != null && !GreatlySidegradedWorld.IsVanillaEvil(worldEvil.Value)) {
-            string iconPath = "Assets/Textures/UI/Icon";
-            iconPath += data.IsHardMode ? "Hallow" : "";
-            iconPath += Enum.GetName(worldEvil.Value);
-            return GameAssets.GetAsset(iconPath);
-        } else {
-            return orig(self);
-        }
+        return orig(self);
     }
 }
-
-//* Call to check if the world uses vanilla evil */
-//* 0x0000016F 03           */ IL_016F: ldarg.1
-//* 0x00000170 28????????   */ IL_0170: call      bool[TheGreatSidegrade] TheGreatSidegrade.Common.GreatlySidegradedWorld::IsVanillaEvil()
-//* 0x00000175 2D08         */ IL_0175: brtrue.s IL_017F
-
-//* Load null for GetGenProgressBar func */
-//* 0x00000177 14           */ IL_0177: ldnull
-//* Call the custom texture loading method */
-//* 0x00000178 28????????   */ IL_0178: call      class [FNA] Microsoft.Xna.Framework.Graphics.Texture2D[TheGreatSidegrade]TheGreatSidegrade.Common.Hooks.WorldList::GetGenProgressBarTexture(class [FNA] Microsoft.Xna.Framework.Graphics.Texture2D)
-//* Jump to the end of the branch
-//* 0x0000017D 2B1B         */ IL_017D: br.s IL_019A
-//
-//* 0x0000017F 06           */ IL_017F: ldloc.0
-//* 0x00000180 2D0D         */ IL_0180: brtrue.s IL_018F
-//
-//* 0x00000182 02           */ IL_0182: ldarg.0
-//* 0x00000183 7BC9560004   */ IL_0183: ldfld     class [ReLogic] ReLogic.Content.Asset`1 <class [FNA] Microsoft.Xna.Framework.Graphics.Texture2D > Terraria.GameContent.UI.Elements.UIGenProgressBar::_texOuterCorrupt
-//* 0x00000188 6F????????   */ IL_0188: callvirt instance !0 class [ReLogic] ReLogic.Content.Asset`1 <class [FNA] Microsoft.Xna.Framework.Graphics.Texture2D >::get_Value()
-//* 0x0000018D 2B0B         */ IL_018D: br.s IL_019A

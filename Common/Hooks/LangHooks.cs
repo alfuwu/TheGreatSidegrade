@@ -2,65 +2,99 @@
 using Terraria;
 using Terraria.ModLoader;
 using System.Reflection;
+using System.Collections.Generic;
+using Avalon.Common;
 
 namespace TheGreatSidegrade.Common.Hooks;
 
 public class LangHooks {
-    private string OnGetDryadWorldStatusDialog(On_Lang.orig_GetDryadWorldStatusDialog orig, out bool worldIsEntirelyPure) {
-        orig(out worldIsEntirelyPure);
-        string text = "";
+    public static string OnGetDryadWorldStatusDialog(On_Lang.orig_GetDryadWorldStatusDialog orig, out bool worldIsEntirelyPure) {
+        orig(out _);
+        string unlocalizedText = "DryadSpecialText.WorldStatus";
         worldIsEntirelyPure = false;
         int tGood = WorldGen.tGood;
         int tEvil = WorldGen.tEvil;
         int tBlood = WorldGen.tBlood;
-        int tSick = TheGreatSidegrade.HasAvalon ? TheGreatSidegrade.Avalon.TryFind("AvalonWorld", out ModSystem world) ? (int) world.GetType().GetField("tSick", BindingFlags.Public | BindingFlags.Static).GetValue(null) : 0 : 0;
+        //if (TheGreatSidegrade.Avalon.TryFind("AvalonWorld", out ModSystem world3))
+        //    TheGreatSidegrade.Mod.Logger.Info("FOUND AVLON WRLD");
+        //TheGreatSidegrade.Mod.Logger.Info(world3.GetType().GetField("tSick", BindingFlags.Public | BindingFlags.Static).GetValue(null));
+        //TheGreatSidegrade.Mod.Logger.Info(AvalonWorld.tSick);
+        int tSick = TheGreatSidegrade.HasAvalon ? TheGreatSidegrade.Avalon.TryFind("AvalonWorld", out ModSystem world) ? (byte) world.GetType().GetField("tSick", BindingFlags.Public | BindingFlags.Static).GetValue(null) : 0 : 0;
+        int tCandy = TheGreatSidegrade.HasConfection ? TheGreatSidegrade.Confection.TryFind("ConfectionWorldGeneration", out ModSystem world2) ? (byte) world2.GetType().GetField("tCandy", BindingFlags.Public | BindingFlags.Static).GetValue(null) : 0 : 0;
         int tFract = GreatlySidegradedWorld.tFract;
-        int tVoid = GreatlySidegradedWorld.tVoid;
+        int tVoid = ModContent.GetInstance<SidegradeConfig>().DryadKnowsNothingStatus ? GreatlySidegradedWorld.tVoid : 0;
         int tRot = GreatlySidegradedWorld.tRot;
         int tTwisted = GreatlySidegradedWorld.tTwisted;
         int tStarved = GreatlySidegradedWorld.tStarved;
-        if (tGood > 0 && tEvil > 0 && tBlood > 0 && tSick > 0)
-            text = Language.GetTextValue("Mods.Avalon.DryadSpecialText.WorldStatusAll", Main.worldName, tGood, tEvil, tBlood, tSick); //We use a combination of vanilla and our own localization to put less on translators
-        else if (tGood > 0 && tSick > 0 && tEvil > 0)
-            text = Language.GetTextValue("Mods.Avalon.DryadSpecialText.WorldStatusHallowCorruptSick", Main.worldName, tGood, tEvil, tSick);
-        else if (tGood > 0 && tSick > 0 && tBlood > 0)
-            text = Language.GetTextValue("Mods.Avalon.DryadSpecialText.WorldStatusHallowCrimsonSick", Main.worldName, tGood, tBlood, tSick);
-        else if (tSick > 0 && tEvil > 0 && tBlood > 0)
-            text = Language.GetTextValue("Mods.Avalon.DryadSpecialText.WorldStatusCorruptCrimsonSick", Main.worldName, tEvil, tBlood, tSick);
-        else if (tGood > 0 && tEvil > 0 && tBlood > 0)
-            text = Language.GetTextValue("DryadSpecialText.WorldStatusAll", Main.worldName, tGood, tEvil, tBlood);
-        else if (tGood > 0 && tEvil > 0)
-            text = Language.GetTextValue("DryadSpecialText.WorldStatusHallowCorrupt", Main.worldName, tGood, tEvil);
-        else if (tGood > 0 && tBlood > 0)
-            text = Language.GetTextValue("DryadSpecialText.WorldStatusHallowCrimson", Main.worldName, tGood, tBlood);
-        else if (tSick > 0 && tEvil > 0)
-            text = Language.GetTextValue("Mods.Avalon.DryadSpecialText.WorldStatusCorruptSick", Main.worldName, tSick, tEvil, tSick);
-        else if (tSick > 0 && tBlood > 0)
-            text = Language.GetTextValue("Mods.Avalon.DryadSpecialText.WorldStatusCrimsonSick", Main.worldName, tSick, tBlood, tSick);
-        else if (tEvil > 0 && tBlood > 0)
-            text = Language.GetTextValue("DryadSpecialText.WorldStatusCorruptCrimson", Main.worldName, tEvil, tBlood);
-        else if (tGood > 0 && tSick > 0)
-            text = Language.GetTextValue("Mods.Avalon.DryadSpecialText.WorldStatusHallowSick", Main.worldName, tGood, tSick);
-        else if (tSick > 0)
-            text = Language.GetTextValue("Mods.Avalon.DryadSpecialText.WorldStatusSick", Main.worldName, tSick);
-        else if (tEvil > 0)
-            text = Language.GetTextValue("DryadSpecialText.WorldStatusCorrupt", Main.worldName, tEvil);
-        else if (tBlood > 0)
-            text = Language.GetTextValue("DryadSpecialText.WorldStatusCrimson", Main.worldName, tBlood);
-        else {
-            if (tGood <= 0) {
-                text = Language.GetTextValue("DryadSpecialText.WorldStatusPure", Main.worldName);
-                worldIsEntirelyPure = true;
-                return text;
-            }
-            text = Language.GetTextValue("DryadSpecialText.WorldStatusHallow", Main.worldName, tGood);
+        int allEvil = tEvil + tBlood + tSick + tFract + tVoid + tRot + tTwisted + tStarved;
+        int allGood = tGood + tCandy;
+        if (allGood <= 0 &&  allEvil <= 0) {
+            worldIsEntirelyPure = true;
+            return Language.GetTextValue("DryadSpecialText.WorldStatusPure", Main.worldName);
         }
-        int all = tEvil + tBlood + tSick + tFract + tVoid + tRot + tTwisted + tStarved;
-        string arg = tGood * 1.2 >= all && tGood * 0.8 <= all ?Language.GetTextValue("DryadSpecialText.WorldDescriptionBalanced") :
-            tGood >= all ? Language.GetTextValue("DryadSpecialText.WorldDescriptionFairyTale") :
-            all > tGood + 20 ? Language.GetTextValue("DryadSpecialText.WorldDescriptionGrim") :
-            all <= 5 ? Language.GetTextValue("DryadSpecialText.WorldDescriptionClose") :
+        //bool onlyVanilla = allEvil == tEvil + tBlood && tCandy <= 0;
+        if (allEvil == tEvil + tBlood + tSick && tCandy <= 0 && tSick > 0)
+            unlocalizedText = "Mods.Avalon." + unlocalizedText;
+        else if (allEvil == tEvil + tBlood && tCandy > 0)
+            unlocalizedText = "Mods.TheConfectionRebirth." + unlocalizedText;
+        else if (tSick > 0 || tCandy > 0 || tFract > 0 || tVoid > 0 || tRot > 0 || tTwisted > 0 || tStarved > 0)
+            unlocalizedText = "Mods.TheGreatSidegrade." + unlocalizedText;
+        // what a goddamn mess
+        // redcode go brrrrrrrr
+        // sorry i tried fixing it but its still messy as hell
+        List<object> args = [Main.worldName];
+        if (tGood > 0) {
+            unlocalizedText += "Hallow";
+            args.Add(tGood);
+        }
+        if (tCandy > 0) {
+            unlocalizedText += "Candy";
+            args.Add(tCandy);
+        }
+        if (tEvil > 0) {
+            unlocalizedText += "Corrupt";
+            args.Add(tEvil);
+        }
+        if (tBlood > 0) {
+            unlocalizedText += "Crimson";
+            args.Add(tBlood);
+        }
+        if (tSick > 0) {
+            unlocalizedText += "Sick";
+            args.Add(tSick);
+        }
+        if (tFract > 0) {
+            unlocalizedText += "Fractured";
+            args.Add(tFract);
+        }
+        if (tVoid > 0) {
+            unlocalizedText += "Nothing";
+            args.Add(tVoid);
+        }
+        if (tRot > 0) {
+            unlocalizedText += "Rotten";
+            args.Add(tRot);
+        }
+        if (tTwisted > 0) {
+            unlocalizedText += "Spiral";
+            args.Add(tTwisted);
+        }
+        if (tStarved > 0) {
+            unlocalizedText += "Starved";
+            args.Add(tStarved);
+        }
+        bool insult = tGood > 0 && tEvil > 0 && tBlood > 0 && tFract > 0 && tVoid > 0 && tRot > 0 && tTwisted > 0 && tStarved > 0 && (!TheGreatSidegrade.HasAvalon || tStarved > 0) && (!TheGreatSidegrade.HasConfection || tCandy > 0);
+        if (insult && tSick > 0 && tCandy > 0)
+            unlocalizedText = "Mods.TheGreatSidegrade.DryadSpecialText.All";
+        TheGreatSidegrade.Mod.Logger.Info(unlocalizedText);
+        TheGreatSidegrade.Mod.Logger.Info($"{Language.GetTextValue(unlocalizedText, [.. args])} " +
+            (insult ? Language.GetTextValue("Mods.TheGreatSidegrade.DryadSpecialText.WhatTheHell") : ""));
+        string arg = allGood * 1.2 >= allEvil && allGood * 0.8 <= allEvil ? Language.GetTextValue("DryadSpecialText.WorldDescriptionBalanced") :
+            allGood >= allEvil ? Language.GetTextValue("DryadSpecialText.WorldDescriptionFairyTale") :
+            allEvil > allGood + 20 ? Language.GetTextValue("DryadSpecialText.WorldDescriptionGrim") :
+            allEvil <= 5 ? Language.GetTextValue("DryadSpecialText.WorldDescriptionClose") :
             Language.GetTextValue("DryadSpecialText.WorldDescriptionWork");
-        return $"{text} {arg}";
+        return $"{Language.GetTextValue(unlocalizedText, [.. args])} {arg}" +
+            (insult ? Language.GetTextValue("Mods.TheGreatSidegrade.DryadSpecialText.WhatTheHell") : "");
     }
 }

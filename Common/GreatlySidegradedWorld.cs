@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using Terraria;
 using Terraria.Chat;
 using Terraria.GameContent.Generation;
@@ -113,10 +114,30 @@ public class GreatlySidegradedWorld : ModSystem {
 
     public override void NetSend(BinaryWriter bw) {
         bw.Write((byte) worldEvil);
+        bw.Write(tFract);
+        bw.Write(tVoid);
+        bw.Write(tRot);
+        bw.Write(tTwisted);
+        bw.Write(tStarved);
+
+        // tSick isn't syncing and i dont know why
+        // but the dryad doesn't think the world is sick at all ever
+        //if (TheGreatSidegrade.HasAvalon && TheGreatSidegrade.Avalon.TryFind("AvalonWorld", out ModSystem world))
+        //    bw.Write((byte) world.GetType().GetField("tSick", BindingFlags.Public | BindingFlags.Static).GetValue(null));
     }
 
     public override void NetReceive(BinaryReader br) {
         worldEvil = (WorldEvil) br.ReadByte();
+        tFract = br.ReadByte();
+        tVoid = br.ReadByte();
+        tRot = br.ReadByte();
+        tTwisted = br.ReadByte();
+        tStarved = br.ReadByte();
+
+        //if (TheGreatSidegrade.HasAvalon && TheGreatSidegrade.Avalon.TryFind("AvalonWorld", out ModSystem world)) {
+        //    Mod.Logger.Info("TSICK : " + br.Read());
+        //    world.GetType().GetField("tSick", BindingFlags.Public | BindingFlags.Static).SetValue(null, br.Read());
+        //}
     }
 
     public override void SaveWorldData(TagCompound tag) {
@@ -130,9 +151,14 @@ public class GreatlySidegradedWorld : ModSystem {
         }
     }
 
+    public override void SaveWorldHeader(TagCompound tag) {
+        tag["WorldEvil"] = (byte) worldEvil;
+    }
+
+
     public override void LoadWorldData(TagCompound tag) {
-        if (tag.ContainsKey("WorldEvil"))
-            worldEvil = (WorldEvil) tag.GetByte("WorldEvil");
+        if (tag.TryGet("WorldEvil", out byte tmp))
+            worldEvil = (WorldEvil) tmp;
         foreach (ModEvent e in ModContent.GetContent<ModEvent>())
             if (tag.ContainsKey(e.GetType().Name))
                 StartEvent(e, tag.GetCompound(e.GetType().Name));
@@ -211,5 +237,5 @@ public class GreatlySidegradedWorld : ModSystem {
     public static bool IsVanillaEvil() => IsVanillaEvil(worldEvil);
 
     // contagion isn't vanilla, but for check purposes we don't want to do anything if the world is a contagion world
-    public static bool IsVanillaEvil(WorldEvil evil) => evil == WorldEvil.Corruption || worldEvil == WorldEvil.Crimson || worldEvil == WorldEvil.Contagion;
+    public static bool IsVanillaEvil(WorldEvil evil) => evil == WorldEvil.Corruption || evil == WorldEvil.Crimson || evil == WorldEvil.Contagion;
 }

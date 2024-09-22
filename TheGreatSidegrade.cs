@@ -16,7 +16,7 @@ public class TheGreatSidegrade : Mod {
     public static bool HasConfection { get => Confection != null; }
 
     public static bool IsContagion {
-        get => HasAvalon && Avalon.TryFind("AvalonWorld", out ModSystem world) && (ushort) world.GetType().GetField("WorldEvil").GetValue(world) == 2;
+        get => HasAvalon && Avalon.TryFind("AvalonWorld", out ModSystem world) && (int) world.GetType().GetField("WorldEvil").GetValue(world) == 2;
         set {
             if (HasAvalon && Avalon.TryFind("AvalonWorld", out ModSystem world))
                 world.GetType().GetField("WorldEvil").SetValue(world, value ? 2 : 0);

@@ -30,7 +30,7 @@ public class ConfectionDryadTextDetourHook {
             c.GotoNext(MoveType.After, i => i.MatchCallvirt(out _));
             c.RemoveRange(c.Instrs.Count - 1 - c.Index); // delete all instructions after calling the original function :)
             c.Emit(OpCodes.Ret); // return
-        } catch (Exception e) {
+        } catch {
             MonoModHooks.DumpIL(TheGreatSidegrade.Mod, il);
         }
     }

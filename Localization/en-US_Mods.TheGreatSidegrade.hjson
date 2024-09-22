@@ -38,7 +38,7 @@ Projectiles.YellowSolutionProjectile.DisplayName: Yellow Solution Projectile
 Configs: {
 	SidegradeClient.DisplayName: Sidegrade Client
 
-	SidegradeServer: {
+	SidegradeConfig: {
 		DisplayName: Sidegrade Server
 		Headers.NewWorldEvils: New World Evils
 
@@ -70,41 +70,6 @@ Configs: {
 		EnableMorePrefixes: {
 			Label: Enable More Prefixes
 			Tooltip: You can never have enough prefixes, as scientifically proven by our loyal scientists here at Sidegrade Inc.
-		}
-	}
-
-	SidegradeConfig: {
-		DisplayName: Sidegrade Config
-		Headers.NewWorldEvils: New World Evils Header
-
-		EnableRandomFracturedWorld: {
-			Label: Enable Random Fractured World
-			Tooltip: ""
-		}
-
-		EnableRandomNothingWorld: {
-			Label: Enable Random Nothing World
-			Tooltip: ""
-		}
-
-		EnableRandomRottenWorld: {
-			Label: Enable Random Rotten World
-			Tooltip: ""
-		}
-
-		EnableRandomSpiralWorld: {
-			Label: Enable Random Spiral World
-			Tooltip: ""
-		}
-
-		EnableRandomStarvedWorld: {
-			Label: Enable Random Starved World
-			Tooltip: ""
-		}
-
-		EnableMorePrefixes: {
-			Label: Enable More Prefixes
-			Tooltip: ""
 		}
 
 		DryadKnowsNothingStatus: {
@@ -158,6 +123,8 @@ SpawnInfo: {
 	Lich: Use a [i:TheGreatSidegrade/Phylactery] anywhere in the world.
 	PrimevalBehemoth: Use a [i:TheGreatSidegrade/SuspiciousLookingRock] in the Forest or Snow biome.
 	TubaArchmage: Use a [i:TheGreatSidegrade/MobiusTube] during the day.
+	ChessKing: Use a [i:TheGreatSidegrade/SuspiciousLookingCheckersboard] at twilight.
+	Checkers: Use a [i:TheGreatSidegrade/SuspiciousLookingChessboard] at dawn.
 }
 
 World: {
