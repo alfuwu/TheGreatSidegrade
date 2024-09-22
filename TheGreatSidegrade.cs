@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Terraria.ModLoader;
 using TheGreatSidegrade.Common.Hooks;
 

@@ -1,24 +1,14 @@
-﻿using Avalon;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Mono.Cecil.Cil;
 using MonoMod.Cil;
 using ReLogic.Content;
-using Stubble.Core.Classes;
 using System;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.GameContent.UI.Elements;
-using Terraria.IO;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
-using Terraria.UI;
-using Terraria.Utilities;
 using TheGreatSidegrade.Assets;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace TheGreatSidegrade.Common.Hooks;
 
