@@ -9,7 +9,7 @@ public class TheGreatSidegrade : Mod {
     public static TheGreatSidegrade Mod { get; private set; }
     public static bool NightJustStarted { get; set; }
     public static bool DayJustStarted { get; set; }
-    public const string AssetPath = $"{nameof(TheGreatSidegrade)}/Assets/";
+    public static string AssetPath {get;} = $"{nameof(TheGreatSidegrade)}/Assets";
 
     public static bool HasAvalon { get => Avalon != null; }
     public static bool HasConfection { get => Confection != null; }

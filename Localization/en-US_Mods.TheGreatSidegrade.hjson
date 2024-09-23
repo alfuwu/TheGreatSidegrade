@@ -128,6 +128,33 @@ SpawnInfo: {
 }
 
 World: {
+	Creation: {
+		EvilFractured: {
+			Title: Fractured
+			Description: Disease-like corruption is guaranteed to be present in your world.
+		}
+
+		EvilNothing: {
+			Title: Nothing
+			Description: The void and all it entails is guaranteed to be present in your world.
+		}
+
+		EvilRotten: {
+			Title: Rotten
+			Description: Ancient, decaying rot is guaranteed to be present in your world.
+		}
+
+		EvilSpiral: {
+			Title: Spiral
+			Description: The alien Spiral is guaranteed to be present in your world.
+		}
+
+		EvilStarved: {
+			Title: Starved
+			Description: The insatiable Starved is guaranteed to be present in your world.
+		}
+	}
+
 	Generation: {
 		Fractured.Message: Breaking the world apart
 		Nothing.Message: Fixing world file...

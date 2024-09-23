@@ -22,6 +22,7 @@ public class Hooks {
 
         // world creation ui
         IL_UIWorldCreation.BuildPage += WorldUIHooks.BuildPage;
+        IL_UIWorldCreation.MakeInfoMenu += WorldUIHooks.MakeInfoMenu;
         IL_UIWorldCreation.ShowOptionDescription += WorldUIHooks.ShowOptionDescription;
         IL_UIWorldCreation.UpdatePreviewPlate += WorldUIHooks.UpdatePreviewPlate;
         IL_UIWorldCreationPreview.DrawSelf += WorldUIHooks.PreviewDrawSelf;

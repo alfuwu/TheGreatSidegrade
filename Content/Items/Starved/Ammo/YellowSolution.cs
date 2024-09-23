@@ -8,7 +8,7 @@ using TheGreatSidegrade.Content.Walls.Starved;
 namespace TheGreatSidegrade.Content.Items.Starved.Ammo;
 
 public class YellowSolutionItem : ModItem {
-    public override string Texture => TheGreatSidegrade.AssetPath + "Textures/Items/YellowSolution";
+    public override string Texture => $"{TheGreatSidegrade.AssetPath}/Textures/Items/YellowSolution";
 
     public override void SetStaticDefaults() {
         Item.ResearchUnlockCount = 99;
@@ -26,7 +26,7 @@ public class YellowSolutionItem : ModItem {
 }
 
 public class YellowSolutionProjectile : ModProjectile {
-    public override string Texture => TheGreatSidegrade.AssetPath + "Textures/Projectiles/YellowSolution";
+    public override string Texture => $"{TheGreatSidegrade.AssetPath}/Textures/Projectiles/YellowSolution";
 
     public ref float Progress => ref Projectile.ai[0];
 

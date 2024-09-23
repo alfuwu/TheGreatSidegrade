@@ -12,6 +12,7 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.WorldBuilding;
 using TheGreatSidegrade.Common.Abstract;
+using TheGreatSidegrade.Common.Hooks;
 using TheGreatSidegrade.Common.Hooks.Compatibility;
 using TheGreatSidegrade.Content.WorldGeneration.Passes;
 
@@ -44,6 +45,7 @@ public class GreatlySidegradedWorld : ModSystem {
     }
 
     public override void PreWorldGen() {
+        WorldGen.WorldGenParam_Evil = (int) WorldUIHooks.SelectedWorldEvil - 1;
         if (WorldGen.WorldGenParam_Evil == 0) {
             worldEvil = WorldEvil.Corruption;
         } else if (WorldGen.WorldGenParam_Evil == 1) {

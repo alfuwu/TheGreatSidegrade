@@ -4,6 +4,7 @@ using Mono.Cecil.Cil;
 using MonoMod.Cil;
 using ReLogic.Content;
 using System;
+using System.Linq;
 using System.Reflection;
 using Terraria;
 using Terraria.GameContent.UI.Elements;
@@ -141,45 +142,135 @@ public class WorldUIHooks {
         return orig(self);
     }
 
+    private static readonly CustomGroupOptionButton<WorldEvilId>[] evilButtons = new CustomGroupOptionButton<WorldEvilId>[Enum.GetValues<WorldEvilId>().Length];
+    public static WorldEvilId SelectedWorldEvil { get; set; }
+
     public static void BuildPage(ILContext il) {
-        //ILCursor c = new(il);
+        ILCursor c = new(il);
 
         // Increase page size
-        //c.GotoNext(i => i.MatchStloc(0));
-        //c.Emit(OpCodes.Ldc_I4, PageSizeIncrease);
-        //c.Emit(OpCodes.Add);
+        c.GotoNext(i => i.MatchStloc(0));
+        c.Emit(OpCodes.Ldc_I4, 38);
+        c.Emit(OpCodes.Add);
     }
 
-    private enum WorldEvilId {
+    public static void MakeInfoMenu(ILContext il) {
+        ILCursor c = new(il);
+
+        c.GotoNext(i => i.MatchLdstr("evil"));
+
+        c.Emit(OpCodes.Ldloc_1);
+        c.Emit(OpCodes.Ldc_R4, 38f);
+        c.Emit(OpCodes.Add);
+        c.Emit(OpCodes.Stloc_1);
+    }
+
+    public enum WorldEvilId {
         Random,
         Corruption,
-        Crimson
+        Crimson,
+        Contagion,
+        Fractured,
+        Nothing,
+        Rotten,
+        Spiral,
+        Starved
     }
 
     public static void OnAddWorldEvilOptions(On_UIWorldCreation.orig_AddWorldEvilOptions orig, UIWorldCreation self, UIElement container, float accumulatedHeight, UIElement.MouseEvent clickEvent, string tagGroup, float usableWidthPercent) {
         orig(self, new UIElement(), accumulatedHeight, clickEvent, tagGroup, usableWidthPercent);
-        EnumDropdownMenu<WorldEvilId> men = new([
-            new("Images/UI/WorldCreation/IconEvilRandom", Lang.misc[103], Language.GetText("UI.WorldDescriptionEvilRandom")),
-            new("Images/UI/WorldCreation/IconEvilCorruption", Lang.misc[101], Language.GetText("UI.WorldDescriptionEvilCorrupt")),
-            new("Images/UI/WorldCreation/IconEvilCrimson", Lang.misc[102], Language.GetText("UI.WorldDescriptionEvilCrimson"))
-        ], Color.White, 1f, 1f, 16f);
-        men.HAlign = 0.5f;
-        men.Width.Set(0, usableWidthPercent * 0.85f);
-        men.Height.Set(34, 0);
-        men.Top.Set(accumulatedHeight, 0f);
-        foreach (var i in men.Options) {
-            i.Width.Set(0, 1);
-            i.Height.Set(0, 1);
+        LocalizedText[] titles = [
+            Lang.misc[103],
+            Lang.misc[101],
+            Lang.misc[102],
+            Language.GetText("Mods.Avalon.World.EvilSelection.Contagion.Title"),
+            Language.GetText($"Mods.{nameof(TheGreatSidegrade)}.World.Creation.EvilFractured.Title"),
+            Language.GetText($"Mods.{nameof(TheGreatSidegrade)}.World.Creation.EvilNothing.Title"),
+            Language.GetText($"Mods.{nameof(TheGreatSidegrade)}.World.Creation.EvilRotten.Title"),
+            Language.GetText($"Mods.{nameof(TheGreatSidegrade)}.World.Creation.EvilSpiral.Title"),
+            Language.GetText($"Mods.{nameof(TheGreatSidegrade)}.World.Creation.EvilStarved.Title")
+        ];
+        LocalizedText[] descriptions = [
+            Language.GetText("UI.WorldDescriptionEvilRandom"),
+            Language.GetText("UI.WorldDescriptionEvilCorrupt"),
+            Language.GetText("UI.WorldDescriptionEvilCrimson"),
+            Language.GetText("Mods.Avalon.World.EvilSelection.Contagion.Description"),
+            Language.GetText($"Mods.{nameof(TheGreatSidegrade)}.World.Creation.EvilFractured.Description"),
+            Language.GetText($"Mods.{nameof(TheGreatSidegrade)}.World.Creation.EvilNothing.Description"),
+            Language.GetText($"Mods.{nameof(TheGreatSidegrade)}.World.Creation.EvilRotten.Description"),
+            Language.GetText($"Mods.{nameof(TheGreatSidegrade)}.World.Creation.EvilSpiral.Description"),
+            Language.GetText($"Mods.{nameof(TheGreatSidegrade)}.World.Creation.EvilStarved.Description")
+        ];
+        Color[] colors = [
+            Color.White,
+            Color.MediumPurple,
+            Color.IndianRed,
+            Color.Green,
+            Color.Gray,
+            Color.Black,
+            new(132, 78, 70),
+            Color.LightSkyBlue,
+            Color.Yellow
+        ];
+        Asset<Texture2D>[] icons = [
+            Main.Assets.Request<Texture2D>("Images/UI/WorldCreation/IconEvilRandom"),
+            Main.Assets.Request<Texture2D>("Images/UI/WorldCreation/IconEvilCorruption"),
+            Main.Assets.Request<Texture2D>("Images/UI/WorldCreation/IconEvilCrimson"),
+            TheGreatSidegrade.HasAvalon ? ModContent.Request<Texture2D>("Avalon/Assets/Textures/UI/WorldCreation/IconContagion",
+                AssetRequestMode.ImmediateLoad) : null,
+            ModContent.Request<Texture2D>($"{TheGreatSidegrade.AssetPath}/Textures/UI/WorldCreation/IconEvilFractured",
+                AssetRequestMode.ImmediateLoad),
+            ModContent.Request<Texture2D>($"{TheGreatSidegrade.AssetPath}/Textures/UI/WorldCreation/IconEvilNothing",
+                AssetRequestMode.ImmediateLoad),
+            ModContent.Request<Texture2D>($"{TheGreatSidegrade.AssetPath}/Textures/UI/WorldCreation/IconEvilRotten",
+                AssetRequestMode.ImmediateLoad),
+            ModContent.Request<Texture2D>($"{TheGreatSidegrade.AssetPath}/Textures/UI/WorldCreation/IconEvilSpiral",
+                AssetRequestMode.ImmediateLoad),
+            ModContent.Request<Texture2D>($"{TheGreatSidegrade.AssetPath}/Textures/UI/WorldCreation/IconEvilStarved",
+                AssetRequestMode.ImmediateLoad),
+        ];
+
+        // this is fucking cursed
+        int f = TheGreatSidegrade.HasAvalon ? 4 : 5;
+        for (int i = 0; i < 2; i++) {
+            int max = i == 0 ? 4 : evilButtons.Length - f;
+            for (int j = f * i; j < (i == 0 ? f : evilButtons.Length); j++) {
+                if (!TheGreatSidegrade.HasAvalon && Enum.GetValues<WorldEvilId>()[j] == WorldEvilId.Contagion) {
+                    evilButtons[j] = null;
+                    continue;
+                }
+                CustomGroupOptionButton<WorldEvilId> groupOptionButton = new(
+                    Enum.GetValues<WorldEvilId>()[j],
+                    titles[j],
+                    descriptions[j],
+                    colors[j],
+                    icons[j],
+                    1f,
+                    1f,
+                    16f) {
+                    Width = StyleDimension.FromPixelsAndPercent(
+                        -(max - 1),
+                        1f / max * usableWidthPercent),
+                    Left = StyleDimension.FromPercent(1f - usableWidthPercent),
+                    HAlign = (j - (f * i) - (!TheGreatSidegrade.HasAvalon && Enum.GetValues<WorldEvilId>()[j] > WorldEvilId.Contagion && i == 0 ? 1 : 0)) / (float) (max - 1),
+                };
+                TheGreatSidegrade.Mod.Logger.Info(1f - usableWidthPercent);
+                groupOptionButton.Top.Set(accumulatedHeight + (38 * i), 0f);
+                groupOptionButton.OnLeftMouseDown += (evt, element) => ClickEvilOption(self, evt, element);
+                groupOptionButton.OnMouseOver += self.ShowOptionDescription;
+                groupOptionButton.OnMouseOut += self.ClearOptionDescription;
+                groupOptionButton.SetSnapPoint(tagGroup, j);
+                container.Append(groupOptionButton);
+                evilButtons[j] = groupOptionButton;
+            }
         }
-        men.SetSnapPoint(tagGroup, 0);
-        container.Append(men);
     }
 
     public static void OnSetDefaultOptions(On_UIWorldCreation.orig_SetDefaultOptions orig, UIWorldCreation self) {
         orig(self);
 
-        //foreach (GroupOptionButton<WorldEvilSelection> evilButton in evilButtons)
-        //    evilButton.SetCurrentOption(SelectedWorldEvil);
+        foreach (CustomGroupOptionButton<WorldEvilId> evilButton in evilButtons)
+            evilButton?.SetCurrentOption(SelectedWorldEvil);
     }
 
     public static void ShowOptionDescription(ILContext il) {
@@ -194,8 +285,8 @@ public class WorldUIHooks {
         c.Emit(OpCodes.Ldloc_0); // localizedText
         c.Emit(OpCodes.Ldarg_2); // listeningElement
         c.EmitDelegate((LocalizedText localizedText, UIElement listeningElement) => {
-            //if (listeningElement is EnumDropdownMenu evilButton)
-            //    localizedText = evilButton.Description;
+            if (listeningElement is CustomGroupOptionButton<WorldEvilId> evilButton)
+                localizedText = evilButton.Description;
 
             return localizedText;
         });
@@ -203,71 +294,24 @@ public class WorldUIHooks {
         c.Emit(OpCodes.Ldloc_0);
     }
 
-    public static void AddEvilOptions(UIWorldCreation self, UIElement container, float accumulatedHeight, UIElement.MouseEvent clickEvent, string tagGroup, float usableWidthPercent) {
-        LocalizedText[] titles = {
-            Lang.misc[103],
-            Lang.misc[101],
-            Lang.misc[102],
-            //Language.GetText(ExxoAvalonOrigins.Mod.GetLocalizationKey("World.EvilSelection.Contagion.Title")),
-        };
-        LocalizedText[] descriptions = {
-            Language.GetText("UI.WorldDescriptionEvilRandom"),
-            Language.GetText("UI.WorldDescriptionEvilCorrupt"),
-            Language.GetText("UI.WorldDescriptionEvilCrimson"),
-            //Language.GetText(ExxoAvalonOrigins.Mod.GetLocalizationKey("World.EvilSelection.Contagion.Description")),
-        };
-        Color[] colors = {
-            Color.White,
-            Color.MediumPurple,
-            Color.IndianRed,
-            //Color.Green,
-        };
-        Asset<Texture2D>[] icons = {
-            Main.Assets.Request<Texture2D>("Images/UI/WorldCreation/IconEvilRandom"),
-            Main.Assets.Request<Texture2D>("Images/UI/WorldCreation/IconEvilCorruption"),
-            Main.Assets.Request<Texture2D>("Images/UI/WorldCreation/IconEvilCrimson"),
-            //Mod.Assets.Request<Texture2D>($"{ExxoAvalonOrigins.TextureAssetsPath}/UI/WorldCreation/IconContagion",
-            //    AssetRequestMode.ImmediateLoad),
-        };
+    public static void ClickEvilOption(UIWorldCreation self, UIMouseEvent _, UIElement listeningElement) {
+        CustomGroupOptionButton<WorldEvilId> groupOptionButton = (CustomGroupOptionButton<WorldEvilId>)listeningElement;
 
-        /*for (int i = 0; i < evilButtons.Length; i++) {
-            var groupOptionButton = new UI.GroupOptionButton<WorldEvilSelection>(
-                Enum.GetValues<WorldEvilSelection>()[i],
-                titles[i],
-                descriptions[i],
-                colors[i],
-                icons[i],
-                1f,
-                1f,
-                16f);
+        SelectedWorldEvil = groupOptionButton.OptionValue;
+        foreach (CustomGroupOptionButton<WorldEvilId> evilButton in evilButtons)
+            evilButton?.SetCurrentOption(SelectedWorldEvil);
 
-            groupOptionButton.OnLeftMouseDown += clickEvent;
-            groupOptionButton.OnMouseOver += self.ShowOptionDescription;
-            groupOptionButton.OnMouseOut += self.ClearOptionDescription;
-
-            buttonGrid.Children.Add(new VanillaToExxoUIAdapter(groupOptionButton) { SnapNode = new SnapNode(tagGroup, i) });
-            evilButtons[i] = groupOptionButton;
-        }*/
-    }
-
-    public static void ClickEvilOption(UIWorldCreation self, UIMouseEvent evt, UIElement listeningElement) {
-        //var groupOptionButton = (GroupOptionButton<WorldEvilSelection>)listeningElement;
-
-        //SelectedWorldEvil = groupOptionButton.OptionValue;
-        //foreach (GroupOptionButton<WorldEvilSelection> evilButton in evilButtons)
-        //    evilButton.SetCurrentOption(SelectedWorldEvil);
-
-        //typeof(UIWorldCreation).GetMethod("UpdatePreviewPlate", BindingFlags.Instance | BindingFlags.NonPublic)?.Invoke(self, []);
+        typeof(UIWorldCreation).GetMethod("UpdatePreviewPlate", BindingFlags.Instance | BindingFlags.NonPublic)?.Invoke(self, []);
     }
 
     public static void UpdatePreviewPlate(ILContext il) {
-        //ILCursor c = new(il);
+        ILCursor c = new(il);
 
-        //c.GotoNext(i =>
-        //        i.MatchLdfld(typeof(UIWorldCreation).GetField("_optionEvil",
-        //            BindingFlags.Instance | BindingFlags.NonPublic)!))
-        //    .GotoNext(MoveType.After, i => i.MatchConvU1())
-        //    .EmitDelegate((byte value) => (byte)SelectedWorldEvil);
+        c.GotoNext(i =>
+                i.MatchLdfld(typeof(UIWorldCreation).GetField("_optionEvil",
+                    BindingFlags.Instance | BindingFlags.NonPublic)!))
+            .GotoNext(MoveType.After, i => i.MatchConvU1())
+            .EmitDelegate((byte value) => (byte) SelectedWorldEvil);
     }
 
     public static void PreviewDrawSelf(ILContext il) {
@@ -286,12 +330,15 @@ public class WorldUIHooks {
                     case 2:
                         break;
                     case 3:
-                        spriteBatch.Draw(TheGreatSidegrade.Mod.Assets.Request<Texture2D>(
-                            $"{TheGreatSidegrade.AssetPath}Textures/UI/WorldCreation/PreviewEvil",
+                        spriteBatch.Draw(ModContent.Request<Texture2D>(
+                            "Avalon/Assets/Textures/UI/WorldCreation/PreviewEvilContagion",
                             AssetRequestMode.ImmediateLoad).Value, position, color);
                         break;
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(evil), evil, null);
+                        spriteBatch.Draw(ModContent.Request<Texture2D>(
+                            $"{TheGreatSidegrade.AssetPath}/Textures/UI/WorldCreation/PreviewEvil{Enum.GetNames<WorldEvilId>()[evil]}",
+                            AssetRequestMode.ImmediateLoad).Value, position, color);
+                        break;
                 }
 
                 return evil;
