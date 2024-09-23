@@ -8,9 +8,9 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Terraria.ObjectData;
 
-namespace TheGreatSidegrade.Content.Tiles.Starved;
+namespace TheGreatSidegrade.Content.Tiles.Fractured;
 
-public class StarvingEgg : ModTile {
+public class FragmentedHeart : ModTile {
     public override void SetStaticDefaults() {
         Main.tileFrameImportant[Type] = true;
         Main.tileLighted[Type] = true;
@@ -23,7 +23,7 @@ public class StarvingEgg : ModTile {
         TileObjectData.newTile.LavaDeath = false;
         TileObjectData.addTile(Type);
 
-        AddMapEntry(new Color(144, 160, 38), LanguageManager.Instance.GetText("StarvingEgg"));
+        AddMapEntry(new Color(144, 160, 38), LanguageManager.Instance.GetText("FragmentedHeart"));
     }
 
     /*public override void AnimateTile(ref int frame, ref int frameCounter) {
@@ -49,9 +49,8 @@ public class StarvingEgg : ModTile {
             //    Item.NewItem(WorldGen.GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 32, 32, ModContent.ItemType<TetanusChakram>(), 1, false, -1, false);
             //else if (num3 == 2)
             //    Item.NewItem(WorldGen.GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 32, 32, ModContent.ItemType<NerveNumbNecklace>(), 1, false, -1, false);
-            /*else*/
-            if (num3 == 3)
-                Item.NewItem(WorldGen.GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 32, 32, ModContent.ItemType<Items.Starved.StarvingEgg>(), 1, false, -1, false);
+            //else if (num3 == 3)
+            //    Item.NewItem(WorldGen.GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 32, 32, ModContent.ItemType<Items.Fractured.Fragmented>(), 1, false, -1, false);
             //else if (num3 == 4)
             //    Item.NewItem(WorldGen.GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 32, 32, ModContent.ItemType<Smogscreen>(), 1, false, -1, false);
             WorldGen.shadowOrbSmashed = true;
@@ -69,23 +68,23 @@ public class StarvingEgg : ModTile {
                         num7 = num8;
                     }
                 }
-                //if (!NPC.AnyNPCs(ModContent.NPCType<TheStarved>()))
-                //    NPC.SpawnOnPlayer(plr, ModContent.NPCType<TheStarved>());
+                //if (!NPC.AnyNPCs(ModContent.NPCType<Oblivion>()))
+                //    NPC.SpawnOnPlayer(plr, ModContent.NPCType<Oblivion>());
             } else {
-                string text = Lang.misc[WorldGen.shadowOrbCount == 2 ? 11 : 10].Value;
+                string text = Language.GetTextValue($"Mods.{nameof(TheGreatSidegrade)}.World.HappyMessages.{Math.Max(1, WorldGen.shadowOrbCount)}");
                 if (Main.netMode == NetmodeID.SinglePlayer)
                     Main.NewText(text, 50, 255, 130);
                 else if (Main.netMode == NetmodeID.Server)
                     ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(text), new(50, 255, 130));
             }
-            SoundEngine.PlaySound(SoundID.Splash, new(i * 16, j * 16));
+            SoundEngine.PlaySound(SoundID.Tink, new(i * 16, j * 16));
         }
     }
 
     public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
         var brightness = Main.rand.Next(-5, 6) * 0.0025f;
-        r = (144f / 255f + brightness) * 0.65f;
-        g = (160f / 255f + brightness) * 0.65f;
-        b = (38f / 255f + brightness) * 0.65f;
+        r = (130f / 255f + brightness) * 0.65f;
+        g = (110f / 255f + brightness) * 0.65f;
+        b = (110f / 255f + brightness) * 0.65f;
     }
 }

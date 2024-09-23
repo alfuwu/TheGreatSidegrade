@@ -72,9 +72,7 @@ public class TwistedEnergyCore : ModTile {
                 if (!NPC.AnyNPCs(ModContent.NPCType<ChronovoreHead>()))
                     NPC.SpawnOnPlayer(plr, ModContent.NPCType<ChronovoreHead>());
             } else {
-                string text = Lang.misc[10].Value;
-                if (WorldGen.shadowOrbCount == 2)
-                    text = Lang.misc[11].Value;
+                string text = Lang.misc[WorldGen.shadowOrbCount == 2 ? 11 : 10].Value;
                 if (Main.netMode == NetmodeID.SinglePlayer)
                     Main.NewText(text, 50, 255, 130);
                 else if (Main.netMode == NetmodeID.Server)

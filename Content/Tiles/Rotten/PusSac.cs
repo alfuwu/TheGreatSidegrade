@@ -50,7 +50,7 @@ public class PusSac : ModTile {
             //else if (num3 == 2)
             //    Item.NewItem(WorldGen.GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 32, 32, ModContent.ItemType<NerveNumbNecklace>(), 1, false, -1, false);
             //else if (num3 == 3)
-            //    Item.NewItem(WorldGen.GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 32, 32, ModContent.ItemType<Items.Starved.StarvingEgg>(), 1, false, -1, false);
+            //    Item.NewItem(WorldGen.GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 32, 32, ModContent.ItemType<Items.Rotten.RottenAbomination>(), 1, false, -1, false);
             //else if (num3 == 4)
             //    Item.NewItem(WorldGen.GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 32, 32, ModContent.ItemType<Smogscreen>(), 1, false, -1, false);
             WorldGen.shadowOrbSmashed = true;
@@ -71,9 +71,7 @@ public class PusSac : ModTile {
                 //if (!NPC.AnyNPCs(ModContent.NPCType<TitanOfRot>()))
                 //    NPC.SpawnOnPlayer(plr, ModContent.NPCType<TitanOfRot>());
             } else {
-                string text = Lang.misc[10].Value;
-                if (WorldGen.shadowOrbCount == 2)
-                    text = Lang.misc[11].Value;
+                string text = Lang.misc[WorldGen.shadowOrbCount == 2 ? 11 : 10].Value;
                 if (Main.netMode == NetmodeID.SinglePlayer)
                     Main.NewText(text, 50, 255, 130);
                 else if (Main.netMode == NetmodeID.Server)

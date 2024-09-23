@@ -143,26 +143,14 @@ World: {
 }
 
 Tiles: {
-	AltarOfTheStarvingOne.MapEntry: Altar of the Starving One
+	ShatteredAltar.MapEntry: Shattered Altar
+	ObliteratedRemnantAltar.MapEntry: Obliterated Remnant Altar
+	DeadOnesAltar.MapEntry: Dead One's Altar
 	TwistedShrine.MapEntry: Twisted Shrine
+	AltarOfTheStarvingOne.MapEntry: Altar of the Starving One
 }
 
 Buffs: {
-	Spiraling: {
-		DisplayName: Spiraling
-		Description: Your mind is twisting!
-	}
-
-	BlightedCorrosion: {
-		DisplayName: Blighted Corrosion
-		Description: Your body is rotting!
-	}
-
-	Doomed: {
-		DisplayName: Doomed
-		Description: You are doomed...
-	}
-
 	FracturingStage1: {
 		DisplayName: Unwhole
 		Description: Your body doesn't feel right
@@ -176,6 +164,21 @@ Buffs: {
 	FracturingStage3: {
 		DisplayName: Fractured
 		Description: You're on the edge
+	}
+
+	Doomed: {
+		DisplayName: Doomed
+		Description: You are doomed...
+	}
+
+	BlightedCorrosion: {
+		DisplayName: Blighted Corrosion
+		Description: Your body is rotting!
+	}
+
+	Spiraling: {
+		DisplayName: Spiraling
+		Description: Your mind is twisting!
 	}
 
 	Starving: {

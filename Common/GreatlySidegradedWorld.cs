@@ -50,7 +50,7 @@ public class GreatlySidegradedWorld : ModSystem {
             worldEvil = WorldEvil.Crimson;
         } else if (WorldGen.WorldGenParam_Evil == -1) {
             Mod.Logger.Info("RANDOM WORLD EVIL");
-            byte avalonModifier = TheGreatSidegrade.HasAvalon ? (byte)0 : (byte)1;
+            byte avalonModifier = TheGreatSidegrade.HasAvalon ? (byte) 0 : (byte) 1;
             if (WorldGen.genRand.NextBool(Enum.GetValues<WorldEvil>().Length - 3, Enum.GetValues<WorldEvil>().Length - avalonModifier))
                 worldEvil = PickRandomEvil();
             else if (TheGreatSidegrade.IsContagion)
