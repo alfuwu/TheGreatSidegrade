@@ -1,5 +1,6 @@
 ﻿using Terraria;
 using Terraria.GameContent.UI.Elements;
+using Terraria.GameContent.UI.States;
 using TheGreatSidegrade.Common.Hooks.Compatibility;
 
 namespace TheGreatSidegrade.Common.Hooks;
@@ -18,6 +19,14 @@ public class Hooks {
         On_Lang.GetDryadWorldStatusDialog += LangHooks.OnGetDryadWorldStatusDialog;
         On_AWorldListItem.GetIcon += WorldUIHooks.OnGetIcon;
         //On_UIWorldListItem.DrawSelf += WorldUIHooks.ModifyIcon;
+
+        // world creation ui
+        IL_UIWorldCreation.BuildPage += WorldUIHooks.BuildPage;
+        IL_UIWorldCreation.ShowOptionDescription += WorldUIHooks.ShowOptionDescription;
+        IL_UIWorldCreation.UpdatePreviewPlate += WorldUIHooks.UpdatePreviewPlate;
+        IL_UIWorldCreationPreview.DrawSelf += WorldUIHooks.PreviewDrawSelf;
+        On_UIWorldCreation.SetDefaultOptions += WorldUIHooks.OnSetDefaultOptions;
+        On_UIWorldCreation.AddWorldEvilOptions += WorldUIHooks.OnAddWorldEvilOptions;
 
         // mod hooks
         if (TheGreatSidegrade.HasAvalon) {
