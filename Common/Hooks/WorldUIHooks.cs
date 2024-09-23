@@ -360,7 +360,8 @@ public class WorldUIHooks {
         List<SnapPoint> snapGroup3 = GetSnapGroup(self, snapPoints, "evil");
         num += snapGroup.Count + snapGroup2.Count;
         List<SnapPoint> snapGroup4 = GetSnapGroup(self, snapPoints, "evil2");
-        List<SnapPoint> snapGroup5 = GetSnapGroup(self, snapPoints, "hallow");
+        List<SnapPoint> snapGroup5 = GetSnapGroup(self, snapPoints, "underworld");
+        List<SnapPoint> snapGroup6 = GetSnapGroup(self, snapPoints, "hallow");
 
         UILinkPoint uILinkPoint;
         UILinkPoint uILinkPoint2 = UILinkPointNavigator.Points[3000];
@@ -389,26 +390,44 @@ public class WorldUIHooks {
             array3[l] = uILinkPoint;
             num++;
         }
+        UILinkPoint[] array4 = snapGroup6.Count > 0 ? new UILinkPoint[snapGroup6.Count] : null;
+        for (int l = 0; l < snapGroup6.Count; l++) {
+            UILinkPointNavigator.SetPosition(num, snapGroup6[l].Position);
+            uILinkPoint = UILinkPointNavigator.Points[num];
+            uILinkPoint.Unlink();
+            array4[l] = uILinkPoint;
+            num++;
+        }
 
+        // redcode
         LoopHorizontalLineLinks(self, array2);
         EstablishUpDownRelationship(self, array, array2);
-        if (array3 == null) {
-            for (int n = 0; n < array2.Length; n++)
-                array2[n].Down = uILinkPoint2.ID;
-
-            array2[^1].Down = uILinkPoint3.ID;
-            uILinkPoint3.Up = array2[^1].ID;
-            uILinkPoint2.Up = array2[0].ID;
-        } else {
+        if (array4 != null && array3 != null) {
+            LoopHorizontalLineLinks(self, array3);
+            LoopHorizontalLineLinks(self, array4);
+            EstablishUpDownRelationship(self, array2, array3);
+            EstablishUpDownRelationship(self, array3, array4);
+            FinishConnections(array4, uILinkPoint2, uILinkPoint3);
+        } else if (array4 != null) {
+            LoopHorizontalLineLinks(self, array4);
+            EstablishUpDownRelationship(self, array2, array4);
+            FinishConnections(array4, uILinkPoint2, uILinkPoint3);
+        } else if (array3 != null) {
             LoopHorizontalLineLinks(self, array3);
             EstablishUpDownRelationship(self, array2, array3);
-            for (int n = 0; n < array3.Length; n++)
-                array3[n].Down = uILinkPoint2.ID;
-
-            array3[^1].Down = uILinkPoint3.ID;
-            uILinkPoint3.Up = array3[^1].ID;
-            uILinkPoint2.Up = array3[0].ID;
+            FinishConnections(array3, uILinkPoint2, uILinkPoint3);
+        } else {
+            FinishConnections(array2, uILinkPoint2, uILinkPoint3);
         }
+    }
+
+    private static void FinishConnections(UILinkPoint[] array, UILinkPoint left, UILinkPoint right) {
+        for (int n = 0; n < array.Length; n++)
+            array[n].Down = left.ID;
+
+        array[^1].Down = right.ID;
+        right.Up = array[^1].ID;
+        left.Up = array[0].ID;
     }
 
     // reflection go brrrr

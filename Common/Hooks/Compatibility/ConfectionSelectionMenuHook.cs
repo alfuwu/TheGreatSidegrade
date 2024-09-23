@@ -14,7 +14,7 @@ public class ConfectionSelectionMenuHook {
 
         foreach (Module mod in TheGreatSidegrade.Confection.GetType().Assembly.GetModules())
             if (Utils.TryGetType(mod, "TheConfectionRebirth.Hooks.ConfectionSelectionMenu", out Type type))
-                applyInfo = type.GetMethod("OnSetupGamepadPoints", BindingFlags.Public | BindingFlags.Static);
+                applyInfo = type.GetMethod("OnSetupGamepadPoints", BindingFlags.Public | BindingFlags.Static | BindingFlags.IgnoreCase);
 
         if (applyInfo != null) {
             applyHook = new(applyInfo, Utils.CancelOn);
