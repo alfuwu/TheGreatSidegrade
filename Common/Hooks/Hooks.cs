@@ -1,6 +1,7 @@
 ﻿using Terraria;
 using Terraria.GameContent.UI.Elements;
 using Terraria.GameContent.UI.States;
+using Terraria.ModLoader;
 using TheGreatSidegrade.Common.Hooks.Compatibility;
 
 namespace TheGreatSidegrade.Common.Hooks;
@@ -38,6 +39,8 @@ public class Hooks {
             ConfectionSelectionMenuHook.Apply();
             ConfectionDryadTextDetourHook.Apply();
         }
+        if (ModLoader.HasMod("TheDepths"))
+            TheDepthsSelectionMenuHook.Apply();
     }
 
     public static void UnregisterHooks() {
@@ -66,5 +69,7 @@ public class Hooks {
             ConfectionSelectionMenuHook.Unapply();
             ConfectionDryadTextDetourHook.Unapply();
         }
+        if (ModLoader.HasMod("TheDepths"))
+            TheDepthsSelectionMenuHook.Unapply();
     }
 }

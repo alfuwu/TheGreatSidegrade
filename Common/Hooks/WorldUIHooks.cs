@@ -66,7 +66,7 @@ public class WorldUIHooks {
             GreatlySidegradedWorld.WorldEvil.Nothing => 0xFFFFFFFFu,
             GreatlySidegradedWorld.WorldEvil.Rotten => 0xFFF0CFFFu,
             GreatlySidegradedWorld.WorldEvil.Spiral => 0xFFFFA291u,
-            GreatlySidegradedWorld.WorldEvil.Starved => 0xFF4C7DFFu,
+            GreatlySidegradedWorld.WorldEvil.Starved => 0xFF2C5DFFu,
             _ => 0u
         };
     }
@@ -165,6 +165,10 @@ public class WorldUIHooks {
         // Increase page size
         c.GotoNext(i => i.MatchStloc(0));
         c.Emit(OpCodes.Ldc_I4, 38);
+        c.Emit(OpCodes.Add);
+        c.GotoNext(i => i.MatchLdcR4(170f)) // fix page position
+            .GotoNext(i => i.MatchLdloc0());
+        c.Emit(OpCodes.Ldc_R4, 38f);
         c.Emit(OpCodes.Add);
     }
 
@@ -363,7 +367,7 @@ public class WorldUIHooks {
         UILinkPoint uILinkPoint3 = UILinkPointNavigator.Points[3001];
 
         UILinkPoint[] array = new UILinkPoint[snapGroup3.Count];
-        for (int l = 0; l < snapGroup4.Count; l++) {
+        for (int l = 0; l < snapGroup3.Count; l++) {
             UILinkPointNavigator.SetPosition(num, snapGroup3[l].Position);
             uILinkPoint = UILinkPointNavigator.Points[num];
             array[l] = uILinkPoint;
