@@ -18,7 +18,6 @@ public class Hooks {
         On_WorldGen.CountTiles += WorldGenHooks.CountTiles;
         On_Lang.GetDryadWorldStatusDialog += LangHooks.OnGetDryadWorldStatusDialog;
         On_AWorldListItem.GetIcon += WorldUIHooks.OnGetIcon;
-        //On_UIWorldListItem.DrawSelf += WorldUIHooks.ModifyIcon;
 
         // world creation ui
         IL_UIWorldCreation.BuildPage += WorldUIHooks.BuildPage;
@@ -28,14 +27,17 @@ public class Hooks {
         IL_UIWorldCreationPreview.DrawSelf += WorldUIHooks.PreviewDrawSelf;
         On_UIWorldCreation.SetDefaultOptions += WorldUIHooks.OnSetDefaultOptions;
         On_UIWorldCreation.AddWorldEvilOptions += WorldUIHooks.OnAddWorldEvilOptions;
+        On_UIWorldCreation.SetupGamepadPoints += WorldUIHooks.OnSetupGamepadPoints;
 
         // mod hooks
         if (TheGreatSidegrade.HasAvalon) {
             ContagionSelectionMenuHook.Apply();
             AvalonDryadTextDetourHook.Apply();
         }
-        if (TheGreatSidegrade.HasConfection)
+        if (TheGreatSidegrade.HasConfection) {
+            ConfectionSelectionMenuHook.Apply();
             ConfectionDryadTextDetourHook.Apply();
+        }
     }
 
     public static void UnregisterHooks() {
@@ -46,13 +48,23 @@ public class Hooks {
         On_WorldGen.TileRunner -= WorldGenHooks.TileRunner;
         On_Lang.GetDryadWorldStatusDialog -= LangHooks.OnGetDryadWorldStatusDialog;
         On_AWorldListItem.GetIcon -= WorldUIHooks.OnGetIcon;
-        //On_UIWorldListItem.DrawSelf -= WorldUIHooks.ModifyIcon;
+
+        IL_UIWorldCreation.BuildPage -= WorldUIHooks.BuildPage;
+        IL_UIWorldCreation.MakeInfoMenu -= WorldUIHooks.MakeInfoMenu;
+        IL_UIWorldCreation.ShowOptionDescription -= WorldUIHooks.ShowOptionDescription;
+        IL_UIWorldCreation.UpdatePreviewPlate -= WorldUIHooks.UpdatePreviewPlate;
+        IL_UIWorldCreationPreview.DrawSelf -= WorldUIHooks.PreviewDrawSelf;
+        On_UIWorldCreation.SetDefaultOptions -= WorldUIHooks.OnSetDefaultOptions;
+        On_UIWorldCreation.AddWorldEvilOptions -= WorldUIHooks.OnAddWorldEvilOptions;
+        On_UIWorldCreation.SetupGamepadPoints -= WorldUIHooks.OnSetupGamepadPoints;
 
         if (TheGreatSidegrade.HasAvalon) {
             ContagionSelectionMenuHook.Unapply();
             AvalonDryadTextDetourHook.Unapply();
         }
-        if (TheGreatSidegrade.HasConfection)
+        if (TheGreatSidegrade.HasConfection) {
+            ConfectionSelectionMenuHook.Unapply();
             ConfectionDryadTextDetourHook.Unapply();
+        }
     }
 }

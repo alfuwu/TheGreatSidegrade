@@ -66,6 +66,7 @@ public class GreatlySidegradedWorld : ModSystem {
         } else if (WorldGen.WorldGenParam_Evil > 1 && WorldGen.WorldGenParam_Evil < Enum.GetValues<WorldEvil>().Length) {
             worldEvil = (WorldEvil) WorldGen.WorldGenParam_Evil;
         }
+
         // scuffed, but works
         WorldGen.WorldGenParam_Evil = worldEvil == WorldEvil.Crimson ? 1 : 0;
         WorldGen.crimson = WorldGen.WorldGenParam_Evil == 1;

@@ -4,6 +4,7 @@ using Mono.Cecil.Cil;
 using MonoMod.Cil;
 using ReLogic.Content;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Terraria;
@@ -13,6 +14,7 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.UI;
+using Terraria.UI.Gamepad;
 using TheGreatSidegrade.Assets;
 using TheGreatSidegrade.Common.UI;
 
@@ -145,6 +147,18 @@ public class WorldUIHooks {
     private static readonly CustomGroupOptionButton<WorldEvilId>[] evilButtons = new CustomGroupOptionButton<WorldEvilId>[Enum.GetValues<WorldEvilId>().Length];
     public static WorldEvilId SelectedWorldEvil { get; set; }
 
+    public enum WorldEvilId {
+        Random,
+        Corruption,
+        Crimson,
+        Contagion,
+        Fractured,
+        Nothing,
+        Rotten,
+        Spiral,
+        Starved
+    }
+
     public static void BuildPage(ILContext il) {
         ILCursor c = new(il);
 
@@ -163,18 +177,6 @@ public class WorldUIHooks {
         c.Emit(OpCodes.Ldc_R4, 38f);
         c.Emit(OpCodes.Add);
         c.Emit(OpCodes.Stloc_1);
-    }
-
-    public enum WorldEvilId {
-        Random,
-        Corruption,
-        Crimson,
-        Contagion,
-        Fractured,
-        Nothing,
-        Rotten,
-        Spiral,
-        Starved
     }
 
     public static void OnAddWorldEvilOptions(On_UIWorldCreation.orig_AddWorldEvilOptions orig, UIWorldCreation self, UIElement container, float accumulatedHeight, UIElement.MouseEvent clickEvent, string tagGroup, float usableWidthPercent) {
@@ -259,7 +261,7 @@ public class WorldUIHooks {
                 groupOptionButton.OnLeftMouseDown += (evt, element) => ClickEvilOption(self, evt, element);
                 groupOptionButton.OnMouseOver += self.ShowOptionDescription;
                 groupOptionButton.OnMouseOut += self.ClearOptionDescription;
-                groupOptionButton.SetSnapPoint(tagGroup, j);
+                groupOptionButton.SetSnapPoint(i == 0 ? tagGroup : "evil2", j);
                 container.Append(groupOptionButton);
                 evilButtons[j] = groupOptionButton;
             }
@@ -343,5 +345,81 @@ public class WorldUIHooks {
 
                 return evil;
             });
+    }
+
+    public static void OnSetupGamepadPoints(On_UIWorldCreation.orig_SetupGamepadPoints orig, UIWorldCreation self, SpriteBatch spriteBatch) {
+        orig(self, spriteBatch);
+        int num = 3006;
+        List<SnapPoint> snapPoints = self.GetSnapPoints();
+        List<SnapPoint> snapGroup = GetSnapGroup(self, snapPoints, "size");
+        List<SnapPoint> snapGroup2 = GetSnapGroup(self, snapPoints, "difficulty");
+        List<SnapPoint> snapGroup3 = GetSnapGroup(self, snapPoints, "evil");
+        num += snapGroup.Count + snapGroup2.Count;
+        List<SnapPoint> snapGroup4 = GetSnapGroup(self, snapPoints, "evil2");
+        List<SnapPoint> snapGroup5 = GetSnapGroup(self, snapPoints, "hallow");
+
+        UILinkPoint uILinkPoint;
+        UILinkPoint uILinkPoint2 = UILinkPointNavigator.Points[3000];
+        UILinkPoint uILinkPoint3 = UILinkPointNavigator.Points[3001];
+
+        UILinkPoint[] array = new UILinkPoint[snapGroup3.Count];
+        for (int l = 0; l < snapGroup4.Count; l++) {
+            UILinkPointNavigator.SetPosition(num, snapGroup3[l].Position);
+            uILinkPoint = UILinkPointNavigator.Points[num];
+            array[l] = uILinkPoint;
+            num++;
+        }
+        UILinkPoint[] array2 = new UILinkPoint[snapGroup4.Count];
+        for (int l = 0; l < snapGroup4.Count; l++) {
+            UILinkPointNavigator.SetPosition(num, snapGroup4[l].Position);
+            uILinkPoint = UILinkPointNavigator.Points[num];
+            uILinkPoint.Unlink();
+            array2[l] = uILinkPoint;
+            num++;
+        }
+        UILinkPoint[] array3 = snapGroup5.Count > 0 ? new UILinkPoint[snapGroup5.Count] : null;
+        for (int l = 0; l < snapGroup5.Count; l++) {
+            UILinkPointNavigator.SetPosition(num, snapGroup5[l].Position);
+            uILinkPoint = UILinkPointNavigator.Points[num];
+            uILinkPoint.Unlink();
+            array3[l] = uILinkPoint;
+            num++;
+        }
+
+        LoopHorizontalLineLinks(self, array2);
+        EstablishUpDownRelationship(self, array, array2);
+        if (array3 == null) {
+            for (int n = 0; n < array2.Length; n++)
+                array2[n].Down = uILinkPoint2.ID;
+
+            array2[^1].Down = uILinkPoint3.ID;
+            uILinkPoint3.Up = array2[^1].ID;
+            uILinkPoint2.Up = array2[0].ID;
+        } else {
+            LoopHorizontalLineLinks(self, array3);
+            EstablishUpDownRelationship(self, array2, array3);
+            for (int n = 0; n < array3.Length; n++)
+                array3[n].Down = uILinkPoint2.ID;
+
+            array3[^1].Down = uILinkPoint3.ID;
+            uILinkPoint3.Up = array3[^1].ID;
+            uILinkPoint2.Up = array3[0].ID;
+        }
+    }
+
+    // reflection go brrrr
+    private static List<SnapPoint> GetSnapGroup(UIWorldCreation self, List<SnapPoint> snapPoints, string group) {
+        return (List<SnapPoint>) typeof(UIWorldCreation).GetMethod("GetSnapGroup", BindingFlags.NonPublic | BindingFlags.Instance)?
+            .Invoke(self, [snapPoints, group]);
+    }
+
+    private static void LoopHorizontalLineLinks(UIWorldCreation self, UILinkPoint[] pointsLine) {
+        typeof(UIWorldCreation).GetMethod("LoopHorizontalLineLinks", BindingFlags.NonPublic | BindingFlags.Instance)?
+            .Invoke(self, [pointsLine]);
+    }
+
+    private static void EstablishUpDownRelationship(UIWorldCreation self, UILinkPoint[] topSide, UILinkPoint[] bottomSide) {
+        typeof(UIWorldCreation).GetMethod("EstablishUpDownRelationship", BindingFlags.NonPublic | BindingFlags.Instance)?
+            .Invoke(self, [topSide, bottomSide]);
     }
 }

@@ -1,15 +1,20 @@
 ﻿using MonoMod.RuntimeDetour;
+using System;
 using System.Reflection;
 using Terraria.ModLoader;
 
 namespace TheGreatSidegrade.Common.Hooks.Compatibility;
 
 [ExtendsFromMod("TheConfectionRebirth")]
-public class ConfectionDryadTextDetourHook {
+public class ConfectionSelectionMenuHook {
     private static ILHook applyHook = null;
 
     public static void Apply() {
-        MethodInfo applyInfo = TheGreatSidegrade.Confection.GetType().GetMethod("On_Lang_GetDryadWorldStatusDialog", BindingFlags.NonPublic | BindingFlags.Instance);
+        MethodInfo applyInfo = null;
+
+        foreach (Module mod in TheGreatSidegrade.Confection.GetType().Assembly.GetModules())
+            if (Utils.TryGetType(mod, "TheConfectionRebirth.Hooks.ConfectionSelectionMenu", out Type type))
+                applyInfo = type.GetMethod("OnSetupGamepadPoints", BindingFlags.Public | BindingFlags.Static);
 
         if (applyInfo != null) {
             applyHook = new(applyInfo, Utils.CancelOn);
