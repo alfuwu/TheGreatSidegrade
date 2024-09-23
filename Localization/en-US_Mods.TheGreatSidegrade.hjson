@@ -98,7 +98,7 @@ SpawnInfo: {
 		'''
 		Use a [i:TheGreatSidegrade/TimeCapsule] in the Spiral.
 
-		Or smash 3 Twisted Cores in the Spiral.
+		Or smash 3 Twisted Energy Cores in the Spiral.
 		'''
 	TitanOfRot:
 		'''
@@ -135,6 +135,11 @@ World: {
 		Spiral.Message: Twisting the world around a donut
 		Starved.Message: The world hungers
 	}
+
+	HappyMessages: {
+		1: You are filled with happiness
+		2: You feel indescribably at peace
+	}
 }
 
 Tiles: {
@@ -143,9 +148,39 @@ Tiles: {
 }
 
 Buffs: {
-	SpiralingDebuff: {
-		DisplayName: Spiraling Debuff
-		Description: Mods.TheGreatSidegrade.Buffs.SpiralingDebuff.Description
+	Spiraling: {
+		DisplayName: Spiraling
+		Description: Your mind is twisting!
+	}
+
+	BlightedCorrosion: {
+		DisplayName: Blighted Corrosion
+		Description: Your body is rotting!
+	}
+
+	Doomed: {
+		DisplayName: Doomed
+		Description: You are doomed...
+	}
+
+	FracturingStage1: {
+		DisplayName: Unwhole
+		Description: Your body doesn't feel right
+	}
+
+	FracturingStage2: {
+		DisplayName: Fracturing
+		Description: You're falling apart!
+	}
+
+	FracturingStage3: {
+		DisplayName: Fractured
+		Description: You're on the edge
+	}
+
+	Starving: {
+		DisplayName: Starving
+		Description: You're very hungry
 	}
 }
 
@@ -154,4 +189,10 @@ Events: {
 		Start: A meteor shower is happening!
 		End: The meteor shower has ended... for now :)
 	}
+}
+
+NPCs: {
+	ChronovoreHead.DisplayName: The Chronovore
+	ChronovoreBody.DisplayName: The Chronovore Segment
+	ChronovoreTail.DisplayName: The Chronovore Tail
 }

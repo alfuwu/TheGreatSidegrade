@@ -4,12 +4,17 @@ The Great Sidegrade (pending trademark) is a Terraria mod that expands Terraria 
 - 0 new weapons
 - 0 new weapon types
 - 0 new accessories
+- 1 new pets
+- 0 new mounts
 - 0 new consumables
-- 1 new evils
+- 1 new ammo
+- 5 new world evils
 - 0 new structures
 - 0 new monsters
-- 0 new bosses
-- 10 new tiles
+- 1 new bosses
+- 18 new tiles
 - 4 new walls
+- 1 new event
+- 1 new buff
 
 The Great Sidegrade is currently in development. Please be patient while Sidegrade Inc. provides you with your greatest™ Terraria experience yet.

@@ -113,6 +113,23 @@ public class WorldUIHooks {
                 string iconPath = $"{nameof(TheGreatSidegrade)}/Assets/Textures/UI/";
                 iconPath += Enum.GetName(worldEvil) + "/Icon";
                 iconPath += self.Data.IsHardMode ? "Hallow" : "";
+                if (self.Data.ZenithWorld)
+                    iconPath += "";//"Everything";
+                else if (self.Data.DrunkWorld)
+                    iconPath += "Corruption";
+                else if (self.Data.ForTheWorthy)
+                    iconPath += "FTW";
+                else if (self.Data.NotTheBees)
+                    iconPath += "NotTheBes";
+                else if (self.Data.Anniversary)
+                    iconPath += "Anniversary";
+                else if (self.Data.DontStarve)
+                    iconPath += "DontStarve";
+                else if (self.Data.RemixWorld)
+                    iconPath += "Remix";
+                else if (self.Data.NoTrapsWorld)
+                    iconPath += "Traps";
+
                 return ModContent.Request<Texture2D>(iconPath, AssetRequestMode.ImmediateLoad);
             }
         }

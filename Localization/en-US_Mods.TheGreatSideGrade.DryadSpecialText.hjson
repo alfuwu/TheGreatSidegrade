@@ -998,4 +998,4 @@ WorldStatusHallowCandyCorruptSickFracturedNothingRottenSpiralStarved: "{0} is {1
 WorldStatusHallowCandyCrimsonSickFracturedNothingRottenSpiralStarved: "{0} is {1}% hallow, {2}% confected, {3}% crimson, {4}% contagion, {5}% fractured, {6}% nothing, {7}% rotten, {8}% twisted, and {9}% starved."
 WorldStatusHallowCorruptCrimsonSickFracturedNothingRottenSpiralStarved: "{0} is {1}% hallow, {2}% corrupt, {3}% crimson, {4}% contagion, {5}% fractured, {6}% nothing, {7}% rotten, {8}% twisted, and {9}% starved."
 WorldStatusCandyCorruptCrimsonSickFracturedNothingRottenSpiralStarved: "{0} is {1}% confected, {2}% corrupt, {3}% crimson, {4}% contagion, {5}% fractured, {6}% nothing, {7}% rotten, {8}% twisted, and {9}% starved."
-WorldStatusAll: "{0} is {1}% hallow, {2}% confected, {3}% corrupt, {4}% crimson, {5}% contagion, {6}% fractured, {7}% nothing, {8}% rotten, {9}% twisted, {10}% starved." // rip perfect thousand lines :c
+WorldStatusAll: "{0} is {1}% hallow, {2}% confected, {3}% corrupt, {4}% crimson, {5}% contagion, {6}% fractured, {7}% nothing, {8}% rotten, {9}% twisted, {10}% starved."

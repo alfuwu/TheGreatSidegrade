@@ -44,16 +44,16 @@ public class GreatlySidegradedWorld : ModSystem {
     }
 
     public override void PreWorldGen() {
-        if (WorldGen.WorldGenParam_Evil == 0 || TheGreatSidegrade.IsContagion) {
+        if (WorldGen.WorldGenParam_Evil == 0) {
             worldEvil = WorldEvil.Corruption;
         } else if (WorldGen.WorldGenParam_Evil == 1) {
             worldEvil = WorldEvil.Crimson;
         } else if (WorldGen.WorldGenParam_Evil == -1) {
             Mod.Logger.Info("RANDOM WORLD EVIL");
-            byte avalonModifier = TheGreatSidegrade.HasAvalon ? (byte) 0 : (byte) 1;
+            byte avalonModifier = TheGreatSidegrade.HasAvalon ? (byte)0 : (byte)1;
             if (WorldGen.genRand.NextBool(Enum.GetValues<WorldEvil>().Length - 3, Enum.GetValues<WorldEvil>().Length - avalonModifier))
                 worldEvil = PickRandomEvil();
-            else if (TheGreatSidegrade.HasAvalon && TheGreatSidegrade.IsContagion)
+            else if (TheGreatSidegrade.IsContagion)
                 worldEvil = WorldEvil.Contagion;
             else if (WorldGen.genRand.NextBool(2))
                 worldEvil = WorldEvil.Crimson;
@@ -61,11 +61,12 @@ public class GreatlySidegradedWorld : ModSystem {
                 worldEvil = WorldEvil.Corruption;
             Mod.Logger.Info("CRIMSN: " + WorldGen.crimson);
             Mod.Logger.Info("WORLDE EVL: " + Enum.GetName(worldEvil));
-        }
-        if (WorldGen.WorldGenParam_Evil > 2)
+        } else if (WorldGen.WorldGenParam_Evil > 1 && WorldGen.WorldGenParam_Evil < Enum.GetValues<WorldEvil>().Length) {
             worldEvil = (WorldEvil) WorldGen.WorldGenParam_Evil;
+        }
         // scuffed, but works
         WorldGen.WorldGenParam_Evil = worldEvil == WorldEvil.Crimson ? 1 : 0;
+        WorldGen.crimson = WorldGen.WorldGenParam_Evil == 1;
         if (TheGreatSidegrade.HasAvalon)
             ContagionSelectionMenuHook.SetContagion(worldEvil == WorldEvil.Contagion);
     }
@@ -129,12 +130,10 @@ public class GreatlySidegradedWorld : ModSystem {
         bw.Write(tTwisted);
         bw.Write(tStarved);
 
-        //TheGreatSidegrade.Mod.Logger.Info("YES YES YES SENDING " + AvalonWorld.tSick);
-
         // tSick isn't syncing and i dont know why
         // but the dryad doesn't think the world is sick at all ever
-        if (TheGreatSidegrade.HasAvalon && TheGreatSidegrade.Avalon.TryFind("AvalonWorld", out ModSystem world))
-            bw.Write((byte) world.GetType().GetField("tSick", BindingFlags.Public | BindingFlags.Static).GetValue(null));
+        //if (TheGreatSidegrade.HasAvalon && TheGreatSidegrade.Avalon.TryFind("AvalonWorld", out ModSystem world))
+        //    bw.Write((byte) world.GetType().GetField("tSick", BindingFlags.Public | BindingFlags.Static).GetValue(null));
     }
 
     public override void NetReceive(BinaryReader br) {
@@ -146,15 +145,13 @@ public class GreatlySidegradedWorld : ModSystem {
         tStarved = br.ReadByte();
         TheGreatSidegrade.Mod.Logger.Info("YES YES YES LOADING");
 
-        if (TheGreatSidegrade.HasAvalon && TheGreatSidegrade.Avalon.TryFind("AvalonWorld", out ModSystem world)) {
-            byte b = br.ReadByte();
-            Mod.Logger.Info("TSICK : " + b);
-            world.GetType().GetField("tSick", BindingFlags.Public | BindingFlags.Static).SetValue(null, b);
-        }
+        //if (TheGreatSidegrade.HasAvalon && TheGreatSidegrade.Avalon.TryFind("AvalonWorld", out ModSystem world))
+        //    world.GetType().GetField("tSick", BindingFlags.Public | BindingFlags.Static).SetValue(null, br.ReadByte());
     }
 
     public override void SaveWorldData(TagCompound tag) {
-        tag["WorldEvil"] = (byte) worldEvil;
+        if (!IsVanillaEvil(worldEvil))
+            tag["WorldEvil"] = (byte) worldEvil;
         foreach (ModEvent e in ModContent.GetContent<ModEvent>()) {
             if (ActiveEvents.Contains(e.GetType())) {
                 TagCompound compound = [];
@@ -165,7 +162,8 @@ public class GreatlySidegradedWorld : ModSystem {
     }
 
     public override void SaveWorldHeader(TagCompound tag) {
-        tag["WorldEvil"] = (byte) worldEvil;
+        if (!IsVanillaEvil(worldEvil)) // we don't care about the icon if its vanilla/contagion
+            tag["WorldEvil"] = (byte) worldEvil;
     }
 
 
@@ -228,12 +226,12 @@ public class GreatlySidegradedWorld : ModSystem {
             if (ActiveEvents.Contains(e.GetType()))
                 e.EventPostUpdate();
         foreach (ModEvent e in events)
-            if (e.CanStart.Invoke() && Main.rand.NextFloat() < e.StartChance.Invoke() && !ActiveEvents.Contains(e.GetType()))
+            if (e.CanStart() && Main.rand.NextFloat() < e.StartChance() && !ActiveEvents.Contains(e.GetType()))
                 StartEvent(e);
         TheGreatSidegrade.NightJustStarted = false;
         TheGreatSidegrade.DayJustStarted = false;
         foreach (ModEvent e in events)
-            if (e.CanEnd.Invoke() && ActiveEvents.Contains(e.GetType()))
+            if (e.CanEnd() && ActiveEvents.Contains(e.GetType()))
                 EndEvent(e);
     }
 

@@ -185,9 +185,9 @@ public class Nothing {
 
                         flag54 = true;
                         //if (Main.tile[num828, num829].WallType == WallID.HardenedSand)
-                        //    Main.tile[num828, num829].WallType = (ushort) ModContent.WallType<Walls.Starved.HardendStarvingSand>();
+                        //    Main.tile[num828, num829].WallType = (ushort) ModContent.WallType<HardendVoidsandWall>();
                         //else if (Main.tile[num828, num829].WallType == WallID.Sandstone)
-                        //    Main.tile[num828, num829].WallType = (ushort) ModContent.WallType<Walls.Starved.StarvedSandstone>();
+                        //    Main.tile[num828, num829].WallType = (ushort) ModContent.WallType<VoidsandstoneWall>();
 
                         if (Main.tile[num828, num829].TileType == TileID.Stone) {
                             if (num828 >= num817 + WorldGen.genRand.Next(5) && num828 <= num818 - WorldGen.genRand.Next(5))
