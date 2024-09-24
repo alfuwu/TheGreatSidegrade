@@ -1,19 +1,60 @@
 Biomes: {
 	StarvedSurfaceBiome: {
 		DisplayName: The Starved
-		TownNPCDialogueName: the Starved
+		TownNPCDialogueName: the starved
 	}
 
 	StarvedUndergroundBiome: {
 		DisplayName: The Starved
-		TownNPCDialogueName: the Starved
+		TownNPCDialogueName: the starved
 	}
 }
 
 Items: {
-	YellowSolutionItem: {
-		DisplayName: Yellow Solution Item
-		Tooltip: ""
+	GraySolution: {
+		DisplayName: Gray Solution
+		Tooltip:
+			'''
+			Used by the Clentaminator
+			Spreads the Fractured
+			'''
+	}
+
+	BlackSolution: {
+		DisplayName: Black Solution
+		Tooltip:
+			'''
+			Used by the Clentaminator
+			Spreads the Nothing
+			'''
+	}
+
+	MalfunctioningSolution: {
+		DisplayName: Malfunctioning Solution
+		Tooltip:
+			'''
+			Used by the Clentaminator
+			Spreads the Rotten
+			There's a label on the back that reads 'Made in China'
+			'''
+	}
+
+	TwistedSolution: {
+		DisplayName: Twisted Solution
+		Tooltip:
+			'''
+			Used by the Clentaminator
+			Spreads the Spiral
+			'''
+	}
+
+	OrangeSolution: {
+		DisplayName: Orange Solution
+		Tooltip:
+			'''
+			Used by the Clentaminator
+			Spreads the Starved
+			'''
 	}
 
 	StarvingCampfire: {
@@ -28,18 +69,75 @@ Items: {
 
 	StarvingEgg: {
 		DisplayName: Starving Egg
+		Tooltip: Summons an adorable hungry egg to light your path
+	}
+
+	ChaliceOfEternity: {
+		DisplayName: Chalice Of Eternity
+		Tooltip: Grants the user immortality
+	}
+
+	HardenedStarvedSandBlock: {
+		DisplayName: Hardened Starved Sand Block
+		Tooltip: ""
+	}
+
+	HungriteBrick: {
+		DisplayName: Hungrite Brick
+		Tooltip: ""
+	}
+
+	HungriteOre: {
+		DisplayName: Hungrite Ore
+		Tooltip: ""
+	}
+
+	StarvedIceBlock: {
+		DisplayName: Starved Ice Block
+		Tooltip: ""
+	}
+
+	StarvedSandBlock: {
+		DisplayName: Starved Sand Block
+		Tooltip: ""
+	}
+
+	StarvedSandstoneBlock: {
+		DisplayName: Starved Sandstone Block
+		Tooltip: ""
+	}
+
+	Starvewood: {
+		DisplayName: Starvewood
+		Tooltip: ""
+	}
+
+	StarvingStoneBlock: {
+		DisplayName: Starving Stone Block
+		Tooltip: ""
+	}
+
+	StarvingStoneBrick: {
+		DisplayName: Starving Stone Brick
 		Tooltip: ""
 	}
 }
 
-Prefixes.GargantuanPrefix.DisplayName: Gargantuan Prefix
-Projectiles.YellowSolutionProjectile.DisplayName: Yellow Solution Projectile
+Prefixes.GargantuanPrefix.DisplayName: Gargantuan
+
+Projectiles: {
+	GraySolution.DisplayName: Gray Solution
+	BlackSolution.DisplayName: Black Solution
+	MalfunctioningSolution.DisplayName: Malfunctioning Solution
+	TwistedSolution.DisplayName: Twisted Solution
+	OrangeSolution.DisplayName: Orange Solution
+}
 
 Configs: {
 	SidegradeClient.DisplayName: Sidegrade Client
 
 	SidegradeConfig: {
-		DisplayName: Sidegrade Server
+		DisplayName: Sidegrade Config
 		Headers.NewWorldEvils: New World Evils
 
 		EnableRandomFracturedWorld: {
@@ -212,6 +310,16 @@ Buffs: {
 		DisplayName: Starving
 		Description: You're very hungry
 	}
+
+	CosmicRetribution: {
+		DisplayName: Cosmic Retribution
+		Description: The Universe is exacting its toll upon you
+	}
+
+	Eternalized: {
+		DisplayName: Eternalized
+		Description: You're immortal!
+	}
 }
 
 Events: {
@@ -229,3 +337,6 @@ NPCs: {
 	ChronovoreTimeCore.DisplayName: Time Core
 	ChronovoreTail.DisplayName: The Chronovore
 }
+
+Dialogue.Nurse.CantHeal: Oh my, it seems your wounds don't want to heal.
+DamageClasses.HolyDamageClass.DisplayName: Holy Damage

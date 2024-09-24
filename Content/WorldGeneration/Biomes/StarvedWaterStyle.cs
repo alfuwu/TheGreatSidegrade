@@ -19,7 +19,7 @@ public class StarvedWaterStyle : ModWaterStyle {
     }
 
     public override int GetSplashDust() {
-        return ModContent.DustType<YellowSolution>();
+        return ModContent.DustType<OrangeSolution>();
     }
 
     public override int GetDropletGore() {

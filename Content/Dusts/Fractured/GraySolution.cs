@@ -1,8 +1,8 @@
 ﻿using Terraria.ModLoader;
 
-namespace TheGreatSidegrade.Content.Dusts.Starved;
+namespace TheGreatSidegrade.Content.Dusts.Fractured;
 
-public class YellowSolution : ModDust {
+public class GraySolution : ModDust {
     public override void SetStaticDefaults() {
         UpdateType = 110;
     }

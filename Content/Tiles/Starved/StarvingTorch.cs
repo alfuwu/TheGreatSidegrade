@@ -9,6 +9,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Microsoft.Xna.Framework;
+using TheGreatSidegrade.Content.Items.Starved.Placeable;
 
 namespace TheGreatSidegrade.Content.Tiles.Starved;
 
@@ -67,6 +68,8 @@ public class StarvingTorch : ModTile {
 
         // Assets
         flameTexture = ModContent.Request<Texture2D>(Texture + "_Flame");
+
+        RegisterItemDrop(ModContent.ItemType<Items.Starved.Placeable.StarvingTorch>());
     }
 
     public override void MouseOver(int i, int j) {

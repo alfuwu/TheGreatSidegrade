@@ -1,5 +1,9 @@
+using Avalon;
+using Microsoft.Xna.Framework;
+using Terraria;
 using Terraria.ModLoader;
 using TheGreatSidegrade.Common.Hooks;
+using Terraria.ID;
 
 namespace TheGreatSidegrade;
 

@@ -2,7 +2,7 @@ The Great Sidegradening is an event wherein the modded game crosses the Sidegrad
 
 The Great Sidegrade (pending trademark) is a Terraria mod that expands Terraria content not forwards, but sideways. Currently, it adds:
 - 0 new weapons
-- 0 new weapon types
+- 1 new weapon type
 - 0 new accessories
 - 1 new pets
 - 0 new mounts
@@ -16,5 +16,6 @@ The Great Sidegrade (pending trademark) is a Terraria mod that expands Terraria 
 - 4 new walls
 - 1 new event
 - 1 new buff
+- 6 new debuffs
 
 The Great Sidegrade is currently in development. Please be patient while Sidegrade Inc. provides you with your greatest™ Terraria experience yet.

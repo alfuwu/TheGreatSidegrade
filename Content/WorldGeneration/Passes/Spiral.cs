@@ -5,7 +5,7 @@ using Terraria.WorldBuilding;
 using Terraria;
 using Terraria.Localization;
 using TheGreatSidegrade.Content.Tiles.Starved;
-using TheGreatSidegrade.Content.Walls.Starved;
+
 using Terraria.ID;
 using ReLogic.Utilities;
 
@@ -193,7 +193,7 @@ public class Spiral {
                             if (num828 >= num817 + WorldGen.genRand.Next(5) && num828 <= num818 - WorldGen.genRand.Next(5))
                                 Main.tile[num828, num829].TileType = (ushort) ModContent.TileType<StarvingStone>();
                         } else if (Main.tile[num828, num829].TileType == TileID.Grass) {
-                            Main.tile[num828, num829].TileType = (ushort) ModContent.TileType<StarvedGrass>();
+                            Main.tile[num828, num829].TileType = (ushort)ModContent.TileType<StarvedGrass>();
                         } else if (Main.tile[num828, num829].TileType == TileID.JungleGrass) {
                             Main.tile[num828, num829].TileType = (ushort) ModContent.TileType<StarvedJungleGrass>();
                         } else if (Main.tile[num828, num829].TileType == TileID.IceBlock) {
@@ -409,7 +409,7 @@ public class Spiral {
                             tile.HasTile = true;
 
                         if (num12 > j + WorldGen.genRand.Next(3, 20))
-                            tile.WallType = (ushort) ModContent.WallType<StarvedNaturalWall1>();
+                            tile.WallType = (ushort) ModContent.WallType<Walls.Starved.StarvedUnsafe1>();
                     }
                 }
             }

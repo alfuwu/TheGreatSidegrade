@@ -2,6 +2,7 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
+using TheGreatSidegrade.Content.Items.Starved.Placeable;
 
 namespace TheGreatSidegrade.Content.Tiles.Starved;
 
@@ -18,5 +19,7 @@ public class Hungrite : ModTile {
         Main.tileBlockLight[Type] = true;
         
         TileObjectData.newTile.CopyFrom(TileObjectData.GetTileData(TileID.Demonite, 0));
+
+        RegisterItemDrop(ModContent.ItemType<HungriteOre>());
     }
 }

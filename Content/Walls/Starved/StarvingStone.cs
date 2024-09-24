@@ -4,11 +4,10 @@ using Terraria.ModLoader;
 
 namespace TheGreatSidegrade.Content.Walls.Starved;
 
-public class StarvedGrassWall : ModWall {
+public class StarvingStone : ModWall {
     public override void SetStaticDefaults() {
-        AddMapEntry(new Color(106, 116, 59));
-        HitSound = SoundID.Grass;
-        WallID.Sets.Conversion.Grass[Type] = true;
+        WallID.Sets.Conversion.Stone[Type] = true;
+        AddMapEntry(new Color(34, 44, 25));
         //DustType = ModContent.DustType<StarvedDust>();
     }
 }

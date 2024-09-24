@@ -11,6 +11,7 @@ using Terraria.ObjectData;
 using Terraria.Utilities;
 using Terraria;
 using Microsoft.Xna.Framework;
+using TheGreatSidegrade.Content.Items.Starved.Placeable;
 
 namespace TheGreatSidegrade.Content.Tiles.Starved;
 
@@ -49,6 +50,8 @@ public class StarvingCampfire : ModTile {
 
         // Assets
         flameTexture = ModContent.Request<Texture2D>(Texture + "_Flame");
+
+        RegisterItemDrop(ModContent.ItemType<Items.Starved.Placeable.StarvingCampfire>());
     }
 
     public override void NearbyEffects(int i, int j, bool closer) {

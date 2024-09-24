@@ -4,9 +4,9 @@ using Terraria.ModLoader;
 
 namespace TheGreatSidegrade.Content.Walls.Starved;
 
-public class StarvedNaturalWall2 : ModWall {
+public class StarvedUnsafe1 : ModWall {
     public override void SetStaticDefaults() {
         WallID.Sets.Conversion.Sandstone[Type] = true;
-        AddMapEntry(new Color(81, 86, 47));
+        AddMapEntry(new Color(57, 55, 12));
     }
 }

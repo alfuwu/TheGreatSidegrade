@@ -3,6 +3,7 @@ using Terraria;
 using Microsoft.Xna.Framework;
 using TheGreatSidegrade.Common;
 using Terraria.ID;
+using TheGreatSidegrade.Content.Items.Starved.Placeable;
 
 namespace TheGreatSidegrade.Content.Tiles.Starved;
 public class HardenedStarvedSand : ModTile {
@@ -19,6 +20,8 @@ public class HardenedStarvedSand : ModTile {
         GreatlySidegradedIDs.Sets.StarvedTileCollection.Add(Type);
 
         AddMapEntry(new Color(221, 131, 59));
+
+        RegisterItemDrop(ModContent.ItemType<HardenedStarvedSandBlock>());
     }
 
     //public override void NumDust(int i, int j, bool fail, ref int num) {

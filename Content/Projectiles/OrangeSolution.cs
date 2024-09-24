@@ -3,31 +3,10 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria;
 using TheGreatSidegrade.Content.Tiles.Starved;
-using TheGreatSidegrade.Content.Walls.Starved;
 
-namespace TheGreatSidegrade.Content.Items.Starved.Ammo;
+namespace TheGreatSidegrade.Content.Projectiles;
 
-public class YellowSolutionItem : ModItem {
-    public override string Texture => $"{TheGreatSidegrade.AssetPath}/Textures/Items/YellowSolution";
-
-    public override void SetStaticDefaults() {
-        Item.ResearchUnlockCount = 99;
-    }
-
-    public override void SetDefaults() {
-        Item.DefaultToSolution(ModContent.ProjectileType<YellowSolutionProjectile>());
-        Item.value = Item.buyPrice(0, 0, 25);
-        Item.rare = ItemRarityID.Orange;
-    }
-
-    public override void ModifyResearchSorting(ref ContentSamples.CreativeHelper.ItemGroup itemGroup) {
-        itemGroup = ContentSamples.CreativeHelper.ItemGroup.Solutions;
-    }
-}
-
-public class YellowSolutionProjectile : ModProjectile {
-    public override string Texture => $"{TheGreatSidegrade.AssetPath}/Textures/Projectiles/YellowSolution";
-
+public class OrangeSolution : ModProjectile {
     public ref float Progress => ref Projectile.ai[0];
 
     public override void SetDefaults() {
@@ -37,8 +16,7 @@ public class YellowSolutionProjectile : ModProjectile {
     }
 
     public override void AI() {
-        // Set the dust type to ExampleSolution
-        int dustType = ModContent.DustType<Dusts.Starved.YellowSolution>();
+        int dustType = ModContent.DustType<Dusts.Starved.OrangeSolution>();
 
         if (Projectile.owner == Main.myPlayer)
             Convert((int)(Projectile.position.X + Projectile.width * 0.5f) / 16, (int)(Projectile.position.Y + Projectile.height * 0.5f) / 16, 2);
@@ -60,8 +38,7 @@ public class YellowSolutionProjectile : ModProjectile {
 
             Progress += 1f;
 
-
-            var dust = Dust.NewDustDirect(new(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, dustType, Projectile.velocity.X * 0.2f, Projectile.velocity.Y * 0.2f, 100);
+            Dust dust = Dust.NewDustDirect(new(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, dustType, Projectile.velocity.X * 0.2f, Projectile.velocity.Y * 0.2f, 100);
 
             dust.noGravity = true;
             dust.scale *= 1.75f;
@@ -83,46 +60,37 @@ public class YellowSolutionProjectile : ModProjectile {
                     int wall = Main.tile[k, l].WallType;
 
                     if (wall == WallID.Stone) {
-                        Main.tile[k, l].WallType = (ushort)ModContent.WallType<StarvingStoneWall>();
+                        Main.tile[k, l].WallType = (ushort) ModContent.WallType<Walls.Starved.StarvingStone>();
                         WorldGen.SquareWallFrame(k, l);
                         NetMessage.SendTileSquare(-1, k, l, 1);
                     }
 
-                    // If the tile is stone, convert to Starving Stone
                     if (TileID.Sets.Conversion.Stone[type]) {
-                        Main.tile[k, l].TileType = (ushort)ModContent.TileType<StarvingStone>();
+                        Main.tile[k, l].TileType = (ushort) ModContent.TileType<StarvingStone>();
                         WorldGen.SquareTileFrame(k, l);
                         NetMessage.SendTileSquare(-1, k, l, 1);
-                    }
-                    // If the tile is sand, convert to Starved Sand
-                    else if (TileID.Sets.Conversion.Sand[type]) {
-                        Main.tile[k, l].TileType = (ushort)ModContent.TileType<StarvedSand>();
+                    } else if (TileID.Sets.Conversion.Sand[type]) {
+                        Main.tile[k, l].TileType = (ushort) ModContent.TileType<StarvedSand>();
                         WorldGen.SquareTileFrame(k, l);
                         NetMessage.SendTileSquare(-1, k, l, 1);
-                    }
-                    // If the tile is hardened sand, convert to Hardened Starved Sand
-                    else if (TileID.Sets.Conversion.HardenedSand[type]) {
-                        Main.tile[k, l].TileType = (ushort)ModContent.TileType<HardenedStarvedSand>();
+                    } else if (TileID.Sets.Conversion.HardenedSand[type]) {
+                        Main.tile[k, l].TileType = (ushort) ModContent.TileType<HardenedStarvedSand>();
                         WorldGen.SquareTileFrame(k, l);
                         NetMessage.SendTileSquare(-1, k, l, 1);
-                    }
-                    // If the tile is sandstone, convert to Starved Sandstone
-                    else if (TileID.Sets.Conversion.Sandstone[type]) {
-                        Main.tile[k, l].TileType = (ushort)ModContent.TileType<StarvedSandstone>();
+                    } else if (TileID.Sets.Conversion.Sandstone[type]) {
+                        Main.tile[k, l].TileType = (ushort) ModContent.TileType<StarvedSandstone>();
                         WorldGen.SquareTileFrame(k, l);
                         NetMessage.SendTileSquare(-1, k, l, 1);
-                    }
-                    // If the tile is ice, convert to Starved Ice
-                    else if (TileID.Sets.Conversion.Ice[type]) {
-                        Main.tile[k, l].TileType = (ushort)ModContent.TileType<StarvedIce>();
+                    } else if (TileID.Sets.Conversion.Ice[type]) {
+                        Main.tile[k, l].TileType = (ushort) ModContent.TileType<StarvedIce>();
                         WorldGen.SquareTileFrame(k, l);
                         NetMessage.SendTileSquare(-1, k, l, 1);
-                    }
-                    // If the tile is grass, convert it to Starved Grass
-                    else if (TileID.Sets.Conversion.Sand[type]) {
-                        Main.tile[k, l].TileType = (ushort)ModContent.TileType<StarvedGrass>();
+                    } else if (TileID.Sets.Conversion.Grass[type]) {
+                        Main.tile[k, l].TileType = (ushort) ModContent.TileType<StarvedGrass>();
                         WorldGen.SquareTileFrame(k, l);
                         NetMessage.SendTileSquare(-1, k, l, 1);
+                    } else if (TileID.Sets.Conversion.JungleGrass[type]) {
+                        Main.tile[k, l].TileType = (ushort) ModContent.TileType<StarvedJungleGrass>();
                     }
                 }
             }
