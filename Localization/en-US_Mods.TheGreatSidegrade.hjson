@@ -44,27 +44,27 @@ Configs: {
 
 		EnableRandomFracturedWorld: {
 			Label: Enable Random Fractured World
-			Tooltip: Allows the mod to randomly choose The Fractured as the world's evil, if left on random
+			Tooltip: Allows the mod to randomly choose fractured as the world's evil, if left on random
 		}
 
 		EnableRandomNothingWorld: {
 			Label: Enable Random Nothing World
-			Tooltip: Allows the mod to randomly choose The Nothing as the world's evil, if left on random
+			Tooltip: Allows the mod to randomly choose nothing as the world's evil, if left on random
 		}
 
 		EnableRandomRottenWorld: {
 			Label: Enable Random Rotten World
-			Tooltip: Allows the mod to randomly choose The Rotten as the world's evil, if left on random
+			Tooltip: Allows the mod to randomly choose rotten as the world's evil, if left on random
 		}
 
 		EnableRandomSpiralWorld: {
 			Label: Enable Random Spiral World
-			Tooltip: Allows the mod to randomly choose The Spiral as the world's evil, if left on random
+			Tooltip: Allows the mod to randomly choose spiral as the world's evil, if left on random
 		}
 
 		EnableRandomStarvedWorld: {
 			Label: Enable Random Starved World
-			Tooltip: Allows the mod to randomly choose The Starved as the world's evil, if left on random
+			Tooltip: Allows the mod to randomly choose starved as the world's evil, if left on random
 		}
 
 		EnableMorePrefixes: {
@@ -223,6 +223,9 @@ Events: {
 
 NPCs: {
 	ChronovoreHead.DisplayName: The Chronovore
-	ChronovoreBody.DisplayName: The Chronovore Segment
-	ChronovoreTail.DisplayName: The Chronovore Tail
+	ChronovoreBody1.DisplayName: The Chronovore
+	ChronovoreBody2.DisplayName: The Chronovore
+	ChronovoreBody3.DisplayName: The Chronovore
+	ChronovoreTimeCore.DisplayName: Time Core
+	ChronovoreTail.DisplayName: The Chronovore
 }

@@ -8,13 +8,17 @@ using TheGreatSidegrade.Content.NPCs;
 using TheGreatSidegrade.Content.BossBars;
 using System;
 using TheGreatSidegrade.Content.WorldGeneration;
-using System.Linq;
 using System.Collections.Generic;
 
 namespace TheGreatSidegrade.Content.Bosses;
 
 [AutoloadBossHead]
 public class ChronovoreHead : WormHead {
+    public class DoubleTap(Player target, Vector2 struckPos) {
+        public Player target = target;
+        public Vector2 struckPos = struckPos;
+        public int time = 30; // half a second
+    }
 
     private static int secondStageHeadSlot = -1;
 
@@ -32,22 +36,17 @@ public class ChronovoreHead : WormHead {
     //    get => NPC.ai[3] <= 0;
     //}
 
-    protected Vector2[] storedTargetPositions = CreateDefaultedArray(new Vector2(-1), 10);
+    private readonly List<DoubleTap> doubleTapPos = [];
+    private readonly List<DoubleTap> newTaps = [];
 
     public override int BodyType => ModContent.NPCType<ChronovoreBody>();
-
     public override int TailType => ModContent.NPCType<ChronovoreTail>();
 
-    public override string Texture => $"{nameof(TheGreatSidegrade)}/Content/Bosses/Chronovore_Head";
+    public bool IsTimeCoreOperational => FollowerNPC.ModNPC is ChronovoreBody chronovore && chronovore.BodySegmentType == ChronovoreBody.BodyType.TimeCore && !chronovore.Destroyed;
+
+    public override string Texture => $"{nameof(TheGreatSidegrade)}/Content/Bosses/Chronovore_Head{(SecondStage ? "_SecondStage" : "")}";
     public override string BossHeadTexture => $"{nameof(TheGreatSidegrade)}/Content/Bosses/Chronovore_BossHead";
     public override int MaxDistanceForUsingTileCollision => 10000;
-
-    public static T[] CreateDefaultedArray<T>(T defaultValue, int length) where T: unmanaged {
-        T[] a = new T[length];
-        for (int _ = 0; _ < length; _++)
-            a[_] = defaultValue;
-        return a;
-    }
 
     public static bool IsWithinAngle(Vector2 origin, Vector2 target, float maxAngleDegrees = 40f) {
         // Calculate the angle in radians between the origin and target
@@ -109,7 +108,7 @@ public class ChronovoreHead : WormHead {
         */
         NPC.aiStyle = -1;
         NPC.npcSlots = 5f;
-        NPC.width = 38; // boss size is kinda funky
+        NPC.width = 46; // boss size is kinda funky
         NPC.height = 38;
         NPC.damage = 22;
         NPC.defense = 4;
@@ -152,23 +151,26 @@ public class ChronovoreHead : WormHead {
     public int attackCounter;
     public override void SendExtraAI(BinaryWriter writer) {
         writer.Write(attackCounter);
-        foreach (Vector2 v in storedTargetPositions)
-            writer.WriteVector2(v);
+        foreach (DoubleTap dt in newTaps) {
+            writer.Write(dt.target.whoAmI);
+            writer.WriteVector2(dt.struckPos);
+        }
+        newTaps.Clear();
     }
 
     public override void ReceiveExtraAI(BinaryReader reader) {
         attackCounter = reader.ReadInt32();
-        for (int i = 0; i < storedTargetPositions.Length; i++)
-            storedTargetPositions[i] = reader.ReadVector2();
-    }
-
-    internal override void OnTargetChange(int newTarget) {
-        for (int i = 0; i < storedTargetPositions.Length; i++)
-            storedTargetPositions[i] = new(-1);
+        try { // do i actually need to sync this
+            while (true) {
+                int plr = reader.ReadInt32();
+                Vector2 pos = reader.ReadVector2();
+                doubleTapPos.Add(new(Main.player[plr], pos));
+            }
+        } catch (EndOfStreamException) { }
     }
 
     public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) {
-        if (attackCounter > 495)
+        if (attackCounter > 95)
             modifiers.ModifyHurtInfo += (ref Player.HurtInfo hurtInfo) => {
                 hurtInfo.Damage *= 2;
             };
@@ -181,36 +183,29 @@ public class ChronovoreHead : WormHead {
             Age++;
 
             // get time reversed bitch
-            Player target = Main.player[NPC.target];
-            if (attackCounter <= 0 && storedTargetPositions.Where(v => v.X != -1 || v.Y != -1).Any()) {
-                Vector2? closest = null;
-                foreach (Vector2 p in storedTargetPositions)
-                    if (closest == null || p.Distance(NPC.position) < closest.Value.Distance(NPC.position))
-                        closest = p;
-                float length = target.position.Distance(NPC.position) - closest.Value.Distance(NPC.position);
-                if (length < 200 || !IsWithinAngle(NPC.position, closest.Value, 4f) || length > 1000)
-                    return; // dont waste a teleport if the distance gained is tiny, the chronovore is actively moving away from the position, or the chronovore is really far away from the position
-                target.Teleport(closest.Value, 1);
-                attackCounter = 500;
-            }
-            if (Age % 240 == 0) { // update positions every four seconds
-                List<Vector2> closestPositions = [target.position];
-                TheGreatSidegrade.Mod.Logger.Info(closestPositions);
-                foreach (Vector2 p in storedTargetPositions) {
-                    if (closestPositions.Count < storedTargetPositions.Length || closestPositions.Where(v => v.Distance(NPC.position) > p.Distance(NPC.position)).Any()) {
-                        closestPositions.Add(p);
-                        int furthest = -1;
-                        if (closestPositions.Count >= storedTargetPositions.Length)
-                            for (int i = 0; i < closestPositions.Count; i++)
-                                if (furthest == -1 || closestPositions[i].Distance(NPC.position) > closestPositions[furthest].Distance(NPC.position))
-                                    furthest = i;
-                        if (furthest != -1)
-                            closestPositions.RemoveAt(furthest);
-                    }
+            // youre still getting time reversed but its more structured now bitch
+            for (int i = 0; i < doubleTapPos.Count; i++) {
+                DoubleTap dt = doubleTapPos[i];
+                dt.time--;
+                TheGreatSidegrade.Mod.Logger.Info(dt.time);
+                if (dt.time <= 0) {
+                    dt.target.Teleport(dt.struckPos, 1); // needs shader effects and a ticking sound
+                    doubleTapPos.Remove(dt);
+                    i--;
                 }
-                storedTargetPositions = [.. closestPositions];
             }
         }
+    }
+
+    public void AddDoubleTap(Player target, Vector2 pos) {
+        DoubleTap dt = new(target, pos);
+        doubleTapPos.Add(dt);
+        newTaps.Add(dt);
+    }
+
+    public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo) {
+        //if (IsTimeCoreOperational)
+            AddDoubleTap(target, target.position);
     }
 }
 
@@ -222,16 +217,14 @@ public class ChronovoreBody : WormBody {
         TimeCore
     }
 
-    public BodyType SegmentBodyType {
-        get => (BodyType) NPC.ai[2];
-        set => NPC.ai[2] = (float) value;
-    }
+    public BodyType BodySegmentType { get; set; }
 
     public bool Destroyed {
-        get => NPC.ai[3] > 150;
+        get => NPC.ai[3] > (BodySegmentType == BodyType.Body2 ? 300 : 150);
     }
 
-    public override string Texture => $"{nameof(TheGreatSidegrade)}/Content/Bosses/Chronovore_{Enum.GetName(SegmentBodyType)}{(Destroyed ? "Destroyed" : "")}";
+    public override string Texture => $"{nameof(TheGreatSidegrade)}/Content/Bosses/Chronovore_{Enum.GetName(BodySegmentType)}{(Destroyed ? "Destroyed" : "")}";
+    public override string Name => $"Chronovore{Enum.GetName(BodySegmentType)}";
 
     public override void SetStaticDefaults() {
         NPCID.Sets.NPCBestiaryDrawModifiers value = new() {
@@ -261,13 +254,18 @@ public class ChronovoreBody : WormBody {
 			dontCountMe = true;
         */
         NPC.aiStyle = -1;
-        NPC.width = 38;
+        NPC.width = 46;
         NPC.height = 38;
         NPC.damage = 13;
         NPC.defense = 7;
         NPC.lifeMax = 30000;
         NPC.value = 800f;
         NPC.scale = 1.2f;
+
+        if (FollowingNPC.ModNPC is ChronovoreHead)
+            BodySegmentType = BodyType.TimeCore;
+        else
+            BodySegmentType = (BodyType) Main.rand.Next(3);
     }
 
     public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) {
@@ -279,11 +277,14 @@ public class ChronovoreBody : WormBody {
 
     public override void Init() {
         ChronovoreHead.CommonWormInit(this);
+    }
 
-        if (FollowingNPC.ModNPC is ChronovoreHead)
-            SegmentBodyType = BodyType.TimeCore;
-        else
-            SegmentBodyType = (BodyType) Main.rand.Next(3);
+    public override void SendExtraAI(BinaryWriter writer) {
+        writer.Write((byte) BodySegmentType);
+    }
+
+    public override void ReceiveExtraAI(BinaryReader reader) {
+        BodySegmentType = (BodyType) reader.ReadByte();
     }
 
     public override void OnHitByItem(Player player, Item item, NPC.HitInfo hit, int damageDone) {
@@ -292,6 +293,11 @@ public class ChronovoreBody : WormBody {
 
     public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone) {
         NPC.ai[3] += damageDone;
+    }
+
+    public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo) {
+        if (HeadSegment.ModNPC is ChronovoreHead chronovore )//&& chronovore.IsTimeCoreOperational)
+            chronovore.AddDoubleTap(target, target.position);
     }
 }
 
@@ -338,7 +344,7 @@ public class ChronovoreTail : WormTail {
 			dontCountMe = true;
         */
         NPC.aiStyle = -1;
-        NPC.width = 38;
+        NPC.width = 46;
         NPC.height = 38;
         NPC.damage = 11;
         NPC.defense = 13;
@@ -349,5 +355,10 @@ public class ChronovoreTail : WormTail {
 
     public override void Init() {
         ChronovoreHead.CommonWormInit(this);
+    }
+
+    public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo) {
+        if (HeadSegment.ModNPC is ChronovoreHead chronovore)// && chronovore.IsTimeCoreOperational)
+            chronovore.AddDoubleTap(target, target.position);
     }
 }

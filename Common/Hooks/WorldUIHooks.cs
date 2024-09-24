@@ -260,7 +260,6 @@ public class WorldUIHooks {
                     Left = StyleDimension.FromPercent(1f - usableWidthPercent),
                     HAlign = (j - (f * i) - (!TheGreatSidegrade.HasAvalon && Enum.GetValues<WorldEvilId>()[j] > WorldEvilId.Contagion && i == 0 ? 1 : 0)) / (float) (max - 1),
                 };
-                TheGreatSidegrade.Mod.Logger.Info(1f - usableWidthPercent);
                 groupOptionButton.Top.Set(accumulatedHeight + (38 * i), 0f);
                 groupOptionButton.OnLeftMouseDown += (evt, element) => ClickEvilOption(self, evt, element);
                 groupOptionButton.OnMouseOver += self.ShowOptionDescription;
@@ -275,6 +274,7 @@ public class WorldUIHooks {
     public static void OnSetDefaultOptions(On_UIWorldCreation.orig_SetDefaultOptions orig, UIWorldCreation self) {
         orig(self);
 
+        SelectedWorldEvil = WorldEvilId.Random;
         foreach (CustomGroupOptionButton<WorldEvilId> evilButton in evilButtons)
             evilButton?.SetCurrentOption(SelectedWorldEvil);
     }

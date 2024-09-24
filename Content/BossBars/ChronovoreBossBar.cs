@@ -5,6 +5,9 @@ using Terraria.GameContent;
 using Terraria.ModLoader;
 using Terraria;
 using Microsoft.Xna.Framework;
+using TheGreatSidegrade.Content.Bosses;
+using System;
+using TheGreatSidegrade.Content.NPCs;
 
 namespace TheGreatSidegrade.Content.BossBars;
 
@@ -32,13 +35,15 @@ public class ChronovoreBossBar : ModBossBar {
         life = npc.life;
         lifeMax = npc.lifeMax;
 
-        /*NPC follower = npc.ModNPC is ChronovoreHead chronovore ? chronovore.FollowerNPC : null;
-
+        /*NPC follower = npc.ModNPC is Worm worm ? worm.FollowerNPC : null;
         while (follower != null) {
-            life += follower.life;
-            lifeMax += follower.lifeMax;
-            follower = follower.ModNPC is ChronovoreBody body ? body.FollowerNPC : null;
-        }*/
+            if (follower.ModNPC is ChronovoreBody body && !body.Destroyed && body.BodySegmentType == ChronovoreBody.BodyType.Body2) {
+                shield += Math.Max(0, follower.ai[3] - 150);
+                shieldMax += 150;
+            }
+            follower = follower.ModNPC is ChronovoreBody e ? e.FollowerNPC : null;
+        }*/ // notworking
+        // i dont think the BodySegmentType is syncing across the network properly
 
         return true;
     }
