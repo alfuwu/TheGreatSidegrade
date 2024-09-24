@@ -121,6 +121,31 @@ Items: {
 		DisplayName: Starving Stone Brick
 		Tooltip: ""
 	}
+
+	FracturedMirror: {
+		DisplayName: Fractured Mirror
+		Tooltip: Gaze in the mirror to enter a fractured realm
+	}
+
+	NothingMirror: {
+		DisplayName: Nothing Mirror
+		Tooltip: Gaze in the mirror to enter a void-consumed realm
+	}
+
+	RottenMirror: {
+		DisplayName: Rotten Mirror
+		Tooltip: Gaze in the mirror to enter a rotten realm
+	}
+
+	SpiralMirror: {
+		DisplayName: Spiral Mirror
+		Tooltip: Gaze in the mirror to enter a twisted realm
+	}
+
+	StarvedMirror: {
+		DisplayName: Starved Mirror
+		Tooltip: Gaze in the mirror to enter a starving realm
+	}
 }
 
 Prefixes.GargantuanPrefix.DisplayName: Gargantuan
@@ -256,7 +281,7 @@ World: {
 	Generation: {
 		Fractured.Message: Breaking the world apart
 		Nothing.Message: Fixing world file...
-		Rotten.Message: Refrigerating the world
+		Rotten.Message: Refridgerating the world
 		Spiral.Message: Twisting the world around a donut
 		Starved.Message: The world hungers
 	}
