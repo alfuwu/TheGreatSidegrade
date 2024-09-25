@@ -9,6 +9,8 @@ using TheGreatSidegrade.Content.BossBars;
 using System;
 using TheGreatSidegrade.Content.WorldGeneration;
 using System.Collections.Generic;
+using Terraria.Graphics.Shaders;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace TheGreatSidegrade.Content.Bosses;
 
@@ -187,11 +189,11 @@ public class ChronovoreHead : WormHead {
             for (int i = 0; i < doubleTapPos.Count; i++) {
                 DoubleTap dt = doubleTapPos[i];
                 dt.time--;
-                TheGreatSidegrade.Mod.Logger.Info(dt.time);
                 if (dt.time <= 0) {
                     dt.target.Teleport(dt.struckPos, 1); // needs shader effects and a ticking sound
                     doubleTapPos.Remove(dt);
                     i--;
+                    //GameShaders.Misc["Chronovore"] = new();
                 }
             }
         }
@@ -223,10 +225,11 @@ public class ChronovoreBody : WormBody {
         get => NPC.ai[3] > (BodySegmentType == BodyType.Body2 ? 300 : 150);
     }
 
-    public override string Texture => $"{nameof(TheGreatSidegrade)}/Content/Bosses/Chronovore_{Enum.GetName(BodySegmentType)}{(Destroyed ? "Destroyed" : "")}";
+    public override string Texture => $"{nameof(TheGreatSidegrade)}/Content/Bosses/Chronovore_Body";
     public override string Name => $"Chronovore{Enum.GetName(BodySegmentType)}";
 
     public override void SetStaticDefaults() {
+        Main.npcFrameCount[NPC.type] = 8;
         NPCID.Sets.NPCBestiaryDrawModifiers value = new() {
             Hide = true // Hides this NPC from the Bestiary, useful for multi-part NPCs whom you only want one entry.
         };
@@ -299,6 +302,15 @@ public class ChronovoreBody : WormBody {
         if (HeadSegment.ModNPC is ChronovoreHead chronovore )//&& chronovore.IsTimeCoreOperational)
             chronovore.AddDoubleTap(target, target.position);
     }
+
+    public override void FindFrame(int frameHeight) {
+        NPC.frame.Y = (int) BodySegmentType * 90 + (Destroyed ? 360 : 0);
+    }
+
+    public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
+        Terraria.NPC
+        return false;
+    }
 }
 
 public class ChronovoreTail : WormTail {
@@ -360,5 +372,12 @@ public class ChronovoreTail : WormTail {
     public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo) {
         if (HeadSegment.ModNPC is ChronovoreHead chronovore)// && chronovore.IsTimeCoreOperational)
             chronovore.AddDoubleTap(target, target.position);
+    }
+
+    public override void FindFrame(int frameHeight) {
+        if (Destroyed)
+            NPC.frame.X = 46;
+        else
+            NPC.frame.X = 0;
     }
 }

@@ -11,6 +11,7 @@ The Great Sidegrade (pending trademark) is a Terraria mod that expands Terraria 
 - 5 new world evils
 - 0 new structures
 - 0 new monsters
+- 0 new town NPCs
 - 1 new bosses
 - 18 new tiles
 - 4 new walls

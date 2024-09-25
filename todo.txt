@@ -28,6 +28,7 @@ new bosses:
  - primeval behemoth (mountain, earthy themed boss)
  - chess boss (meme boss, fights checkers boss if summoned at the same time)
  - checkers boss (also meme boss, fights chess boss if summoned at the same time)
+ - some boss that multiplies every time you kill a part of it(?)
 
 new monsters:
  - twisted horror (land-based creature that spawns in the spiral)
@@ -72,9 +73,9 @@ new event monsters:
  meteor shower:
   - meteor elemental
 
-biome worlds compat
+biome worlds compat -- DONE!!! (mostly)
 
 nothing ideas:
  - change background to plain black? nah, would prevent seeing the loading bar. find some other color tho
  - change all world gen pass texts to "Fixing world..."
- - add config value that removes the nothing from the evil selection menu, enabled by default, making the nothing only available thru RNG
+ - add config value that removes the nothing from the evil selection menu, enabled by default, making the nothing only available thru RNG unless the user changes the config
