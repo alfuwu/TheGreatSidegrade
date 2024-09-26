@@ -12,7 +12,7 @@ namespace TheGreatSidegrade.Content.WorldGeneration.Passes;
 
 public class Fractured {
     public static void Method(GenerationProgress progress, GameConfiguration _) {
-        progress.Message = Language.GetTextValue("Mods.TheGreatSidegrade.World.Generation.Fractured.Message");
+        progress.Message = Language.GetTextValue($"{TheGreatSidegrade.Localization}.World.Generation.Fractured.Message");
         int num778 = Main.maxTilesX;
         int num779 = 0;
         int num780 = Main.maxTilesX;

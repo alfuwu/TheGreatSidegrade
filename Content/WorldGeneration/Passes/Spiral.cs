@@ -13,7 +13,7 @@ namespace TheGreatSidegrade.Content.WorldGeneration.Passes;
 
 public class Spiral {
     public static void Method(GenerationProgress progress, GameConfiguration _) {
-        progress.Message = Language.GetTextValue("Mods.TheGreatSidegrade.World.Generation.Spiral.Message");
+        progress.Message = Language.GetTextValue($"{TheGreatSidegrade.Localization}.World.Generation.Spiral.Message");
         int num778 = Main.maxTilesX;
         int num779 = 0;
         int num780 = Main.maxTilesX;

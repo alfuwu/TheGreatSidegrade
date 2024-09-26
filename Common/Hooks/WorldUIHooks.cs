@@ -118,7 +118,7 @@ public class WorldUIHooks {
                 worldEvil = (GreatlySidegradedWorld.WorldEvil) tmp;
 
             if (!GreatlySidegradedWorld.IsVanillaEvil(worldEvil)) {
-                string iconPath = $"{nameof(TheGreatSidegrade)}/Assets/Textures/UI/";
+                string iconPath = "Assets/Textures/UI/";
                 iconPath += Enum.GetName(worldEvil) + "/Icon";
                 iconPath += self.Data.IsHardMode ? "Hallow" : "";
                 if (self.Data.ZenithWorld)
@@ -138,7 +138,7 @@ public class WorldUIHooks {
                 else if (self.Data.NoTrapsWorld)
                     iconPath += "Traps";
 
-                return ModContent.Request<Texture2D>(iconPath, AssetRequestMode.ImmediateLoad);
+                return GameAssets.GetAsset(iconPath, AssetRequestMode.ImmediateLoad);
             }
         }
         return orig(self);
@@ -190,22 +190,22 @@ public class WorldUIHooks {
             Lang.misc[101],
             Lang.misc[102],
             Language.GetText("Mods.Avalon.World.EvilSelection.Contagion.Title"),
-            Language.GetText($"Mods.{nameof(TheGreatSidegrade)}.World.Creation.EvilFractured.Title"),
-            Language.GetText($"Mods.{nameof(TheGreatSidegrade)}.World.Creation.EvilNothing.Title"),
-            Language.GetText($"Mods.{nameof(TheGreatSidegrade)}.World.Creation.EvilRotten.Title"),
-            Language.GetText($"Mods.{nameof(TheGreatSidegrade)}.World.Creation.EvilSpiral.Title"),
-            Language.GetText($"Mods.{nameof(TheGreatSidegrade)}.World.Creation.EvilStarved.Title")
+            Language.GetText($"{TheGreatSidegrade.Localization}.World.Creation.EvilFractured.Title"),
+            Language.GetText($"{TheGreatSidegrade.Localization}.World.Creation.EvilNothing.Title"),
+            Language.GetText($"{TheGreatSidegrade.Localization}.World.Creation.EvilRotten.Title"),
+            Language.GetText($"{TheGreatSidegrade.Localization}.World.Creation.EvilSpiral.Title"),
+            Language.GetText($"{TheGreatSidegrade.Localization}.World.Creation.EvilStarved.Title")
         ];
         LocalizedText[] descriptions = [
             Language.GetText("UI.WorldDescriptionEvilRandom"),
             Language.GetText("UI.WorldDescriptionEvilCorrupt"),
             Language.GetText("UI.WorldDescriptionEvilCrimson"),
             Language.GetText("Mods.Avalon.World.EvilSelection.Contagion.Description"),
-            Language.GetText($"Mods.{nameof(TheGreatSidegrade)}.World.Creation.EvilFractured.Description"),
-            Language.GetText($"Mods.{nameof(TheGreatSidegrade)}.World.Creation.EvilNothing.Description"),
-            Language.GetText($"Mods.{nameof(TheGreatSidegrade)}.World.Creation.EvilRotten.Description"),
-            Language.GetText($"Mods.{nameof(TheGreatSidegrade)}.World.Creation.EvilSpiral.Description"),
-            Language.GetText($"Mods.{nameof(TheGreatSidegrade)}.World.Creation.EvilStarved.Description")
+            Language.GetText($"{TheGreatSidegrade.Localization}.World.Creation.EvilFractured.Description"),
+            Language.GetText($"{TheGreatSidegrade.Localization}.World.Creation.EvilNothing.Description"),
+            Language.GetText($"{TheGreatSidegrade.Localization}.World.Creation.EvilRotten.Description"),
+            Language.GetText($"{TheGreatSidegrade.Localization}.World.Creation.EvilSpiral.Description"),
+            Language.GetText($"{TheGreatSidegrade.Localization}.World.Creation.EvilStarved.Description")
         ];
         Color[] colors = [
             Color.White,
@@ -224,15 +224,15 @@ public class WorldUIHooks {
             Main.Assets.Request<Texture2D>("Images/UI/WorldCreation/IconEvilCrimson"),
             TheGreatSidegrade.HasAvalon ? ModContent.Request<Texture2D>("Avalon/Assets/Textures/UI/WorldCreation/IconContagion",
                 AssetRequestMode.ImmediateLoad) : null,
-            ModContent.Request<Texture2D>($"{TheGreatSidegrade.AssetPath}/Textures/UI/WorldCreation/IconEvilFractured",
+            GameAssets.GetAsset("Assets/Textures/UI/WorldCreation/IconEvilFractured",
                 AssetRequestMode.ImmediateLoad),
-            ModContent.Request<Texture2D>($"{TheGreatSidegrade.AssetPath}/Textures/UI/WorldCreation/IconEvilNothing",
+            GameAssets.GetAsset("Assets/Textures/UI/WorldCreation/IconEvilNothing",
                 AssetRequestMode.ImmediateLoad),
-            ModContent.Request<Texture2D>($"{TheGreatSidegrade.AssetPath}/Textures/UI/WorldCreation/IconEvilRotten",
+            GameAssets.GetAsset("Assets/Textures/UI/WorldCreation/IconEvilRotten",
                 AssetRequestMode.ImmediateLoad),
-            ModContent.Request<Texture2D>($"{TheGreatSidegrade.AssetPath}/Textures/UI/WorldCreation/IconEvilSpiral",
+            GameAssets.GetAsset("Assets/Textures/UI/WorldCreation/IconEvilSpiral",
                 AssetRequestMode.ImmediateLoad),
-            ModContent.Request<Texture2D>($"{TheGreatSidegrade.AssetPath}/Textures/UI/WorldCreation/IconEvilStarved",
+            GameAssets.GetAsset("Assets/Textures/UI/WorldCreation/IconEvilStarved",
                 AssetRequestMode.ImmediateLoad),
         ];
 
@@ -341,8 +341,7 @@ public class WorldUIHooks {
                             AssetRequestMode.ImmediateLoad).Value, position, color);
                         break;
                     default:
-                        spriteBatch.Draw(ModContent.Request<Texture2D>(
-                            $"{TheGreatSidegrade.AssetPath}/Textures/UI/WorldCreation/PreviewEvil{Enum.GetNames<WorldEvilId>()[evil]}",
+                        spriteBatch.Draw(GameAssets.GetAsset($"Assets/Textures/UI/WorldCreation/PreviewEvil{Enum.GetNames<WorldEvilId>()[evil]}",
                             AssetRequestMode.ImmediateLoad).Value, position, color);
                         break;
                 }

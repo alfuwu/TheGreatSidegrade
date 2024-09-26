@@ -1,9 +1,6 @@
-using Avalon;
-using Microsoft.Xna.Framework;
-using Terraria;
 using Terraria.ModLoader;
 using TheGreatSidegrade.Common.Hooks;
-using Terraria.ID;
+using TheGreatSidegrade.Assets;
 
 namespace TheGreatSidegrade;
 
@@ -13,13 +10,16 @@ public class TheGreatSidegrade : Mod {
     public static TheGreatSidegrade Mod { get; private set; }
     public static bool NightJustStarted { get; set; }
     public static bool DayJustStarted { get; set; }
-    public static string AssetPath {get;} = $"{nameof(TheGreatSidegrade)}/Assets";
+    public const string AssetPath = $"{nameof(TheGreatSidegrade)}/Assets";
+    public const string Localization = $"Mods.{nameof(TheGreatSidegrade)}";
 
     public static bool HasAvalon { get => Avalon != null; }
     public static bool HasConfection { get => Confection != null; }
 
     public static bool IsContagion {
-        get => HasAvalon && Avalon.TryFind("AvalonWorld", out ModSystem world) && (int) world.GetType().GetField("WorldEvil").GetValue(world) == 2;
+        get {
+            return HasAvalon && Avalon.TryFind("AvalonWorld", out ModSystem world) && (int)world.GetType().GetField("WorldEvil").GetValue(world) == 2;
+        }
         set {
             if (HasAvalon && Avalon.TryFind("AvalonWorld", out ModSystem world))
                 world.GetType().GetField("WorldEvil").SetValue(world, value ? 2 : 0);
@@ -34,6 +34,7 @@ public class TheGreatSidegrade : Mod {
             Confection = tmp2;
 
         Hooks.RegisterHooks();
+        GameEffects.LoadShaders();
     }
 
     public override void Unload() {

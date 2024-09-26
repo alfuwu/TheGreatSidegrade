@@ -34,7 +34,7 @@ public class LangHooks {
         else if (allEvil == tEvil + tBlood && tCandy > 0)
             unlocalizedText = "Mods.TheConfectionRebirth." + unlocalizedText;
         else if (tSick > 0 || tCandy > 0 || tFract > 0 || tVoid > 0 || tRot > 0 || tTwisted > 0 || tStarved > 0)
-            unlocalizedText = $"Mods.{nameof(TheGreatSidegrade)}." + unlocalizedText;
+            unlocalizedText = $"{TheGreatSidegrade.Localization}.{unlocalizedText}";
         // what a goddamn mess
         // redcode go brrrrrrrr
         // sorry i tried fixing it but its still messy as hell
@@ -81,7 +81,7 @@ public class LangHooks {
         }
         bool insult = tGood > 0 && tEvil > 0 && tBlood > 0 && tFract > 0 && (!ModContent.GetInstance<SidegradeConfig>().DryadKnowsNothingStatus || tVoid > 0) && tRot > 0 && tTwisted > 0 && tStarved > 0 && (!TheGreatSidegrade.HasAvalon || tSick > 0) && (!TheGreatSidegrade.HasConfection || tCandy > 0);
         if (insult && tSick > 0 && tCandy > 0)
-            unlocalizedText = $"Mods.{nameof(TheGreatSidegrade)}.DryadSpecialText.WorldStatusAll";
+            unlocalizedText = $"{TheGreatSidegrade.Localization}.DryadSpecialText.WorldStatusAll";
         else if (allEvil == tEvil + tBlood + tSick && tEvil > 0 && tBlood > 0 && tSick > 0 && tCandy <= 0)
             unlocalizedText = "Mods.Avalon.DryadSpecialText.WorldStatusAll";
         else if (allEvil == tEvil + tBlood && tEvil > 0 && tBlood > 0 && tGood > 0 && tCandy > 0)
@@ -97,6 +97,6 @@ public class LangHooks {
             allEvil <= 5 ? Language.GetTextValue("DryadSpecialText.WorldDescriptionClose") :
             Language.GetTextValue("DryadSpecialText.WorldDescriptionWork");
         return $"{Language.GetTextValue(unlocalizedText, [.. args])} {arg}" +
-            (insult ? Language.GetTextValue("Mods.TheGreatSidegrade.DryadSpecialText.WhatTheHell") : "");
+            (insult ? Language.GetTextValue($"{TheGreatSidegrade.Localization}.DryadSpecialText.WhatTheHell") : "");
     }
 }

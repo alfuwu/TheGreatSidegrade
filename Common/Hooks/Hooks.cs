@@ -1,4 +1,5 @@
 ﻿using Terraria;
+using Terraria.GameContent.UI.BigProgressBar;
 using Terraria.GameContent.UI.Elements;
 using Terraria.GameContent.UI.States;
 using Terraria.ModLoader;
@@ -21,7 +22,7 @@ public class Hooks {
         On_AWorldListItem.GetIcon += WorldUIHooks.OnGetIcon;
         On_Player.UpdateLifeRegen += PlayerHooks.OnUpdateLifeRegen;
         On_Player.UpdateManaRegen += PlayerHooks.OnUpdateManaRegen;
-
+        
         // world creation ui
         IL_UIWorldCreation.BuildPage += WorldUIHooks.BuildPage;
         IL_UIWorldCreation.MakeInfoMenu += WorldUIHooks.MakeInfoMenu;
@@ -55,7 +56,7 @@ public class Hooks {
         On_AWorldListItem.GetIcon -= WorldUIHooks.OnGetIcon;
         On_Player.UpdateLifeRegen -= PlayerHooks.OnUpdateLifeRegen;
         On_Player.UpdateManaRegen -= PlayerHooks.OnUpdateManaRegen;
-
+        
         IL_UIWorldCreation.BuildPage -= WorldUIHooks.BuildPage;
         IL_UIWorldCreation.MakeInfoMenu -= WorldUIHooks.MakeInfoMenu;
         IL_UIWorldCreation.ShowOptionDescription -= WorldUIHooks.ShowOptionDescription;

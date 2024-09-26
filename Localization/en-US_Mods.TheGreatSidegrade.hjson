@@ -364,4 +364,29 @@ NPCs: {
 }
 
 Dialogue.Nurse.CantHeal: Oh my, it seems your wounds don't want to heal.
-DamageClasses.HolyDamageClass.DisplayName: Holy Damage
+DamageClasses.HolyDamageClass.DisplayName: Holy damage
+
+Bestiary: {
+	Biomes: {
+		TheFractured: The Fractured
+		TheNothing: ???
+		TheRotten: The Rotten
+		TheSpiral: The Spiral
+		TheStarved: The Starved
+	}
+
+	Checkers: A magical chip come to life through pure hatred towards an unidentified entity.
+	ChessKing: A figurine representing a monarch. It seems greatly agitated for some inexplicable reason.
+	ChorusOfCatastrophe: A trio of
+	Chronovore: The Chronovore is an ancient machine cast into ruin by the very power it controls. Now it lay, desolate, in the heart of the Spiral. Beware, for though it has lost much of its might, it is still a cataclysmic foe.
+	CruxParasite: A beast that feasts on the dissonance between the Crimson and Corruption, it is a pest that should be exterminated.
+	CursedLich: A poor soul that wished for immortality and was unlucky enough to be granted it. They have practices many a dark art during their lengthy lifespawn.
+	DreamingColossus: A massive being that pondered the meaning of life for so long it began pondering why it was pondering before short-circuiting and falling asleep.
+	Oblivion: ''''Log Entry 103: "Oblivion" appears to be an unthinking mass of pure Creation energy found within the Nothing, colloqiually known as the Void. I do not know why Oblivion resides there, its purpose, nor how to draw its attention. I shall attempt to collect more information.' There are not more log entries.'''
+	PrimevalBehemoth: The Primeval Behemoth is a creature that has existed since the dawn of the land, a mighty force to be reckoned with. Unfortunately, times are a-changin' and it is not getting any stronger.
+	StormOfEternity: The Storm of Eternity is a curious natural phenomena that occurs in the Fractured when it is destabilised. It gathers a unique material within it that can be used to craft powerful items.
+	TheStarved: The Starved is a writhing hivemind of eternally hungry abominable flesh. It swarms its prey with weak minions before going in with its main body to finish the fight.
+	TitanOfRot: Once-magnificent, the Titan of Rot has decayed into a walking shell of its former glory. Now, it prowls the disgusting underbelly of the Rotten, searching for untainted to absorb.
+	TubaArchmage: One of the elite upperclassmen of tuba society, the Tuba Archmage weilds the power of
+	Veilkeeper: A creature that exists inside of the Inbetween, keeping the Veil in balance and operational.
+}

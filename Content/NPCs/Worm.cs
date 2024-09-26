@@ -357,19 +357,19 @@ public abstract class WormHead : Worm {
         // Copy the value, since it will be clobbered later
         Vector2 npcCenter = NPC.Center;
 
-        float targetRoundedPosX = (float)((int)(targetXPos / 16f) * 16);
-        float targetRoundedPosY = (float)((int)(targetYPos / 16f) * 16);
-        npcCenter.X = (float)((int)(npcCenter.X / 16f) * 16);
-        npcCenter.Y = (float)((int)(npcCenter.Y / 16f) * 16);
+        float targetRoundedPosX = (int)(targetXPos / 16f) * 16;
+        float targetRoundedPosY = (int)(targetYPos / 16f) * 16;
+        npcCenter.X = (int)(npcCenter.X / 16f) * 16;
+        npcCenter.Y = (int)(npcCenter.Y / 16f) * 16;
         float dirX = targetRoundedPosX - npcCenter.X;
         float dirY = targetRoundedPosY - npcCenter.Y;
 
         float length = (float)Math.Sqrt(dirX * dirX + dirY * dirY);
 
         // If we do not have any type of collision, we want the NPC to fall down and de-accelerate along the X axis.
-        if (!collision && !CanFly)
+        if (!collision && !CanFly) {
             HeadAI_Movement_HandleFallingFromNoCollision(dirX, speed, acceleration);
-        else {
+        } else {
             // Else we want to play some audio (soundDelay) and move towards our target.
             HeadAI_Movement_PlayDigSounds(length);
 

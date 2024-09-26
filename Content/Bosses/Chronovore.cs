@@ -11,6 +11,7 @@ using TheGreatSidegrade.Content.WorldGeneration;
 using System.Collections.Generic;
 using Terraria.Graphics.Shaders;
 using Microsoft.Xna.Framework.Graphics;
+using TheGreatSidegrade.Assets;
 
 namespace TheGreatSidegrade.Content.Bosses;
 
@@ -46,7 +47,7 @@ public class ChronovoreHead : WormHead {
 
     public bool IsTimeCoreOperational => FollowerNPC.ModNPC is ChronovoreBody chronovore && chronovore.BodySegmentType == ChronovoreBody.BodyType.TimeCore && !chronovore.Destroyed;
 
-    public override string Texture => $"{nameof(TheGreatSidegrade)}/Content/Bosses/Chronovore_Head{(SecondStage ? "_SecondStage" : "")}";
+    public override string Texture => $"{nameof(TheGreatSidegrade)}/Content/Bosses/Chronovore_Head";
     public override string BossHeadTexture => $"{nameof(TheGreatSidegrade)}/Content/Bosses/Chronovore_BossHead";
     public override int MaxDistanceForUsingTileCollision => 10000;
 
@@ -130,7 +131,7 @@ public class ChronovoreHead : WormHead {
         bestiaryEntry.Info.AddRange([
 				SpawnConditions.TheSpiral,
 
-				new FlavorTextBestiaryInfoElement("The Chronovore is an ancient machine cast into ruin by the very power it controls. Now it lay, desolate, in the heart of the Spiral. Beware, for though it has lost much of its might, it is still a cataclysmic foe.")
+				new FlavorTextBestiaryInfoElement($"{TheGreatSidegrade.Localization}.Bestiary.Chronovore")
             ]);
     }
 
@@ -146,8 +147,8 @@ public class ChronovoreHead : WormHead {
     // This method is invoked from ChronovoreHead, ChronovoreBody and ChronovoreTail
     internal static void CommonWormInit(Worm worm) {
         // These two properties handle the movement of the worm
-        worm.MoveSpeed = 17f;
-        worm.Acceleration = 0.08f;
+        worm.MoveSpeed = 10f;
+        worm.Acceleration = 0.18f;
     }
 
     public int attackCounter;
@@ -191,12 +192,17 @@ public class ChronovoreHead : WormHead {
                 dt.time--;
                 if (dt.time <= 0) {
                     dt.target.Teleport(dt.struckPos, 1); // needs shader effects and a ticking sound
-                    doubleTapPos.Remove(dt);
+                    doubleTapPos.RemoveAt(i);
                     i--;
-                    //GameShaders.Misc["Chronovore"] = new();
                 }
             }
         }
+    }
+
+    public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
+        Texture2D e = GameAssets.GetTexture($"Content/Bosses/Chronovore_Head{(SecondStage ? "_SecondStage" : "")}");
+        Main.EntitySpriteDraw(e, NPC.Center - Main.screenPosition, null, NPC.GetAlpha(Lighting.GetColor((int)NPC.Center.X / 16, (int)NPC.Center.Y / 16)), NPC.rotation, e.Size() * 0.5f, NPC.scale, SpriteEffects.None, 0);
+        return false;
     }
 
     public void AddDoubleTap(Player target, Vector2 pos) {
@@ -222,10 +228,10 @@ public class ChronovoreBody : WormBody {
     public BodyType BodySegmentType { get; set; }
 
     public bool Destroyed {
-        get => NPC.ai[3] > (BodySegmentType == BodyType.Body2 ? 300 : 150);
+        get => NPC.ai[3] > (BodySegmentType == BodyType.TimeCore ? 1000 : BodySegmentType == BodyType.Body2 ? 300 : 150) * (Main.masterMode ? 2f : Main.expertMode ? 1.4f : 1f);
     }
 
-    public override string Texture => $"{nameof(TheGreatSidegrade)}/Content/Bosses/Chronovore_Body";
+    public override string Texture => $"{nameof(TheGreatSidegrade)}/Content/Bosses/Chronovore_Body1";
     public override string Name => $"Chronovore{Enum.GetName(BodySegmentType)}";
 
     public override void SetStaticDefaults() {
@@ -264,11 +270,6 @@ public class ChronovoreBody : WormBody {
         NPC.lifeMax = 30000;
         NPC.value = 800f;
         NPC.scale = 1.2f;
-
-        if (FollowingNPC.ModNPC is ChronovoreHead)
-            BodySegmentType = BodyType.TimeCore;
-        else
-            BodySegmentType = (BodyType) Main.rand.Next(3);
     }
 
     public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) {
@@ -280,6 +281,14 @@ public class ChronovoreBody : WormBody {
 
     public override void Init() {
         ChronovoreHead.CommonWormInit(this);
+
+        if (FollowingNPC.ModNPC is ChronovoreHead)
+            BodySegmentType = BodyType.TimeCore;
+        else
+            BodySegmentType = (BodyType)Main.rand.Next(3);
+        NPC.netUpdate = true;
+        NPC.netUpdate2 = true; // idfk
+        // i mean it works
     }
 
     public override void SendExtraAI(BinaryWriter writer) {
@@ -303,12 +312,9 @@ public class ChronovoreBody : WormBody {
             chronovore.AddDoubleTap(target, target.position);
     }
 
-    public override void FindFrame(int frameHeight) {
-        NPC.frame.Y = (int) BodySegmentType * 90 + (Destroyed ? 360 : 0);
-    }
-
     public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
-        Terraria.NPC
+        Texture2D e = GameAssets.GetTexture($"Content/Bosses/Chronovore_{BodySegmentType}{(Destroyed ? "Destroyed" : "")}");
+        Main.EntitySpriteDraw(e, NPC.Center - Main.screenPosition, null, NPC.GetAlpha(Lighting.GetColor((int)NPC.Center.X / 16, (int)NPC.Center.Y / 16)), NPC.rotation, e.Size() * 0.5f, NPC.scale, SpriteEffects.None, 0);
         return false;
     }
 }
@@ -319,7 +325,7 @@ public class ChronovoreTail : WormTail {
         set => NPC.ai[2] = value ? 1 : 0;
     }
 
-    public override string Texture => $"{nameof(TheGreatSidegrade)}/Content/Bosses/Chronovore_Tail{(Destroyed ? "Destroyed" : "")}";
+    public override string Texture => $"{nameof(TheGreatSidegrade)}/Content/Bosses/Chronovore_Tail";
 
     public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) {
         if (HeadSegment.ModNPC is ChronovoreHead chronovore && chronovore.attackCounter > 495)
@@ -330,7 +336,7 @@ public class ChronovoreTail : WormTail {
 
     public override void SetStaticDefaults() {
         NPCID.Sets.NPCBestiaryDrawModifiers value = new() {
-            Hide = true // Hides this NPC from the Bestiary, useful for multi-part NPCs whom you only want one entry.
+            Hide = true
         };
         NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, value);
     }
@@ -374,10 +380,17 @@ public class ChronovoreTail : WormTail {
             chronovore.AddDoubleTap(target, target.position);
     }
 
-    public override void FindFrame(int frameHeight) {
-        if (Destroyed)
-            NPC.frame.X = 46;
-        else
-            NPC.frame.X = 0;
+    public override void OnHitByItem(Player player, Item item, NPC.HitInfo hit, int damageDone) {
+        NPC.ai[3] += damageDone;
+    }
+
+    public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone) {
+        NPC.ai[3] += damageDone;
+    }
+
+    public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
+        Texture2D e = GameAssets.GetTexture($"Content/Bosses/Chronovore_Tail{(Destroyed ? "Destroyed" : "")}");
+        Main.EntitySpriteDraw(e, NPC.Center - Main.screenPosition, null, NPC.GetAlpha(Lighting.GetColor((int)NPC.Center.X / 16, (int)NPC.Center.Y / 16)), NPC.rotation, e.Size() * 0.5f, NPC.scale, SpriteEffects.None, 0);
+        return false;
     }
 }

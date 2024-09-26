@@ -12,7 +12,7 @@ namespace TheGreatSidegrade.Content.WorldGeneration.Passes;
 
 public class Nothing {
     public static void Method(GenerationProgress progress, GameConfiguration _) {
-        progress.Message = Language.GetTextValue("Mods.TheGreatSidegrade.World.Generation.Nothing.Message");
+        progress.Message = Language.GetTextValue($"{TheGreatSidegrade.Localization}.World.Generation.Nothing.Message");
         int num778 = Main.maxTilesX;
         int num779 = 0;
         int num780 = Main.maxTilesX;

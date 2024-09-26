@@ -34,15 +34,17 @@ public class ChronovoreBossBar : ModBossBar {
 
         life = npc.life;
         lifeMax = npc.lifeMax;
+        shield = 0;
+        shieldMax = 0;
 
-        /*NPC follower = npc.ModNPC is Worm worm ? worm.FollowerNPC : null;
+        NPC follower = npc.ModNPC is Worm worm ? worm.FollowerNPC : null;
         while (follower != null) {
             if (follower.ModNPC is ChronovoreBody body && !body.Destroyed && body.BodySegmentType == ChronovoreBody.BodyType.Body2) {
-                shield += Math.Max(0, follower.ai[3] - 150);
+                shield += Math.Max(0, Math.Min(follower.ai[3], 150) - 150);
                 shieldMax += 150;
             }
             follower = follower.ModNPC is ChronovoreBody e ? e.FollowerNPC : null;
-        }*/ // notworking
+        } // notworking
         // i dont think the BodySegmentType is syncing across the network properly
 
         return true;

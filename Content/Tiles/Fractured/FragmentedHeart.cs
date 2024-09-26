@@ -71,7 +71,7 @@ public class FragmentedHeart : ModTile {
                 //if (!NPC.AnyNPCs(ModContent.NPCType<Oblivion>()))
                 //    NPC.SpawnOnPlayer(plr, ModContent.NPCType<Oblivion>());
             } else {
-                string text = Language.GetTextValue($"Mods.{nameof(TheGreatSidegrade)}.World.HappyMessages.{Math.Max(1, WorldGen.shadowOrbCount)}");
+                string text = Lang.misc[WorldGen.shadowOrbCount == 2 ? 11 : 10].Value;
                 if (Main.netMode == NetmodeID.SinglePlayer)
                     Main.NewText(text, 50, 255, 130);
                 else if (Main.netMode == NetmodeID.Server)

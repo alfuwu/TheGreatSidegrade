@@ -13,7 +13,7 @@ namespace TheGreatSidegrade.Content.WorldGeneration.Passes;
 
 public class Starved {
     public static void Method(GenerationProgress progress, GameConfiguration _) {
-        progress.Message = Language.GetTextValue("Mods.TheGreatSidegrade.World.Generation.Starved.Message");
+        progress.Message = Language.GetTextValue($"{TheGreatSidegrade.Localization}.World.Generation.Starved.Message");
         int num778 = Main.maxTilesX;
         int num779 = 0;
         int num780 = Main.maxTilesX;

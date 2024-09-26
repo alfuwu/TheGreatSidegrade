@@ -12,7 +12,7 @@ namespace TheGreatSidegrade.Content.WorldGeneration.Passes;
 
 public class Rotten {
     public static void Method(GenerationProgress progress, GameConfiguration _) {
-        progress.Message = Language.GetTextValue("Mods.TheGreatSidegrade.World.Generation.Rotten.Message");
+        progress.Message = Language.GetTextValue($"{TheGreatSidegrade.Localization}.World.Generation.Rotten.Message");
         int num778 = Main.maxTilesX;
         int num779 = 0;
         int num780 = Main.maxTilesX;

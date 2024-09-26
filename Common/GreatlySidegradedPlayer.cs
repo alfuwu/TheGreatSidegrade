@@ -36,7 +36,7 @@ public class GreatlySidegradedPlayer : ModPlayer {
 
     public override bool ModifyNurseHeal(NPC nurse, ref int health, ref bool removeDebuffs, ref string chatText) {
         if (isEternalized) {
-            chatText = Language.GetTextValue($"Mods.{nameof(TheGreatSidegrade)}.Dialogue.Nurse.CantHeal");
+            chatText = Language.GetTextValue($"{TheGreatSidegrade.Localization}.Dialogue.Nurse.CantHeal");
             return false;
         }
         return base.ModifyNurseHeal(nurse, ref health, ref removeDebuffs, ref chatText);
