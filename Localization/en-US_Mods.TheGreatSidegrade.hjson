@@ -243,7 +243,7 @@ SpawnInfo: {
 		Or break and eat 3 Starving Eggs.
 		'''
 	ChorusOfCatastrophe: Use a [i:TheGreatSidegraded/CatcallerWhistle] at night in hardmode.
-	Lich: Use a [i:TheGreatSidegrade/Phylactery] anywhere in the world.
+	CursedLich: Use a [i:TheGreatSidegrade/Phylactery] anywhere in the world.
 	PrimevalBehemoth: Use a [i:TheGreatSidegrade/SuspiciousLookingRock] in the Forest or Snow biome.
 	TubaArchmage: Use a [i:TheGreatSidegrade/MobiusTube] during the day.
 	ChessKing: Use a [i:TheGreatSidegrade/SuspiciousLookingCheckersboard] at twilight.
@@ -254,7 +254,7 @@ World: {
 	Creation: {
 		EvilFractured: {
 			Title: Fractured
-			Description: Disease-like corruption is guaranteed to be present in your world.
+			Description: The dissonant Fractured is guaranteed to be present in your world.
 		}
 
 		EvilNothing: {
@@ -347,6 +347,8 @@ Buffs: {
 	}
 }
 
+Gods.Uru: Goddess of Life
+
 Events: {
 	MeteorShower: {
 		Start: A meteor shower is happening!
@@ -355,12 +357,25 @@ Events: {
 }
 
 NPCs: {
+	Checkers.DisplayName: Checkers
+	ChessKing.DisplayName: Chess King
+	ChorusOfCatastrophe: Chorus of Catastrophe
 	ChronovoreHead.DisplayName: The Chronovore
 	ChronovoreBody1.DisplayName: The Chronovore
 	ChronovoreBody2.DisplayName: The Chronovore
 	ChronovoreBody3.DisplayName: The Chronovore
 	ChronovoreTimeCore.DisplayName: Time Core
 	ChronovoreTail.DisplayName: The Chronovore
+	CruxParasite: Crux Parasite
+	CursedLich: Cursed Lich
+	DreamingColossus: Dreaming Colossus
+	Oblivion.DisplayName: Oblivion
+	PrimevalBehemoth: Primeval Behemoth
+	StormOfEternity: Storm of Eternity
+	TheStarved: The Starved
+	TitanOfRot: Titan of Rot
+	TubaArchmage: Samuel, the Tuba Archmage
+	Veilkeeper: The Veilkeeper
 }
 
 Dialogue.Nurse.CantHeal: Oh my, it seems your wounds don't want to heal.
@@ -382,7 +397,7 @@ Bestiary: {
 	CruxParasite: A beast that feasts on the dissonance between the Crimson and Corruption, it is a pest that should be exterminated.
 	CursedLich: A poor soul that wished for immortality and was unlucky enough to be granted it. They have practices many a dark art during their lengthy lifespawn.
 	DreamingColossus: A massive being that pondered the meaning of life for so long it began pondering why it was pondering before short-circuiting and falling asleep.
-	Oblivion: ''''Log Entry 103: "Oblivion" appears to be an unthinking mass of pure Creation energy found within the Nothing, colloqiually known as the Void. I do not know why Oblivion resides there, its purpose, nor how to draw its attention. I shall attempt to collect more information.' There are not more log entries.'''
+	Oblivion: ''''Log Entry 103: "Oblivion" appears to be an unthinking mass of pure Creation energy found within the Nothing, colloqiually known as the Void. I do not know why Oblivion resides there, its purpose, nor how to draw its attention. I shall attempt to collect more information.' There are no further log entries.'''
 	PrimevalBehemoth: The Primeval Behemoth is a creature that has existed since the dawn of the land, a mighty force to be reckoned with. Unfortunately, times are a-changin' and it is not getting any stronger.
 	StormOfEternity: The Storm of Eternity is a curious natural phenomena that occurs in the Fractured when it is destabilised. It gathers a unique material within it that can be used to craft powerful items.
 	TheStarved: The Starved is a writhing hivemind of eternally hungry abominable flesh. It swarms its prey with weak minions before going in with its main body to finish the fight.

@@ -81,3 +81,5 @@ nothing ideas:
  - add config value that removes the nothing from the evil selection menu, enabled by default, making the nothing only available thru RNG unless the user changes the config
 
  crat (cat + rat)
+
+ world evil invasion

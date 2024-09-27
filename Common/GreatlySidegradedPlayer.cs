@@ -1,17 +1,20 @@
-﻿using Terraria;
+﻿using System.Collections.Generic;
+using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using TheGreatSidegrade.Common.Abstract;
 using TheGreatSidegrade.Content.Buffs;
 
 namespace TheGreatSidegrade.Common;
 
 public class GreatlySidegradedPlayer : ModPlayer {
-    public int faith;
+    public float faith;
+    public HashSet<ModGod> faithfulTowards = [];
     private bool isEternalized;
 
     public override void ModifyManaCost(Item item, ref float reduce, ref float mult) {
         if (isEternalized)
-            mult *= 99999999f; // just give it some real high value or smthn to prevent anything from working
+            mult *= float.MaxValue; // just give it some real high value or smthn to prevent anything from working
     }
 
     public override void ModifyHurt(ref Player.HurtModifiers info) {
@@ -21,6 +24,9 @@ public class GreatlySidegradedPlayer : ModPlayer {
                 info.SourceDamage = 0;
             };
             Player.statLife += 1; // heal the 1 minimum damage you'd take
+        } else { // no point in applying any effects when eternalized
+            foreach (ModGod god in faithfulTowards)
+                god.ModifyHurt(this, ref info);
         }
     }
 
@@ -39,11 +45,11 @@ public class GreatlySidegradedPlayer : ModPlayer {
             chatText = Language.GetTextValue($"{TheGreatSidegrade.Localization}.Dialogue.Nurse.CantHeal");
             return false;
         }
-        return base.ModifyNurseHeal(nurse, ref health, ref removeDebuffs, ref chatText);
+        return true;
     }
 
     public override void PreUpdate() {
-        if (Player.HasBuff<Eternalized>())
+        if (!isEternalized && Player.HasBuff<Eternalized>())
             isEternalized = true;
     }
 

@@ -1,11 +1,11 @@
-﻿using Terraria.GameContent.Bestiary;
+﻿using TheGreatSidegrade.Common;
 
 namespace TheGreatSidegrade.Content.WorldGeneration;
 
 public static class SpawnConditions {
-    public static SpawnConditionBestiaryInfoElement TheFractured = new($"{TheGreatSidegrade.Localization}.Bestiary.Biomes.TheFractured", 7, "Images/MapBG6", new(200, 200, 200));
-    public static SpawnConditionBestiaryInfoElement TheNothing = new($"{TheGreatSidegrade.Localization}.Bestiary.Biomes.TheNothing", 7, "Images/MapBG6", new(200, 200, 200));
-    public static SpawnConditionBestiaryInfoElement TheRotten = new($"{TheGreatSidegrade.Localization}.Bestiary.Biomes.TheRotten", 7, "Images/MapBG6", new(200, 200, 200));
-    public static SpawnConditionBestiaryInfoElement TheSpiral = new($"{TheGreatSidegrade.Localization}.Bestiary.Biomes.TheSpiral", 7, "Images/MapBG6", new(200, 200, 200));
-    public static SpawnConditionBestiaryInfoElement TheStarved = new($"{TheGreatSidegrade.Localization}.Bestiary.Biomes.TheStarved", 7, "Images/MapBG6", new(200, 200, 200));
+    public static ModSpawnConditionBestiaryInfoElement TheFractured { get; } = new($"{TheGreatSidegrade.Localization}.Bestiary.Biomes.TheFractured", "UI/WorldCreation/IconEvilFractured", "UI/Bestiary/FracturedBG", new(200, 200, 200));
+    public static ModSpawnConditionBestiaryInfoElement TheNothing { get; } = new($"{TheGreatSidegrade.Localization}.Bestiary.Biomes.TheNothing", "UI/WorldCreation/IconEvilNothing", "UI/Bestiary/NothingBG", new(200, 200, 200));
+    public static ModSpawnConditionBestiaryInfoElement TheRotten { get; } = new($"{TheGreatSidegrade.Localization}.Bestiary.Biomes.TheRotten", "UI/WorldCreation/IconEvilRotten", "UI/Bestiary/RottenBG", new(200, 200, 200));
+    public static ModSpawnConditionBestiaryInfoElement TheSpiral { get; } = new($"{TheGreatSidegrade.Localization}.Bestiary.Biomes.TheSpiral", "UI/WorldCreation/IconEvilSpiral", "UI/Bestiary/SpiralBG", new(200, 200, 200));
+    public static ModSpawnConditionBestiaryInfoElement TheStarved { get; } = new($"{TheGreatSidegrade.Localization}.Bestiary.Biomes.TheStarved", "UI/WorldCreation/IconEvilStarved", "UI/Bestiary/StarvedBG", new(200, 200, 200));
 }

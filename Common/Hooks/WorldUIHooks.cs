@@ -118,7 +118,7 @@ public class WorldUIHooks {
                 worldEvil = (GreatlySidegradedWorld.WorldEvil) tmp;
 
             if (!GreatlySidegradedWorld.IsVanillaEvil(worldEvil)) {
-                string iconPath = "Assets/Textures/UI/";
+                string iconPath = "Assets/Textures/UI/Icons/";
                 iconPath += Enum.GetName(worldEvil) + "/Icon";
                 iconPath += self.Data.IsHardMode ? "Hallow" : "";
                 if (self.Data.ZenithWorld)

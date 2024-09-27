@@ -81,7 +81,11 @@ public class ChronovoreHead : WormHead {
     }
 
     public override void SetStaticDefaults() {
-        var drawModifier = new NPCID.Sets.NPCBestiaryDrawModifiers() { // Influences how the NPC looks in the Bestiary
+        NPCID.Sets.MPAllowedEnemies[Type] = true;
+        NPCID.Sets.BossBestiaryPriority.Add(Type);
+        NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;
+
+        NPCID.Sets.NPCBestiaryDrawModifiers drawModifier = new() { // Influences how the NPC looks in the Bestiary
             CustomTexturePath = $"{nameof(TheGreatSidegrade)}/Content/Bosses/Chronovore_Bestiary", // If the NPC is multiple parts like a worm, a custom texture for the Bestiary is encouraged.
             Position = new(40f, 24f),
             PortraitPositionXOverride = 0f,
@@ -122,17 +126,16 @@ public class ChronovoreHead : WormHead {
         NPC.boss = true;
         NPC.BossBar = ModContent.GetInstance<ChronovoreBossBar>(); // i dont think this is even required
         
-        //if (!Main.dedServ)
-        //    Music = MusicLoader.GetMusicSlot(Mod, "Assets/Music/Ropocalypse2");
+        if (!Main.dedServ)
+            Music = MusicID.Boss1;
     }
 
     public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
         // We can use AddRange instead of calling Add multiple times in order to add multiple items at once
         bestiaryEntry.Info.AddRange([
-				SpawnConditions.TheSpiral,
-
-				new FlavorTextBestiaryInfoElement($"{TheGreatSidegrade.Localization}.Bestiary.Chronovore")
-            ]);
+			SpawnConditions.TheSpiral,
+			new FlavorTextBestiaryInfoElement($"{TheGreatSidegrade.Localization}.Bestiary.Chronovore")
+        ]);
     }
 
     public override void Init() {
@@ -147,8 +150,8 @@ public class ChronovoreHead : WormHead {
     // This method is invoked from ChronovoreHead, ChronovoreBody and ChronovoreTail
     internal static void CommonWormInit(Worm worm) {
         // These two properties handle the movement of the worm
-        worm.MoveSpeed = 10f;
-        worm.Acceleration = 0.18f;
+        worm.MoveSpeed = 15f;
+        worm.Acceleration = 0.1f;
     }
 
     public int attackCounter;
@@ -212,7 +215,7 @@ public class ChronovoreHead : WormHead {
     }
 
     public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo) {
-        //if (IsTimeCoreOperational)
+        if (IsTimeCoreOperational)
             AddDoubleTap(target, target.position);
     }
 }
@@ -308,7 +311,7 @@ public class ChronovoreBody : WormBody {
     }
 
     public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo) {
-        if (HeadSegment.ModNPC is ChronovoreHead chronovore )//&& chronovore.IsTimeCoreOperational)
+        if (HeadSegment.ModNPC is ChronovoreHead chronovore && chronovore.IsTimeCoreOperational)
             chronovore.AddDoubleTap(target, target.position);
     }
 
@@ -376,7 +379,7 @@ public class ChronovoreTail : WormTail {
     }
 
     public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo) {
-        if (HeadSegment.ModNPC is ChronovoreHead chronovore)// && chronovore.IsTimeCoreOperational)
+        if (HeadSegment.ModNPC is ChronovoreHead chronovore && chronovore.IsTimeCoreOperational)
             chronovore.AddDoubleTap(target, target.position);
     }
 

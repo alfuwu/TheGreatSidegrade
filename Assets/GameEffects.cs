@@ -10,12 +10,15 @@ using ReLogic.Content;
 
 namespace TheGreatSidegrade.Assets;
 
-public class GameEffects {
-    public static Asset<Effect> ChronovoreDoubleTapShader;
+public static class GameEffects {
+    private static Asset<Effect> ChronovoreDoubleTapShader;
+    private static Asset<Effect> DreamingColossusShader;
+    private static Asset<Effect> OblivionShader;
+    private static Asset<Effect> VeilkeeperRealityPhaseShader;
 
-    private static void RegisterMiscShader(Asset<Effect> shader, string name, string pass) => GameShaders.Misc[$"TheGreatSidegrade/{name}"] = new(shader, pass);
+    private static void RegisterShader(Asset<Effect> shader, string name, string pass) => GameShaders.Misc[$"{nameof(TheGreatSidegrade)}/{name}"] = new(shader, pass);
 
-    public static Asset<Effect> GetEffect(string path, AssetRequestMode requestMode = AssetRequestMode.AsyncLoad) => TheGreatSidegrade.Mod.Assets.Request<Effect>(path, requestMode);
+    public static Asset<Effect> GetEffect(string path, AssetRequestMode requestMode = AssetRequestMode.AsyncLoad) => TheGreatSidegrade.Mod.Assets.Request<Effect>($"Assets/Effects/{path}", requestMode);
 
     public static void LoadShaders() {
         if (Main.dedServ)
@@ -23,6 +26,12 @@ public class GameEffects {
 
         // temp, remove calamity shader and replace with actual effect shader when done learning how to shadfer
         ChronovoreDoubleTapShader = GetEffect("DoGPortalShader");
-        RegisterMiscShader(ChronovoreDoubleTapShader, "ChronovoreDoubleTap", "ScreenPass");
+        RegisterShader(ChronovoreDoubleTapShader, "ChronovoreDoubleTap", "ScreenPass");
+        //DreamingColossusShader = GetEffect("DreamingColossus");
+        //RegisterShader(DreamingColossusShader, "DreamingColossus", "ScreenPass");
+        OblivionShader = GetEffect("Oblivion");
+        RegisterShader(OblivionShader, "Oblivion", "ScreenPass");
+        //VeilkeeperRealityPhaseShader = GetEffect("Veilkeeper");
+        //RegisterShader(VeilkeeperRealityPhaseShader, "Veilkeeper", "ScreenPass");
     }
 }
