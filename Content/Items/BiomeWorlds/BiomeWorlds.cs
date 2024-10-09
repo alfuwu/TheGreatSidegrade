@@ -58,7 +58,7 @@ public abstract class BaseWorldGenPass : GenPass {
 
     protected override void ApplyPass(GenerationProgress progress, GameConfiguration configuration) {
         GenerationProgress currentGenerationProgress = WorldGenerator.CurrentGenerationProgress;
-        WorldGen.WorldGenParam_Evil = (int) WorldEvilType;
+        WorldGen.WorldGenParam_Evil = (int)WorldEvilType;
         WorldGen.GenerateWorld(Main.ActiveWorldFileData.Seed, null);
         WorldGenerator.CurrentGenerationProgress = currentGenerationProgress;
         for (int x = 0; x < Main.maxTilesX; x++) {

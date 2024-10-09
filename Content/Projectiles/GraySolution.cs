@@ -58,37 +58,37 @@ public class GraySolution : ModProjectile {
                     int wall = Main.tile[k, l].WallType;
 
                     if (wall == WallID.Stone) {
-                        //Main.tile[k, l].WallType = (ushort) ModContent.WallType<Walls.Fractured.Fracstone>();
+                        //Main.tile[k, l].WallType = (ushort)ModContent.WallType<Walls.Fractured.Fracstone>();
                         WorldGen.SquareWallFrame(k, l);
                         NetMessage.SendTileSquare(-1, k, l, 1);
                     }
 
                     if (TileID.Sets.Conversion.Stone[type]) {
-                        //Main.tile[k, l].TileType = (ushort) ModContent.TileType<Fracstone>();
+                        //Main.tile[k, l].TileType = (ushort)ModContent.TileType<Fracstone>();
                         WorldGen.SquareTileFrame(k, l);
                         NetMessage.SendTileSquare(-1, k, l, 1);
                     } else if (TileID.Sets.Conversion.Sand[type]) {
-                        //Main.tile[k, l].TileType = (ushort) ModContent.TileType<Shattersand>();
+                        //Main.tile[k, l].TileType = (ushort)ModContent.TileType<Shattersand>();
                         WorldGen.SquareTileFrame(k, l);
                         NetMessage.SendTileSquare(-1, k, l, 1);
                     } else if (TileID.Sets.Conversion.HardenedSand[type]) {
-                        //Main.tile[k, l].TileType = (ushort) ModContent.TileType<HardenedShattersand>();
+                        //Main.tile[k, l].TileType = (ushort)ModContent.TileType<HardenedShattersand>();
                         WorldGen.SquareTileFrame(k, l);
                         NetMessage.SendTileSquare(-1, k, l, 1);
                     } else if (TileID.Sets.Conversion.Sandstone[type]) {
-                        //Main.tile[k, l].TileType = (ushort) ModContent.TileType<Shattersandstone>();
+                        //Main.tile[k, l].TileType = (ushort)ModContent.TileType<Shattersandstone>();
                         WorldGen.SquareTileFrame(k, l);
                         NetMessage.SendTileSquare(-1, k, l, 1);
                     } else if (TileID.Sets.Conversion.Ice[type]) {
-                        //Main.tile[k, l].TileType = (ushort) ModContent.TileType<ShatteredIce>();
+                        //Main.tile[k, l].TileType = (ushort)ModContent.TileType<ShatteredIce>();
                         WorldGen.SquareTileFrame(k, l);
                         NetMessage.SendTileSquare(-1, k, l, 1);
                     } else if (TileID.Sets.Conversion.Grass[type]) {
-                        //Main.tile[k, l].TileType = (ushort) ModContent.TileType<Fracgrass>();
+                        //Main.tile[k, l].TileType = (ushort)ModContent.TileType<Fracgrass>();
                         WorldGen.SquareTileFrame(k, l);
                         NetMessage.SendTileSquare(-1, k, l, 1);
                     } else if (TileID.Sets.Conversion.JungleGrass[type]) {
-                        //Main.tile[k, l].TileType = (ushort) ModContent.TileType<JungleFracgrass>();
+                        //Main.tile[k, l].TileType = (ushort)ModContent.TileType<JungleFracgrass>();
                     }
                 }
             }

@@ -19,6 +19,7 @@ public class Hungrite : ModTile {
         Main.tileBlockLight[Type] = true;
         
         TileObjectData.newTile.CopyFrom(TileObjectData.GetTileData(TileID.Demonite, 0));
+        TileObjectData.addTile(Type);
 
         RegisterItemDrop(ModContent.ItemType<HungriteOre>());
     }

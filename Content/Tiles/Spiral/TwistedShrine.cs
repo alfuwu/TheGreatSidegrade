@@ -41,7 +41,7 @@ public class TwistedShrine : ModTile {
 
     public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
         //float f = Main.rand.Next(-5, 6) * 0.035f;
-        //r = 0.632f + (float) Math.Pow(f, 1.4);
+        //r = 0.632f + (float)Math.Pow(f, 1.4);
         //g = 0.444f + f * 1.2f;
         //b = 0.131f;
     }

@@ -1,5 +1,8 @@
 displayName = The Great Sidegrade
 author = alfuwu
 version = 1.0.0.0
+hideCode = false
+hideResources = false
+includeSource = true
 weakReferences=Avalon,BiomeWorlds,TheConfectionRebirth
 sortBefore=Avalon,TheConfectionRebirth,TheDepths

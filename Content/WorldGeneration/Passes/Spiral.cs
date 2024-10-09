@@ -71,7 +71,7 @@ public class Spiral {
                 flag53 = true;
                 int num819 = Main.maxTilesX / 2;
                 int num820 = 200;
-                num816 = !WorldGen.drunkWorldGen ? WorldGen.genRand.Next(num785, Main.maxTilesX - num785) : GenVars.crimsonLeft ? WorldGen.genRand.Next((int) (Main.maxTilesX * 0.5), Main.maxTilesX - num785) : WorldGen.genRand.Next(num785, (int) (Main.maxTilesX * 0.5));
+                num816 = !WorldGen.drunkWorldGen ? WorldGen.genRand.Next(num785, Main.maxTilesX - num785) : GenVars.crimsonLeft ? WorldGen.genRand.Next((int)(Main.maxTilesX * 0.5), Main.maxTilesX - num785) : WorldGen.genRand.Next(num785, (int)(Main.maxTilesX * 0.5));
                 num817 = num816 - WorldGen.genRand.Next(200) - 100;
                 num818 = num816 + WorldGen.genRand.Next(200) + 100;
                 if (num817 < GenVars.evilBiomeBeachAvoidance)
@@ -130,7 +130,7 @@ public class Spiral {
                     num821--;
 
                 if (num822 == num816 || num821 == 0) {
-                    for (int num823 = (int) GenVars.worldSurfaceLow; num823 < Main.worldSurface - 1; num823++) {
+                    for (int num823 = (int)GenVars.worldSurfaceLow; num823 < Main.worldSurface - 1; num823++) {
                         if (Main.tile[num822, num823].HasTile || Main.tile[num822, num823].WallType > 0) {
                             if (num822 == num816) {
                                 num821 = 20;
@@ -146,12 +146,12 @@ public class Spiral {
                     }
                 }
 
-                for (int num824 = (int) GenVars.worldSurfaceLow; num824 < Main.worldSurface - 1; num824++) {
+                for (int num824 = (int)GenVars.worldSurfaceLow; num824 < Main.worldSurface - 1; num824++) {
                     if (Main.tile[num822, num824].HasTile) {
                         int num825 = num824 + WorldGen.genRand.Next(10, 14);
                         for (int num826 = num824; num826 < num825; num826++)
                             if (Main.tile[num822, num826].TileType == TileID.JungleGrass && num822 >= num817 + WorldGen.genRand.Next(5) && num822 < num818 - WorldGen.genRand.Next(5))
-                                Main.tile[num822, num826].TileType = (ushort) ModContent.TileType<StarvedJungleGrass>();
+                                Main.tile[num822, num826].TileType = (ushort)ModContent.TileType<StarvedJungleGrass>();
 
                         break;
                     }
@@ -168,10 +168,10 @@ public class Spiral {
                     num827 = Main.worldSurface + 50.0;
 
                 bool flag54 = false;
-                for (int num829 = (int) GenVars.worldSurfaceLow; num829 < num827; num829++) {
+                for (int num829 = (int)GenVars.worldSurfaceLow; num829 < num827; num829++) {
                     if (Main.tile[num828, num829].HasTile) {
                         if (Main.tile[num828, num829].TileType == TileID.Sand && num828 >= num817 + WorldGen.genRand.Next(5) && num828 <= num818 - WorldGen.genRand.Next(5))
-                            Main.tile[num828, num829].TileType = (ushort) ModContent.TileType<StarvedSand>();
+                            Main.tile[num828, num829].TileType = (ushort)ModContent.TileType<StarvedSand>();
 
                         if (num829 < Main.worldSurface - 1 && !flag54) {
                             if (Main.tile[num828, num829].TileType == TileID.Dirt) {
@@ -185,23 +185,23 @@ public class Spiral {
 
                         flag54 = true;
                         //if (Main.tile[num828, num829].WallType == WallID.HardenedSand)
-                        //    Main.tile[num828, num829].WallType = (ushort) ModContent.WallType<HardendHelixsandWall>();
+                        //    Main.tile[num828, num829].WallType = (ushort)ModContent.WallType<HardendHelixsandWall>();
                         //else if (Main.tile[num828, num829].WallType == WallID.Sandstone)
-                        //    Main.tile[num828, num829].WallType = (ushort) ModContent.WallType<HelixsandstoneWall>();
+                        //    Main.tile[num828, num829].WallType = (ushort)ModContent.WallType<HelixsandstoneWall>();
 
                         if (Main.tile[num828, num829].TileType == TileID.Stone) {
                             if (num828 >= num817 + WorldGen.genRand.Next(5) && num828 <= num818 - WorldGen.genRand.Next(5))
-                                Main.tile[num828, num829].TileType = (ushort) ModContent.TileType<StarvingStone>();
+                                Main.tile[num828, num829].TileType = (ushort)ModContent.TileType<StarvingStone>();
                         } else if (Main.tile[num828, num829].TileType == TileID.Grass) {
                             Main.tile[num828, num829].TileType = (ushort)ModContent.TileType<StarvedGrass>();
                         } else if (Main.tile[num828, num829].TileType == TileID.JungleGrass) {
-                            Main.tile[num828, num829].TileType = (ushort) ModContent.TileType<StarvedJungleGrass>();
+                            Main.tile[num828, num829].TileType = (ushort)ModContent.TileType<StarvedJungleGrass>();
                         } else if (Main.tile[num828, num829].TileType == TileID.IceBlock) {
-                            Main.tile[num828, num829].TileType = (ushort) ModContent.TileType<StarvedIce>();
+                            Main.tile[num828, num829].TileType = (ushort)ModContent.TileType<StarvedIce>();
                         } else if (Main.tile[num828, num829].TileType == TileID.Sandstone) {
-                            Main.tile[num828, num829].TileType = (ushort) ModContent.TileType<StarvedSandstone>();
+                            Main.tile[num828, num829].TileType = (ushort)ModContent.TileType<StarvedSandstone>();
                         } else if (Main.tile[num828, num829].TileType == TileID.HardenedSand) {
-                            Main.tile[num828, num829].TileType = (ushort) ModContent.TileType<HardenedStarvedSand>();
+                            Main.tile[num828, num829].TileType = (ushort)ModContent.TileType<HardenedStarvedSand>();
                         }
                     }
                 }
@@ -279,8 +279,8 @@ public class Spiral {
             num -= 1.0;
             if (!flag && vector2D.Y > Main.worldSurface + 20.0) {
                 flag = true;
-                WorldGen.ChasmRunnerSideways((int) vector2D.X, (int) vector2D.Y, -1, WorldGen.genRand.Next(20, 40));
-                WorldGen.ChasmRunnerSideways((int) vector2D.X, (int) vector2D.Y, 1, WorldGen.genRand.Next(20, 40));
+                WorldGen.ChasmRunnerSideways((int)vector2D.X, (int)vector2D.Y, -1, WorldGen.genRand.Next(20, 40));
+                WorldGen.ChasmRunnerSideways((int)vector2D.X, (int)vector2D.Y, 1, WorldGen.genRand.Next(20, 40));
             }
 
             int num4;
@@ -288,10 +288,10 @@ public class Spiral {
             int num6;
             int num7;
             if (num > num2) {
-                num4 = (int) (vector2D.X - num3 * 0.5);
-                num5 = (int) (vector2D.X + num3 * 0.5);
-                num6 = (int) (vector2D.Y - num3 * 0.5);
-                num7 = (int) (vector2D.Y + num3 * 0.5);
+                num4 = (int)(vector2D.X - num3 * 0.5);
+                num5 = (int)(vector2D.X + num3 * 0.5);
+                num6 = (int)(vector2D.Y - num3 * 0.5);
+                num7 = (int)(vector2D.Y + num3 * 0.5);
                 if (num4 < 0)
                     num4 = 0;
 
@@ -319,14 +319,14 @@ public class Spiral {
             if (num <= 0.0) {
                 if (!flag2) {
                     flag2 = true;
-                    AddStarvingEgg((int) vector2D.X, (int) vector2D.Y);
+                    AddStarvingEgg((int)vector2D.X, (int)vector2D.Y);
                 } else if (!flag3) {
                     flag3 = false;
                     bool flag4 = false;
                     int num8 = 0;
                     while (!flag4) {
-                        int num9 = WorldGen.genRand.Next((int) vector2D.X - 25, (int) vector2D.X + 25);
-                        int num10 = WorldGen.genRand.Next((int) vector2D.Y - 50, (int) vector2D.Y);
+                        int num9 = WorldGen.genRand.Next((int)vector2D.X - 25, (int)vector2D.X + 25);
+                        int num10 = WorldGen.genRand.Next((int)vector2D.Y - 50, (int)vector2D.Y);
                         if (num9 < 5)
                             num9 = 5;
 
@@ -341,7 +341,7 @@ public class Spiral {
 
                         if (num10 > Main.worldSurface) {
                             if (!WorldGen.IsTileNearby(num9, num10, ModContent.TileType<AltarOfTheStarvingOne>(), 3))
-                                WorldGen.Place3x2(num9, num10, (ushort) ModContent.TileType<AltarOfTheStarvingOne>());
+                                WorldGen.Place3x2(num9, num10, (ushort)ModContent.TileType<AltarOfTheStarvingOne>());
 
                             if (Main.tile[num9, num10].TileType == ModContent.TileType<AltarOfTheStarvingOne>()) {
                                 flag4 = true;
@@ -366,10 +366,10 @@ public class Spiral {
             if (vector2D2.X < -0.3)
                 vector2D2.X = -0.3;
 
-            num4 = (int) (vector2D.X - num3 * 1.1);
-            num5 = (int) (vector2D.X + num3 * 1.1);
-            num6 = (int) (vector2D.Y - num3 * 1.1);
-            num7 = (int) (vector2D.Y + num3 * 1.1);
+            num4 = (int)(vector2D.X - num3 * 1.1);
+            num5 = (int)(vector2D.X + num3 * 1.1);
+            num6 = (int)(vector2D.Y - num3 * 1.1);
+            num7 = (int)(vector2D.Y + num3 * 1.1);
             if (num4 < 1)
                 num4 = 1;
 
@@ -393,7 +393,7 @@ public class Spiral {
                             tile.HasTile = true;
 
                         if (tile.TileType != ModContent.TileType<StarvingEgg>())
-                            tile.TileType = (ushort) ModContent.TileType<StarvingStone>();
+                            tile.TileType = (ushort)ModContent.TileType<StarvingStone>();
                     }
                 }
             }
@@ -403,13 +403,13 @@ public class Spiral {
                     if (Math.Abs(num11 - vector2D.X) + Math.Abs(num12 - vector2D.Y) < num3 * 1.1 * (1.0 + WorldGen.genRand.Next(-10, 11) * 0.015)) {
                         Tile tile = Main.tile[num11, num12];
                         if (tile.TileType != ModContent.TileType<StarvingEgg>())
-                            tile.TileType = (ushort) ModContent.TileType<StarvingStone>();
+                            tile.TileType = (ushort)ModContent.TileType<StarvingStone>();
 
                         if (steps <= num2)
                             tile.HasTile = true;
 
                         if (num12 > j + WorldGen.genRand.Next(3, 20))
-                            tile.WallType = (ushort) ModContent.WallType<Walls.Starved.StarvedUnsafe1>();
+                            tile.WallType = (ushort)ModContent.WallType<Walls.Starved.StarvedUnsafe1>();
                     }
                 }
             }
@@ -429,27 +429,27 @@ public class Spiral {
             return;
         for (int i = x - 1; i < x + 1; i++)
             for (int j = y - 1; j < y + 1; j++)
-                if (Main.tile[i, j].HasTile && Main.tile[i, j].TileType == (ushort) ModContent.TileType<StarvingEgg>())
+                if (Main.tile[i, j].HasTile && Main.tile[i, j].TileType == (ushort)ModContent.TileType<StarvingEgg>())
                     return;
         short num = 0;
         Tile bottomLeft = Main.tile[x - 1, y - 1];
         bottomLeft.HasTile = true;
-        bottomLeft.TileType = (ushort) ModContent.TileType<StarvingEgg>();
+        bottomLeft.TileType = (ushort)ModContent.TileType<StarvingEgg>();
         bottomLeft.TileFrameX = num;
         bottomLeft.TileFrameY = 0;
         Tile bottomRight = Main.tile[x, y - 1];
         bottomRight.HasTile = true;
-        bottomRight.TileType = (ushort) ModContent.TileType<StarvingEgg>();
+        bottomRight.TileType = (ushort)ModContent.TileType<StarvingEgg>();
         bottomRight.TileFrameX = (short)(18 + num);
         bottomRight.TileFrameY = 0;
         Tile topLeft = Main.tile[x - 1, y];
         topLeft.HasTile = true;
-        topLeft.TileType = (ushort) ModContent.TileType<StarvingEgg>();
+        topLeft.TileType = (ushort)ModContent.TileType<StarvingEgg>();
         topLeft.TileFrameX = num;
         topLeft.TileFrameY = 18;
         Tile topRight = Main.tile[x, y];
         topRight.HasTile = true;
-        topRight.TileType = (ushort) ModContent.TileType<StarvingEgg>();
+        topRight.TileType = (ushort)ModContent.TileType<StarvingEgg>();
         topRight.TileFrameX = (short) (18 + num);
         topRight.TileFrameY = 18;
     }

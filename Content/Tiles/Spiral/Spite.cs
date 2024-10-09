@@ -18,5 +18,6 @@ public class Spite : ModTile {
         Main.tileBlockLight[Type] = true;
         
         TileObjectData.newTile.CopyFrom(TileObjectData.GetTileData(TileID.Demonite, 0));
+        TileObjectData.addTile(Type);
     }
 }

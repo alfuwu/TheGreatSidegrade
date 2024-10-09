@@ -1,5 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using ReLogic.Utilities;
+using System.Collections.Generic;
+using System.Reflection;
 using Terraria;
+using Terraria.Audio;
+using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using TheGreatSidegrade.Common.Abstract;
@@ -14,7 +18,7 @@ public class GreatlySidegradedPlayer : ModPlayer {
 
     public override void ModifyManaCost(Item item, ref float reduce, ref float mult) {
         if (isEternalized)
-            mult *= float.MaxValue; // just give it some real high value or smthn to prevent anything from working
+            mult *= 999999999f; // just give it some real high value or smthn to prevent anything from working
     }
 
     public override void ModifyHurt(ref Player.HurtModifiers info) {

@@ -5,11 +5,11 @@ using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.UI.Elements;
 using Terraria.Localization;
-using Terraria.ModLoader;
 using Terraria.UI;
 using TheGreatSidegrade.Assets;
 
 namespace TheGreatSidegrade.Common;
+
 public class ModSpawnConditionBestiaryInfoElement : IBestiaryInfoElement, IBestiaryBackgroundImagePathAndColorProvider, IBestiaryPrioritizedElement {
     private readonly string _key;
     private readonly string _iconPath;

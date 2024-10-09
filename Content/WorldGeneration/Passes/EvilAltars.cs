@@ -16,7 +16,7 @@ public class EvilAltars : GenPass {
     protected override void ApplyPass(GenerationProgress progress, GameConfiguration configuration) {
         Main.tileSolid[484] = false;
         progress.Message = Lang.gen[26].Value;
-        int num641 = (int) (Main.maxTilesX * Main.maxTilesY * 3.3E-06);
+        int num641 = (int)(Main.maxTilesX * Main.maxTilesY * 3.3E-06);
         int altarTile = GreatlySidegradedWorld.worldEvil switch {
             GreatlySidegradedWorld.WorldEvil.Fractured => ModContent.TileType<AltarOfTheStarvingOne>(),
             GreatlySidegradedWorld.WorldEvil.Nothing => ModContent.TileType<AltarOfTheStarvingOne>(),

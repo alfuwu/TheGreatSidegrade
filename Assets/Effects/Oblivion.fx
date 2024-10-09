@@ -17,9 +17,10 @@ float4 PixelShaderFunction(float4 position : SV_POSITION, float2 coords : TEXCOO
     // calc distance to center, use pow to favor center positions over distant positions
     float distanceFromCenter = pow(length(centeredCoords), 0.8);
 
-    float2 acoords = float2(abs((coords.x + sin(uTime) * 0.5) % 1.0), (coords.y + uTime) % 1.0);
+    float2 acoords = float2(abs((coords.x + sin(uTime) * 0.1) % 1.0), (coords.y + uTime) % 1.0);
     // sample noise texture
-    float noiseValue = tex2D(uNoiseTex, acoords).x * pow(max(1, tex2D(uVignette, acoords).x), 2);
+    float noiseValue = tex2D(uNoiseTex, acoords).x * pow(max(0.8, tex2D(uVignette, acoords).x), 2); // woosh
+    // oops accidentally used acoords for vignette instead of coords, but i kinda like the pulsing effect so it stays
 
     // use the radial distance as the gradient effect
     float gradientValue = 1.0 - distanceFromCenter * 1.6;

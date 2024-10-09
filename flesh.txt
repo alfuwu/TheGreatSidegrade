@@ -1,0 +1,191 @@
+this file is for defining ideally what the content suggested in todo.txt should do in game when implemented in more depth. everything is subject to change. this gives a more concrete roadmap to work on and thus makes it easier to fill out the mod.
+
+each shadow orb equivalent: 1 accessory, 1 gun/firearm, 1 magic weapon, 1 melee weapon, and 1 light pet relating to itself (expand upon this further?)
+ - fragmented heart drops:
+   * accessory: 
+   * firearm: shrapnel shooter (short-range, high dmg, piercing, shotgun-like)
+   * magic weapon: barrage (fires a storm of piercing shards at the target, magic book)
+   * melee weapon: 
+   * light pet: fragmented heart
+ - gate of oblivion drops:
+   * accessory: 
+   * firearm: heretic rifle (every 2nd shot shoots an additional oblivion bullet, which is a unique bullet that cannot be crafted)
+   * magic weapon: voidrift (opens up a rift to the void, applying a weak pulling effect to hostile npcs and dealing contact damage)
+   * melee weapon: shard of the void
+   * light pet: oblivion in a lantern (a floating lantern containing a small oblivion flame)
+ - pus sac drops:
+   * accessory: rotten shoulderguard (+3 def, immunity to rusty ???)
+   * firearm: the glooper (fires globs of pus at enemies that poisons them)
+   * magic weapon: scythe of rot (doubles as a melee-ish weapon, fires a scythe projectile similar to the death sickle that inflicts the Rusty debuff)
+   * melee weapon: rusted greatsword (large, powerful, slow weapon that inflicts the rusty debuff)
+   * light pet: pus sac
+   * guaranteed drop of 7-12 Rotten Skin
+ - twisted energy cell drops:
+   * accessory: energy drink (??? add effects here)
+   * firearm: pulse pistol (sleek blue pistol, fires in burst of two shots similar to the clockwork assault rifle)
+   * magic weapon: EMP (emits a pulse that deals AOE dmg)
+   * melee weapon: twisted sword (just a twisted sword)
+   * light pet: twisted energy cell
+ - starving egg drops:
+   * accessory: hunger amulet (delays starvation in the constant by a significant amount, ??? add effects here)
+   * firearm: abyss ray (idfk atp) (shoots big black lazer, similar to zapinator but w/o the randomness)
+   * magic weapon: 
+   * melee weapon: living claymore
+   * light pet: starving egg
+
+gods (may or may not be scrapped):
+ - the player can select one god to worship, which tints their holy-related powers with the aspect of the god
+   * for example: uru, the goddess of life, gives a bonus to life regen and a bonus to healing-related holy powers
+ - the primary god worhiped in a world is able to move in as an NPC if its total faith is above 5, and will sell holy related items for a special currency that only drops from enemies killed with Holy damage
+ - a pope NPC will move in if the total world faith is above 10 and the primary god worshiped is not an evil god
+ - a cultist NPC will move in if the total world faith is above 10 and the primary god worshiped is an evil god
+ - the pope/cultist sell holy items for coins, instead of the special currency gods use
+ - god list:
+   * grahh, god of war and death (red, black) << great name
+   * uru, goddess of life (green, gold)
+   * idfk << also great name
+
+faith items:
+ - accessories:
+   * wooden cross (increases player faith by 3)
+ - armors:
+   * colored garbs (each garb color relates to a god, if that god is the god the player worships, increase player faith by 1 per each piece, set bonus is +2 faith)
+ - weapons:
+   * holy retribution (smites all NPCs that have the Judged debuff, dealing damage proportional to the user's faith level and how close the buff is to ending)
+
+projectiles:
+ - oblivion bullet: a bullet made of pure Creation energy. infinite piercing, << needs more unique stuff probably
+
+bosses:
+ - checkers:
+   * fights chess king over player if found
+   * deals 99999 damage to the player if it manages to jump over their heads
+   
+   * drops: checker board
+   * expert drop: 
+   * master drop: checkers piece (summons a checkers pet)
+ - chess king:
+   * fights checkers over player if found
+   * spawns in other chess pieces as minions to fight for it, in second phase (half health) spawns a queen miniboss to fight for it
+   
+   * drops: 
+   * expert drop: staff of chess (summoning weapon)
+   * master drop: chess piece (summons a chess king pet)
+ - chorus of catastrophe:
+   * idk yet other than three women
+   
+   * drops: 
+   * expert drop: 
+   * master drop: siren whistle (summons a siren pet)
+ - chronovore:
+   * big time worm
+   * hitting the player while the time core is alive will cause the player to rewind time after half a second has passed, returning to their position where they were hit
+   * "destroying" a segment drops twisted fragments, which are a shadow scale alternative for the Spiral
+   * in second phase
+   * in second phase (expert mode & above), create two phantom copies of itself. these copies do not have time powers, but they can still do contact damage
+   
+   * drops: 
+   * expert drop: 
+   * master drop: time core (summons a mini chronovore pet)
+ - crux parasite:
+   * i dont actually know
+
+   * drops: 
+   * expert drop: 
+   * master drop: fused evil (summons a baby crux parasite pet)
+ - cursed lich:
+   * big magic circles
+   * basically lunatic cultist on steroids
+
+   * drops: 
+   * expert drop: 
+   * master drop: lich bone (summons a skeleton dog pet)
+ - dreaming colossus
+   * EoL-style (humanoid in background)
+   * phase two is dimension-shift into dream realm, apply shader after
+   * in phase two, spawn lots of minions (dont know what the minions'll be yet)
+
+   * drops: 
+   * expert drop: 
+   * master drop: melatonin (summons a dreaming baby pet)
+ - oblivion:
+   * big bal of white fiya
+   * the oblivion oblivionator is a unique cannon structure that generates in the void evil biome. one shot deals about a third of oblivion's HP, which will move oblivion into its second and third phase
+   
+   * drops: 
+   * expert drop: 
+   * master drop: flame of oblivion (summons a small oblivion fire)
+ - primeval behemoth:
+   * mountain beast thing
+   * idk
+
+   * drops: 
+   * expert drop: 
+   * master drop: 
+ - storm of eternity:
+   * massive multi-part boss made up of a bunch of shards, high speeds with low accuracy
+   * killing half the storm reveals the core of the storm, which provides a target to kill
+   * each shard drops shattered shards, shadow scale alternative for the Fractured
+
+   * drops: 
+   * expert drop: 
+   * master drop: 
+ - the starved:
+   * mob of hungry creatures that come at the player from both sides of the screen
+   * each kill of a hungry creature drops abyss sap, shadow scale alternative for the Starved
+
+   * drops: 
+   * expert drop: 
+   * master drop: 
+ - titan of rot:
+   * golem/deerclops-like
+   * idk past that
+
+   * drops: 
+   * expert drop: 
+   * master drop: rotten steak (summons a baby titan of rot pet)
+ - tuba archmage:
+   * lunatic cultist-like
+   * flies around
+   * sound based attacks (use shaders?)
+
+   * drops:
+   * expert drop: 
+   * master drop: tuba citizenship (summons a tuba archmage pet)
+ - veilkeeper:
+   * upon death, unseal the Veil
+
+   * drops: 
+   * expert drop: 
+   * master drop: 
+
+items:
+ - accessories:
+   * 
+ - melee weapons:
+   * 
+ - magic weapons:
+   * sunflower staff (shoots fireballs)
+ - ranged weapons:
+   * 
+ - summoner weapons:
+   * 
+ - permanent consumables:
+   * mind ascension (BoC thingy)
+   * holy water (permanently increases faith by 2)
+
+ice biome flesh:
+ - 
+
+desert biome flesh:
+ -
+
+ocean biome flesh:
+ -
+
+forest rain flesh:
+ - 
+
+underground flesh:
+ - new microbiomes:
+  * 

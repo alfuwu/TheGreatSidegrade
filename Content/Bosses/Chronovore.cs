@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using System.IO;
-using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria;
 using Terraria.ModLoader;
@@ -9,18 +8,23 @@ using TheGreatSidegrade.Content.BossBars;
 using System;
 using TheGreatSidegrade.Content.WorldGeneration;
 using System.Collections.Generic;
-using Terraria.Graphics.Shaders;
 using Microsoft.Xna.Framework.Graphics;
 using TheGreatSidegrade.Assets;
+using Terraria.GameContent.Bestiary;
+using SceneFilters = Terraria.Graphics.Effects.Filters;
 
 namespace TheGreatSidegrade.Content.Bosses;
 
 [AutoloadBossHead]
 public class ChronovoreHead : WormHead {
+    private const float DoubleTapTime = 40f; // 2/3rds of a second
+    private const string BluePass = $"{nameof(TheGreatSidegrade)}/ChronovoreDoubleTap/BluePass";
+    private const string RipplePass = $"{nameof(TheGreatSidegrade)}/ChronovoreDoubleTap/RipplePass";
+
     public class DoubleTap(Player target, Vector2 struckPos) {
         public Player target = target;
         public Vector2 struckPos = struckPos;
-        public int time = 30; // half a second
+        public int time = (int)DoubleTapTime;
     }
 
     private static int secondStageHeadSlot = -1;
@@ -30,17 +34,7 @@ public class ChronovoreHead : WormHead {
         set => NPC.ai[2] = value ? 1 : 0;
     }
 
-    public int Age {
-        get => (int) NPC.ai[3];
-        set => NPC.ai[3] = value;
-    }
-
-    //public bool CanTimeReverse {
-    //    get => NPC.ai[3] <= 0;
-    //}
-
     private readonly List<DoubleTap> doubleTapPos = [];
-    private readonly List<DoubleTap> newTaps = [];
 
     public override int BodyType => ModContent.NPCType<ChronovoreBody>();
     public override int TailType => ModContent.NPCType<ChronovoreTail>();
@@ -157,22 +151,22 @@ public class ChronovoreHead : WormHead {
     public int attackCounter;
     public override void SendExtraAI(BinaryWriter writer) {
         writer.Write(attackCounter);
-        foreach (DoubleTap dt in newTaps) {
+        /*foreach (DoubleTap dt in newTaps) {
             writer.Write(dt.target.whoAmI);
             writer.WriteVector2(dt.struckPos);
         }
-        newTaps.Clear();
+        newTaps.Clear();*/
     }
 
     public override void ReceiveExtraAI(BinaryReader reader) {
         attackCounter = reader.ReadInt32();
-        try { // do i actually need to sync this
+        /*try { // do i actually need to sync this
             while (true) {
                 int plr = reader.ReadInt32();
                 Vector2 pos = reader.ReadVector2();
                 doubleTapPos.Add(new(Main.player[plr], pos));
             }
-        } catch (EndOfStreamException) { }
+        } catch (EndOfStreamException) { }*/
     }
 
     public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) {
@@ -186,8 +180,8 @@ public class ChronovoreHead : WormHead {
         if (Main.netMode != NetmodeID.MultiplayerClient) {
             if (attackCounter > 0)
                 attackCounter--; // tick down the attack counter.
-            Age++;
 
+            int lowestTime = -1;
             // get time reversed bitch
             // youre still getting time reversed but its more structured now bitch
             for (int i = 0; i < doubleTapPos.Count; i++) {
@@ -197,7 +191,40 @@ public class ChronovoreHead : WormHead {
                     dt.target.Teleport(dt.struckPos, 1); // needs shader effects and a ticking sound
                     doubleTapPos.RemoveAt(i);
                     i--;
+                } else if (lowestTime <= 0 || dt.time < lowestTime) {
+                    lowestTime = dt.time;
                 }
+            }
+            if (doubleTapPos.Count > 0 && Main.netMode != NetmodeID.Server) {
+                if (!SceneFilters.Scene[BluePass].Active)
+                    SceneFilters.Scene.Activate(BluePass);
+                if (!SceneFilters.Scene[RipplePass].Active)
+                    SceneFilters.Scene.Activate(RipplePass);
+                float t = (DoubleTapTime - lowestTime) / DoubleTapTime;
+                SceneFilters.Scene[BluePass].GetShader().UseProgress(t);
+                SceneFilters.Scene[RipplePass].GetShader().UseProgress(t);
+            } else if (doubleTapPos.Count <= 0 && Main.netMode != NetmodeID.Server) {
+                if (SceneFilters.Scene[BluePass].Active) {
+                    SceneFilters.Scene.Deactivate(BluePass);
+                    SceneFilters.Scene[RipplePass].GetShader().UseProgress(0f);
+                }
+                if (SceneFilters.Scene[RipplePass].Active) {
+                    SceneFilters.Scene.Deactivate(RipplePass);
+                    SceneFilters.Scene[RipplePass].GetShader().UseProgress(0f);
+                }
+            }
+        }
+    }
+
+    public override void OnKill() {
+        if (Main.netMode != NetmodeID.Server) {
+            if (SceneFilters.Scene[BluePass].Active) {
+                SceneFilters.Scene.Deactivate(BluePass);
+                SceneFilters.Scene[RipplePass].GetShader().UseProgress(0f);
+            }
+            if (SceneFilters.Scene[RipplePass].Active) {
+                SceneFilters.Scene.Deactivate(RipplePass);
+                SceneFilters.Scene[RipplePass].GetShader().UseProgress(0f);
             }
         }
     }
@@ -211,7 +238,7 @@ public class ChronovoreHead : WormHead {
     public void AddDoubleTap(Player target, Vector2 pos) {
         DoubleTap dt = new(target, pos);
         doubleTapPos.Add(dt);
-        newTaps.Add(dt);
+        //newTaps.Add(dt);
     }
 
     public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo) {
@@ -277,9 +304,7 @@ public class ChronovoreBody : WormBody {
 
     public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) {
         if (HeadSegment.ModNPC is ChronovoreHead chronovore && chronovore.attackCounter > 495)
-            modifiers.ModifyHurtInfo += (ref Player.HurtInfo hurtInfo) => {
-                hurtInfo.Damage *= 2;
-            };
+            modifiers.ModifyHurtInfo += (ref Player.HurtInfo hurtInfo) => hurtInfo.Damage *= 2;
     }
 
     public override void Init() {

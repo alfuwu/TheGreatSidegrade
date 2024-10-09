@@ -24,7 +24,6 @@ public class ChaliceOfEternity : ModItem {
         Item.useTime = 15;
         Item.useTurn = true;
         Item.UseSound = SoundID.Item3; // SoundID.Item29
-        Item.maxStack = Item.CommonMaxStack;
         Item.consumable = true;
         Item.rare = ItemRarityID.Yellow;
         Item.value = Item.buyPrice(gold: 30);

@@ -6,7 +6,7 @@ new evils:
  - the spiral (twisted themed evil biome)
  - the rotten (rotten themed evil biome, similar to the crimson, desolate)
  - the fractured (tons of small floating rocks make up the land, rare)
- - the hive(?) (hiveminded biome)
+ - the hive(?) (hiveminded biome) << nvm, crimson is canonically already a hivemind sooooo
 
 new goods(?):
  - the bloom (overgrowth, bioluminescent plants, regeneration & life)
@@ -76,9 +76,11 @@ new event monsters:
 biome worlds compat -- DONE!!! (mostly)
 
 nothing ideas:
- - change background to plain black? nah, would prevent seeing the loading bar. find some other color tho
+ - change background (during worldgen) to plain black? nah, would prevent seeing the loading bar. find some other color tho
  - change all world gen pass texts to "Fixing world..."
  - add config value that removes the nothing from the evil selection menu, enabled by default, making the nothing only available thru RNG unless the user changes the config
+
+ flesh out unloved biomes (ocean, ice, desert)
 
  crat (cat + rat)
 

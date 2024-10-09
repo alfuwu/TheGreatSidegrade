@@ -258,7 +258,7 @@ public class WorldUIHooks {
                         -(max - 1),
                         1f / max * usableWidthPercent),
                     Left = StyleDimension.FromPercent(1f - usableWidthPercent),
-                    HAlign = (j - (f * i) - (!TheGreatSidegrade.HasAvalon && Enum.GetValues<WorldEvilId>()[j] > WorldEvilId.Contagion && i == 0 ? 1 : 0)) / (float) (max - 1),
+                    HAlign = (j - (f * i) - (!TheGreatSidegrade.HasAvalon && Enum.GetValues<WorldEvilId>()[j] > WorldEvilId.Contagion && i == 0 ? 1 : 0)) / (float)(max - 1),
                 };
                 groupOptionButton.Top.Set(accumulatedHeight + (38 * i), 0f);
                 groupOptionButton.OnLeftMouseDown += (evt, element) => ClickEvilOption(self, evt, element);

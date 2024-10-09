@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Terraria.Graphics.Shaders;
 using Terraria;
 using ReLogic.Content;
+using Terraria.Graphics.Effects;
 
 namespace TheGreatSidegrade.Assets;
 
@@ -17,6 +18,7 @@ public static class GameEffects {
     private static Asset<Effect> VeilkeeperRealityPhaseShader;
 
     private static void RegisterShader(Asset<Effect> shader, string name, string pass) => GameShaders.Misc[$"{nameof(TheGreatSidegrade)}/{name}"] = new(shader, pass);
+    private static void RegisterScreenShader(Asset<Effect> shader, string name, string pass, EffectPriority priority = EffectPriority.Medium) => Filters.Scene[$"{nameof(TheGreatSidegrade)}/{name}"] = new(new(shader, pass), priority);
 
     public static Asset<Effect> GetEffect(string path, AssetRequestMode requestMode = AssetRequestMode.AsyncLoad) => TheGreatSidegrade.Mod.Assets.Request<Effect>($"Assets/Effects/{path}", requestMode);
 
@@ -24,9 +26,9 @@ public static class GameEffects {
         if (Main.dedServ)
             return;
 
-        // temp, remove calamity shader and replace with actual effect shader when done learning how to shadfer
-        ChronovoreDoubleTapShader = GetEffect("DoGPortalShader");
-        RegisterShader(ChronovoreDoubleTapShader, "ChronovoreDoubleTap", "ScreenPass");
+        ChronovoreDoubleTapShader = GetEffect("DoubleTap");
+        RegisterScreenShader(ChronovoreDoubleTapShader, "ChronovoreDoubleTap/BluePass", "BluePass");
+        RegisterScreenShader(ChronovoreDoubleTapShader, "ChronovoreDoubleTap/RipplePass", "ScreenPass");
         //DreamingColossusShader = GetEffect("DreamingColossus");
         //RegisterShader(DreamingColossusShader, "DreamingColossus", "ScreenPass");
         OblivionShader = GetEffect("Oblivion");

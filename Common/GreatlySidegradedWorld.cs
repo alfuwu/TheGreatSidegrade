@@ -19,15 +19,17 @@ using TheGreatSidegrade.Content.WorldGeneration.Passes;
 namespace TheGreatSidegrade.Common;
 
 public class GreatlySidegradedWorld : ModSystem {
-    public static Color FracturedBiomeColor = new(111, 110, 110);
-    public static Color NothingBiomeColor = new(10, 10, 10);
-    public static Color RottenBiomeColor = new(142, 76, 59);
-    public static Color SpiralBiomeColor = new(56, 76, 59);
-    public static Color StarvedBiomeColor = new(199, 173, 90);
+    public static readonly Color FracturedBiomeColor = new(111, 110, 110);
+    public static readonly Color NothingBiomeColor = new(10, 10, 10);
+    public static readonly Color RottenBiomeColor = new(142, 76, 59);
+    public static readonly Color SpiralBiomeColor = new(56, 76, 59);
+    public static readonly Color StarvedBiomeColor = new(199, 173, 90);
+
+    public static int FracTree = 0, EldTree = 0, RotTree = 0, HelixTree = 0, StarvingTree = 0;
 
     public static WorldEvil worldEvil;
 
-    public static List<Type> ActiveEvents = [];
+    public static readonly List<Type> ActiveEvents = [];
 
     public static int totalFract = 0, totalVoid = 0, totalRot = 0, totalTwisted = 0, totalStarved = 0;
     public static int totalFract2 = 0, totalVoid2 = 0, totalRot2 = 0, totalTwisted2 = 0, totalStarved2 = 0;
@@ -45,14 +47,14 @@ public class GreatlySidegradedWorld : ModSystem {
     }
 
     public override void PreWorldGen() {
-        WorldGen.WorldGenParam_Evil = (int) WorldUIHooks.SelectedWorldEvil - 1;
+        WorldGen.WorldGenParam_Evil = (int)WorldUIHooks.SelectedWorldEvil - 1;
         if (WorldGen.WorldGenParam_Evil == 0) {
             worldEvil = WorldEvil.Corruption;
         } else if (WorldGen.WorldGenParam_Evil == 1) {
             worldEvil = WorldEvil.Crimson;
         } else if (WorldGen.WorldGenParam_Evil == -1) {
             Mod.Logger.Info("RANDOM WORLD EVIL");
-            byte avalonModifier = TheGreatSidegrade.HasAvalon ? (byte) 0 : (byte) 1;
+            byte avalonModifier = (byte)(TheGreatSidegrade.HasAvalon ? 0 : 1);
             if (WorldGen.genRand.NextBool(Enum.GetValues<WorldEvil>().Length - 3, Enum.GetValues<WorldEvil>().Length - avalonModifier))
                 worldEvil = PickRandomEvil();
             else if (TheGreatSidegrade.IsContagion)
@@ -64,7 +66,7 @@ public class GreatlySidegradedWorld : ModSystem {
             Mod.Logger.Info("CRIMSN: " + WorldGen.crimson);
             Mod.Logger.Info("WORLDE EVL: " + Enum.GetName(worldEvil));
         } else if (WorldGen.WorldGenParam_Evil > 1 && WorldGen.WorldGenParam_Evil < Enum.GetValues<WorldEvil>().Length) {
-            worldEvil = (WorldEvil) WorldGen.WorldGenParam_Evil;
+            worldEvil = (WorldEvil)WorldGen.WorldGenParam_Evil;
         }
 
         // scuffed, but works
@@ -76,7 +78,7 @@ public class GreatlySidegradedWorld : ModSystem {
 
     public static WorldEvil PickRandomEvil() {
         byte avalonModifier = TheGreatSidegrade.HasAvalon ? (byte) 0 : (byte) 1;
-        return (WorldEvil) Main.rand.Next(Enum.GetValues<WorldEvil>().Length - 2 - avalonModifier) + 2 + avalonModifier;
+        return (WorldEvil)Main.rand.Next(Enum.GetValues<WorldEvil>().Length - 2 - avalonModifier) + 2 + avalonModifier;
     }
 
     public override void ModifyWorldGenTasks(List<GenPass> list, ref double totalWeight) {
@@ -172,7 +174,7 @@ public class GreatlySidegradedWorld : ModSystem {
 
     public override void LoadWorldData(TagCompound tag) {
         for (int i = 0; i < Main.tile.Width; ++i) {
-            for (int j = 0; j < Main.tile.Height; ++j) {
+            for (int j = 0; j < Main.tile.Height; ++j) { // expensiv
                 if (GreatlySidegradedIDs.Sets.FracturedTileCollection.Contains(Main.tile[i, j].TileType))
                     totalFract2++;
                 if (GreatlySidegradedIDs.Sets.VoidTileCollection.Contains(Main.tile[i, j].TileType))

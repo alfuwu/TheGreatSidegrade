@@ -83,7 +83,8 @@ public class Oblivion : ModNPC {
     }
 
     public override void AI() {
-        
+        // whiet fiyr :)
+        Lighting.AddLight(NPC.Center, new Vector3(1.4f));
     }
 
     public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
