@@ -17,14 +17,14 @@ namespace TheGreatSidegrade.Content.Bosses;
 
 [AutoloadBossHead]
 public class ChronovoreHead : WormHead {
-    private const float DoubleTapTime = 40f; // 2/3rds of a second
+    private const int DoubleTapTime = 120; // 2 seconds
     private const string BluePass = $"{nameof(TheGreatSidegrade)}/ChronovoreDoubleTap/BluePass";
     private const string RipplePass = $"{nameof(TheGreatSidegrade)}/ChronovoreDoubleTap/RipplePass";
 
     public class DoubleTap(Player target, Vector2 struckPos) {
         public Player target = target;
         public Vector2 struckPos = struckPos;
-        public int time = (int)DoubleTapTime;
+        public int time = DoubleTapTime;
     }
 
     private static int secondStageHeadSlot = -1;
@@ -113,7 +113,7 @@ public class ChronovoreHead : WormHead {
         NPC.height = 38;
         NPC.damage = 22;
         NPC.defense = 4;
-        NPC.lifeMax = 30000;
+        NPC.lifeMax = 4000;
         NPC.value = 800f;
         NPC.scale = 1.2f;
         NPC.SpawnWithHigherTime(30);
@@ -200,7 +200,7 @@ public class ChronovoreHead : WormHead {
                     SceneFilters.Scene.Activate(BluePass);
                 if (!SceneFilters.Scene[RipplePass].Active)
                     SceneFilters.Scene.Activate(RipplePass);
-                float t = (DoubleTapTime - lowestTime) / DoubleTapTime;
+                float t = (DoubleTapTime - lowestTime) / (float)DoubleTapTime;
                 SceneFilters.Scene[BluePass].GetShader().UseProgress(t);
                 SceneFilters.Scene[RipplePass].GetShader().UseProgress(t);
             } else if (doubleTapPos.Count <= 0 && Main.netMode != NetmodeID.Server) {
@@ -231,6 +231,22 @@ public class ChronovoreHead : WormHead {
 
     public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
         Texture2D e = GameAssets.GetTexture($"Content/Bosses/Chronovore_Head{(SecondStage ? "_SecondStage" : "")}");
+        foreach (DoubleTap dt in doubleTapPos) {
+            if (dt.time <= 30 && Main.myPlayer == dt.target.whoAmI) {
+                //spriteBatch.End();
+                //spriteBatch.Begin(SpriteSortMode.Immediate, null, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
+
+                //Texture2D noiseTexture = GameAssets.GetTexture("Assets/Textures/texture");
+                //Vector2 drawPosition = dt.struckPos - Main.screenPosition;
+                //Vector2 origin = noiseTexture.Size() * 0.5f;
+                
+                //Main.EntitySpriteDraw(noiseTexture, drawPosition, null, Color.White, 0f, origin, 3.5f, SpriteEffects.None, 0);
+                //spriteBatch.End();
+                //spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
+                break;
+            }
+        }
+        
         Main.EntitySpriteDraw(e, NPC.Center - Main.screenPosition, null, NPC.GetAlpha(Lighting.GetColor((int)NPC.Center.X / 16, (int)NPC.Center.Y / 16)), NPC.rotation, e.Size() * 0.5f, NPC.scale, SpriteEffects.None, 0);
         return false;
     }
@@ -257,9 +273,7 @@ public class ChronovoreBody : WormBody {
 
     public BodyType BodySegmentType { get; set; }
 
-    public bool Destroyed {
-        get => NPC.ai[3] > (BodySegmentType == BodyType.TimeCore ? 1000 : BodySegmentType == BodyType.Body2 ? 300 : 150) * (Main.masterMode ? 2f : Main.expertMode ? 1.4f : 1f);
-    }
+    public bool Destroyed => NPC.ai[3] > (BodySegmentType == BodyType.TimeCore ? 300 : BodySegmentType == BodyType.Body2 ? 100 : 50) * (Main.masterMode ? 2f : Main.expertMode ? 1.4f : 1f);
 
     public override string Texture => $"{nameof(TheGreatSidegrade)}/Content/Bosses/Chronovore_Body1";
     public override string Name => $"Chronovore{Enum.GetName(BodySegmentType)}";
@@ -297,7 +311,7 @@ public class ChronovoreBody : WormBody {
         NPC.height = 38;
         NPC.damage = 13;
         NPC.defense = 7;
-        NPC.lifeMax = 30000;
+        NPC.lifeMax = 4000;
         NPC.value = 800f;
         NPC.scale = 1.2f;
     }
@@ -348,10 +362,7 @@ public class ChronovoreBody : WormBody {
 }
 
 public class ChronovoreTail : WormTail {
-    public bool Destroyed {
-        get => NPC.ai[2] == 1;
-        set => NPC.ai[2] = value ? 1 : 0;
-    }
+    public bool Destroyed => NPC.ai[3] > 50 * (Main.masterMode ? 2f : Main.expertMode ? 1.4f : 1f);
 
     public override string Texture => $"{nameof(TheGreatSidegrade)}/Content/Bosses/Chronovore_Tail";
 
@@ -394,7 +405,7 @@ public class ChronovoreTail : WormTail {
         NPC.height = 38;
         NPC.damage = 11;
         NPC.defense = 13;
-        NPC.lifeMax = 15000;
+        NPC.lifeMax = 4000;
         NPC.value = 800f;
         NPC.scale = 1.2f;
     }
